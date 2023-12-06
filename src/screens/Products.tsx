@@ -7,6 +7,7 @@ import theme from "../theme";
 import { AntDesign } from "@expo/vector-icons";
 import { ProductsProps } from "../types/StackTypes";
 import useCategories from "../hooks/useCategories";
+import LoadingComponent from "../components/LoadingComponent";
 
 const Container = styled.View`
   display: flex;
@@ -71,7 +72,11 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
   const { categories, status, error } = useCategories();
 
-  console.log(categories, status, error);
+  //console.log(categories, status, error);
+
+  if (status === "loading") {
+    return <LoadingComponent />;
+  }
 
   // Function to get filtered data based on the selected filter
   const getFilteredProducts = () => {
