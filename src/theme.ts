@@ -10,6 +10,7 @@ const theme = {
     unSelectedColor: "#96744E",
     shadowColor: "#171717",
     borderColor: "#ddd",
+    error: "#d73a4a",
   },
   fontSizes: {
     body: 16,

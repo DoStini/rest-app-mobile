@@ -1,12 +1,15 @@
+import { setItemAsync } from "expo-secure-store";
 import api from "./axios";
 
 export const login = async (email: string, password: string) => {
   const response = await api.post("/proxy/auth", {
-    email,
+    username: email,
     password,
   });
 
-  console.log(response.data, response.status);
+  const token = response.data.accessToken;
+
+  await setItemAsync("token", token);
 
   return response.data;
 };
