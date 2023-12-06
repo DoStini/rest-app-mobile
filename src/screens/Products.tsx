@@ -6,6 +6,7 @@ import { TextInput } from "react-native";
 import theme from "../theme";
 import { AntDesign } from "@expo/vector-icons";
 import { ProductsProps } from "../types/StackTypes";
+import { Product } from "../types/StateTypes";
 import useCategories from "../hooks/useCategories";
 import LoadingComponent from "../components/LoadingComponent";
 
@@ -95,8 +96,8 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
 
   const filteredProducts = getFilteredProducts();
 
-  const goToProduct = (id: string) => {
-    navigation.navigate("Product", { id: id });
+  const goToProduct = (product: Product) => {
+    navigation.navigate("Product", { product: product });
   };
 
   return (
@@ -133,7 +134,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
         {filteredProducts.map((product) => (
           <TouchableOpacity
             key={product.id}
-            onPress={() => goToProduct(product.id)}
+            onPress={() => goToProduct(product)}
           >
             <ListItemContainer>
               <Text fontSize="subheading" color="textSecondary">

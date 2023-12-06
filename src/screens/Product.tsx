@@ -3,42 +3,73 @@ import Text from "../components/Text";
 import { ProductProps } from "../types/StackTypes";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const ContentContainer = styled.View`
+const Container = styled.View`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 50px;
+  padding-top: 60px;
 `;
-const IconContainer = styled.View`
-  position: absolute;
-  top: 50px;
-  left: 10px;
+
+const TopBar = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
+  border-bottom-color: black;
+  border-bottom-width: 1px;
+`;
+
+const InfoBox = styled.View`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-bottom-color: black;
+  border-bottom-width: 1px;
 `;
 
 const Product: React.FC<ProductProps> = ({ navigation, route }) => {
-  const { id } = route.params;
-  //console.log(id);
+  const { product } = route.params;
+  //console.log(product);
 
   const goToProducts = () => {
     navigation.navigate("Products");
   };
 
   return (
-    <ContentContainer>
-      <IconContainer>
+    <Container>
+      <TopBar>
         <MaterialIcons
           name="arrow-back"
           size={30}
           color="black"
           onPress={goToProducts}
         />
-      </IconContainer>
-      <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Product {id}
-      </Text>
-    </ContentContainer>
+        <Text fontSize="heading" fontWeight="bold" shadow={true}>
+          Product details
+        </Text>
+      </TopBar>
+      <InfoBox>
+        <Text fontSize="subheading" fontWeight="bold">
+          Name:
+        </Text>
+        <Text fontSize="subheading">{product.name}</Text>
+      </InfoBox>
+      <InfoBox>
+        <Text fontSize="subheading" fontWeight="bold">
+          Price:
+        </Text>
+        <Text fontSize="subheading">{product.price}</Text>
+      </InfoBox>
+      <InfoBox>
+        <Text fontSize="subheading" fontWeight="bold">
+          Description:
+        </Text>
+        <Text fontSize="subheading">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at
+          dolor velit.
+        </Text>
+      </InfoBox>
+    </Container>
   );
 };
 
