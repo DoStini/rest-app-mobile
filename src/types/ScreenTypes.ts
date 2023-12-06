@@ -1,7 +1,7 @@
 export const Screen = {
   Statistics: { name: "STATISTICS", icon: "bar-chart" },
-  Histórico: { name: "HISTORICO", icon: "food-bank" },
-  Produtos: { name: "PRODUTOS", icon: "local-pizza" },
+  History: { name: "HISTORY", icon: "food-bank" },
+  Products: { name: "PRODUCTS", icon: "local-pizza" },
   Settings: { name: "SETTINGS", icon: "settings" },
 } as const;
 

@@ -35,7 +35,7 @@ const Orders = ({ navigation }: OrdersProps) => {
         />
       </IconContainer>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Histórico
+        History
       </Text>
     </ContentContainer>
   );

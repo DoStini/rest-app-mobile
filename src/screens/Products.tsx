@@ -95,7 +95,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
   return (
     <Container>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Produtos
+        Products
       </Text>
       <InputContainer>
         <AntDesign name="search1" size={24} color={theme.colors.textPrimary} />

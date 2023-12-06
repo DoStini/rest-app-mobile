@@ -5,15 +5,15 @@ type BottomTabIconMap = Record<ScreenTitle, ScreenIcon>;
 
 const bottomTabBarRoutesMap: BottomTabRouteMap = {
   STATISTICS: "Statistics",
-  HISTORICO: "Histórico",
-  PRODUTOS: "Produtos",
+  HISTORY: "History",
+  PRODUCTS: "Products",
   SETTINGS: "Settings",
 };
 
 const bottomTabBarIconsMap: BottomTabIconMap = {
   STATISTICS: "bar-chart",
-  HISTORICO: "food-bank",
-  PRODUTOS: "local-pizza",
+  HISTORY: "food-bank",
+  PRODUCTS: "local-pizza",
   SETTINGS: "settings",
 };
 

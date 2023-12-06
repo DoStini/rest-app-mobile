@@ -20,9 +20,9 @@ const Main = () => {
           name={Screen.Statistics.name}
           component={Statistics}
         />
-        <BottomTab.Screen name={Screen.Histórico.name} component={OrderStack} />
+        <BottomTab.Screen name={Screen.History.name} component={OrderStack} />
         <BottomTab.Screen
-          name={Screen.Produtos.name}
+          name={Screen.Products.name}
           component={ProductStack}
         />
         <BottomTab.Screen name={Screen.Settings.name} component={Settings} />
