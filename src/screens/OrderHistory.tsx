@@ -17,7 +17,7 @@ const IconContainer = styled.View`
   padding: 10px;
 `;
 
-const OrderHistory = ({ navigation }: OrderHistoryProps) => {
+const OrderHistory: React.FC<OrderHistoryProps> = ({ navigation }) => {
   const goToOrders = () => {
     navigation.navigate("Orders");
   };

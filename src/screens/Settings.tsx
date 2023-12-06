@@ -9,7 +9,7 @@ const ContentContainer = styled.View`
   padding-top: 50px;
 `;
 
-const Settings = () => {
+const Settings: React.FC = () => {
   return (
     <ContentContainer>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>

@@ -5,9 +5,8 @@ import React, { useState } from "react";
 import { TextInput } from "react-native";
 import theme from "../theme";
 import { AntDesign } from "@expo/vector-icons";
-import { PRODUCT_FILTERS } from "../constants";
-import { mockData } from "../mockData";
 import { ProductsProps } from "../types/StackTypes";
+import useCategories from "../hooks/useCategories";
 
 const Container = styled.View`
   display: flex;
@@ -69,24 +68,27 @@ const ListItemContainer = styled.View`
 
 const Products: React.FC<ProductsProps> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState(1);
+  const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
+  const { categories, status, error } = useCategories();
+
+  console.log(categories, status, error);
 
   // Function to get filtered data based on the selected filter
-  const getFilteredData = () => {
-    const filterKey = PRODUCT_FILTERS[selectedFilter].toLowerCase();
+  const getFilteredProducts = () => {
+    if (selectedFilter !== null) {
+      const selectedCategory = categories.find(
+        (category) => category.id === selectedFilter
+      );
+      const products = selectedCategory ? selectedCategory.products : [];
 
-    if (filterKey in mockData) {
-      const data = mockData[filterKey as keyof typeof mockData] || [];
-
-      return data.filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      return products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     return [];
   };
 
-  // Filter the data based on the selected filter
-  const filteredData = getFilteredData();
+  const filteredProducts = getFilteredProducts();
 
   const goToProduct = (id: string) => {
     navigation.navigate("Product", { id: id });
@@ -101,34 +103,39 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
         <AntDesign name="search1" size={24} color={theme.colors.textPrimary} />
         <StyledTextInput
           value={searchQuery}
-          placeholder="Produto a pesquisar..."
+          placeholder="Search for a product..."
           onChangeText={(query: string) => setSearchQuery(query)}
         />
       </InputContainer>
       <FilterContainer>
-        {PRODUCT_FILTERS.map((option, index) => (
+        {categories.map((category) => (
           <FilterButton
-            key={index}
-            selected={selectedFilter === index}
-            onPress={() => setSelectedFilter(index)}
+            key={category.id}
+            selected={selectedFilter === category.id}
+            onPress={() => setSelectedFilter(category.id)}
           >
             <Text
-              color={selectedFilter === index ? "textSecondary" : "textPrimary"}
+              color={
+                selectedFilter === category.id ? "textSecondary" : "textPrimary"
+              }
             >
-              {option}
+              {category.name}
             </Text>
           </FilterButton>
         ))}
       </FilterContainer>
       <StyledScrollView>
-        {filteredData.map((item) => (
-          <TouchableOpacity key={item.id} onPress={() => goToProduct(item.id)}>
-            <ListItemContainer key={item.id}>
+        {filteredProducts.map((product) => (
+          <TouchableOpacity
+            key={product.id}
+            onPress={() => goToProduct(product.id)}
+          >
+            <ListItemContainer>
               <Text fontSize="subheading" color="textSecondary">
-                {item.name}
+                {product.name}
               </Text>
               <Text fontSize="subheading" color="textSecondary">
-                {item.price}
+                {product.price}
               </Text>
             </ListItemContainer>
           </TouchableOpacity>

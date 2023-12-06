@@ -19,7 +19,7 @@ const IconContainer = styled.View`
   padding: 10px;
 `;
 
-const Orders = ({ navigation }: OrdersProps) => {
+const Orders: React.FC<OrdersProps> = ({ navigation }) => {
   const goToHistory = () => {
     navigation.navigate("OrderHistory");
   };
