@@ -4,6 +4,7 @@ const theme = {
     textSecondary: "white",
     backgroundPrimary: "#372F22",
     backgroundSecondary: "#FFEDD8",
+    tertiary: "#96744E",
     barColor: "#FFEDD8",
     selectedColor: "#372F22",
     unSelectedColor: "#96744E",

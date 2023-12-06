@@ -9,7 +9,21 @@ import ProductStack from "./ProductsStack";
 
 const BottomTab = createBottomTabNavigator();
 
+import useAuth from "../hooks/useAuth";
+import { ActivityIndicator } from "react-native";
+import Login from "./auth/Login";
+
 const Main = () => {
+  const { user, loading, error } = useAuth();
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (error) {
+    return <Login />;
+  }
+
   return (
     <NavigationContainer>
       <BottomTab.Navigator
