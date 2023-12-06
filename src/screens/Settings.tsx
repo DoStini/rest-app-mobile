@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import Text from "./Text";
+import Text from "../components/Text";
 
 const ContentContainer = styled.View`
   display: flex;

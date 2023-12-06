@@ -3,11 +3,11 @@ import { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TabBarMarker from "./TabBarMarker";
 import TabBarComponent from "./TabBarComponent";
-import { ScreenTitle } from "../types/types";
-import { getTitleForRoute, getIconForRoute } from "../types/utils";
-import { BottomTabBarProps } from "../types/types";
+import { ScreenTitle } from "../types/ScreenTypes";
+import { getTitleForRoute, getIconForRoute } from "../config/utils";
+import { BottomTabBarProps } from "../types/TabBarTypes";
 import styled from "styled-components/native";
-import { SCREEN_WIDTH, TAB_COUNT } from "../types/constants";
+import { SCREEN_WIDTH, TAB_COUNT } from "../constants";
 import theme from "../theme";
 
 const Container = styled.View`

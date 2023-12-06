@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable } from "react-native";
-import { TabBarItemProps } from "../types/types";
+import { TabBarItemProps } from "../types/TabBarTypes";
 import styled from "styled-components/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import theme from "../theme";

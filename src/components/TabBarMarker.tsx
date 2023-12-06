@@ -1,8 +1,8 @@
 import React from "react";
 import Animated from "react-native-reanimated";
-import { TabBarMarkerProps } from "../types/types";
+import { TabBarMarkerProps } from "../types/TabBarTypes";
 import styled from "styled-components/native";
-import { SCREEN_WIDTH, TAB_COUNT } from "../types/constants";
+import { SCREEN_WIDTH, TAB_COUNT } from "../constants";
 import theme from "../theme";
 
 const Container = styled(Animated.View)`

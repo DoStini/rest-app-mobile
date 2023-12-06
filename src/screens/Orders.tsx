@@ -1,45 +1,44 @@
 import styled from "styled-components/native";
-import Text from "./Text";
-import { ProductProps } from "../types/types";
+import Text from "../components/Text";
+import { OrdersProps } from "../types/StackTypes";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const ContentContainer = styled.View`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   padding-top: 50px;
+  position: relative;
 `;
+
 const IconContainer = styled.View`
   position: absolute;
   top: 50px;
-  left: 10px;
+  right: 10px;
   padding: 10px;
 `;
 
-const Product: React.FC<ProductProps> = ({ navigation, route }) => {
-  const { id } = route.params;
-  //console.log(id);
-
-  const goToProducts = () => {
-    navigation.navigate("Products");
+const Orders = ({ navigation }: OrdersProps) => {
+  const goToHistory = () => {
+    navigation.navigate("OrderHistory");
   };
 
   return (
     <ContentContainer>
       <IconContainer>
         <MaterialIcons
-          name="arrow-back"
+          name="history"
           size={30}
           color="black"
-          onPress={goToProducts}
+          onPress={goToHistory}
         />
       </IconContainer>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Product {id}
+        Histórico
       </Text>
     </ContentContainer>
   );
 };
 
-export default Product;
+export default Orders;

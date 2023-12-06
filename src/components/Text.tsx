@@ -6,7 +6,7 @@ import {
   FontSizeType,
   FontWeightType,
   TextProps,
-} from "../types/types";
+} from "../types/ThemeTypes";
 
 const styles = StyleSheet.create({
   text: {

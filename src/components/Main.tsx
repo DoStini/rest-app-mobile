@@ -1,11 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Screen } from "../types/types";
+import { Screen } from "../types/ScreenTypes";
 import TabBar from "./TabBar";
-import Statistics from "./Statistics";
-import OrderStack from "./OrderStack";
-import Settings from "./Settings";
-import ProductStack from "./ProductsStack";
+import Statistics from "../screens/Statistics";
+import OrderStack from "../screens/OrderStack";
+import Settings from "../screens/Settings";
+import ProductStack from "../screens/ProductsStack";
 
 const BottomTab = createBottomTabNavigator();
 

@@ -1,4 +1,4 @@
-import { ScreenTitle, ScreenIcon } from "./types";
+import { ScreenTitle, ScreenIcon } from "../types/ScreenTypes";
 
 type BottomTabRouteMap = Record<ScreenTitle, string>;
 type BottomTabIconMap = Record<ScreenTitle, ScreenIcon>;

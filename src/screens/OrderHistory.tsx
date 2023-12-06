@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
-import Text from "./Text";
-import { OrderHistoryProps } from "../types/types";
+import Text from "../components/Text";
+import { OrderHistoryProps } from "../types/StackTypes";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const ContentContainer = styled.View`

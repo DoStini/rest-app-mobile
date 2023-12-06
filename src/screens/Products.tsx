@@ -1,13 +1,13 @@
 import styled from "styled-components/native";
-import Text from "./Text";
+import Text from "../components/Text";
 import { TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native";
 import theme from "../theme";
 import { AntDesign } from "@expo/vector-icons";
-import { PRODUCT_FILTERS } from "../types/constants";
+import { PRODUCT_FILTERS } from "../constants";
 import { mockData } from "../mockData";
-import { ProductsProps } from "../types/types";
+import { ProductsProps } from "../types/StackTypes";
 
 const Container = styled.View`
   display: flex;
