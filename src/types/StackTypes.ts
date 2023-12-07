@@ -1,10 +1,10 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
-import { Product } from "./StateTypes";
+import { Product } from "./Product";
 
 type HistoryStackNavigatorParamList = {
   HistoryOrderList: undefined;
-  HistoryOrder: { orderId: string };
+  HistoryOrder: { id: string };
 };
 
 type HistoryListNavigationProp = StackNavigationProp<

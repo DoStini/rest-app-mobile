@@ -19,11 +19,10 @@ export const fetchOrderById = async (id: string) => {
 };
 
 // TODO, waiting for backend
-
 export const fetchCategories = async () => {
   try {
-    const response = await api.get("/categories");
-    return response.data;
+    //const response = await api.get("/categories");
+    return [];
   } catch (error) {
     console.error("Error fetching categories:", error);
   }

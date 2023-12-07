@@ -2,7 +2,7 @@ import { OrderProduct } from "./OrderProduct";
 import { Table } from "./Table";
 import { Creator } from "./Creator";
 
-type Order = {
+export type Order = {
   OrderProduct: OrderProduct[];
   Table: Table;
   closed: boolean;

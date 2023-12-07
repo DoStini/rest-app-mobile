@@ -6,7 +6,8 @@ import { TextInput } from "react-native";
 import theme from "../../theme";
 import { AntDesign } from "@expo/vector-icons";
 import { ProductsProps } from "../../types/StackTypes";
-import { Product } from "../../types/StateTypes";
+import { Product } from "../../types/Product";
+import { Category } from "../../types/Category";
 import useCategories from "../../hooks/useCategories";
 import LoadingComponent from "../LoadingComponent";
 
@@ -85,7 +86,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
       );
       const products = selectedCategory ? selectedCategory.products : [];
 
-      return products.filter((product) =>
+      return products.filter((product: Product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -113,7 +114,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
       </InputContainer>
 
       <FilterContainer>
-        {categories.map((category) => (
+        {categories.map((category: Category) => (
           <FilterButton
             key={category.id}
             selected={selectedFilter === category.id}
@@ -130,7 +131,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
         ))}
       </FilterContainer>
       <StyledScrollView>
-        {filteredProducts.map((product) => (
+        {filteredProducts.map((product: Product) => (
           <TouchableOpacity
             key={product.id}
             onPress={() => goToProduct(product)}

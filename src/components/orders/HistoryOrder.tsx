@@ -50,8 +50,8 @@ const ProductBox = styled.View`
 `;
 
 const HistoryOrder: React.FC<HistoryOrderProps> = ({ navigation, route }) => {
-  const { orderId } = route.params;
-  const { selectedOrder, status } = useSelectedOrder(orderId);
+  const { id } = route.params;
+  const { selectedOrder, status } = useSelectedOrder(id);
 
   if (!selectedOrder || status === "loading") {
     return <LoadingComponent />;
@@ -60,8 +60,6 @@ const HistoryOrder: React.FC<HistoryOrderProps> = ({ navigation, route }) => {
   const goToHistory = () => {
     navigation.navigate("HistoryOrderList");
   };
-
-  console.log(selectedOrder.OrderProduct);
 
   return (
     <Container>

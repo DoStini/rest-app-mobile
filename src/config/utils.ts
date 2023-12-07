@@ -25,4 +25,4 @@ export const getTitleForRoute = (
 export const getIconForRoute = (
   screen: ScreenTitle,
   iconsMap: Partial<BottomTabIconMap> = bottomTabBarIconsMap
-) => iconsMap[screen] ?? "question";
+) => iconsMap[screen] ?? "error-outline";
