@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchOrder } from "../store/selectedOrderSlice";
+import { fetchOrder, clearSelectedOrder } from "../store/selectedOrderSlice";
 import { AppDispatch, RootState } from "../store/store";
 
 const useSelectedOrder = (orderId: string) => {
@@ -12,10 +12,14 @@ const useSelectedOrder = (orderId: string) => {
   const error = useSelector((state: RootState) => state.selectedOrder.error);
 
   useEffect(() => {
-    if (status === "idle") {
+    if (orderId) {
       dispatch(fetchOrder(orderId));
     }
-  }, [dispatch, status]);
+
+    return () => {
+      dispatch(clearSelectedOrder());
+    };
+  }, [dispatch, orderId]);
 
   return { selectedOrder, status, error };
 };

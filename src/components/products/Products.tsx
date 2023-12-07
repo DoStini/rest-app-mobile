@@ -73,8 +73,6 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
   const { categories, status, error } = useCategories();
 
-  //console.log(categories, status, error);
-
   if (status === "loading") {
     return <LoadingComponent />;
   }
@@ -93,7 +91,6 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
     }
     return [];
   };
-  console.log(categories);
 
   const filteredProducts = getFilteredProducts();
 
@@ -114,13 +111,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
           onChangeText={(query: string) => setSearchQuery(query)}
         />
       </InputContainer>
-    </Container>
-  );
-};
 
-export default Products;
-
-/*
       <FilterContainer>
         {categories.map((category) => (
           <FilterButton
@@ -155,5 +146,8 @@ export default Products;
           </TouchableOpacity>
         ))}
       </StyledScrollView>
+    </Container>
+  );
+};
 
-*/
+export default Products;

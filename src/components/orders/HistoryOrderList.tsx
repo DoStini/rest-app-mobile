@@ -33,7 +33,6 @@ const ListItemContainer = styled(TouchableOpacity)`
 const HistoryOrderList: React.FC<HistoryProps> = ({ navigation }) => {
   const { items, status, error } = useHistory();
 
-  //console.log(items);
   const goToHistoryOrder = (orderId: string) => {
     navigation.navigate("HistoryOrder", { orderId });
   };
