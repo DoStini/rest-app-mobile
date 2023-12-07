@@ -1,9 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import categoriesReducer from "./categoriesSlice";
+import historyReducer from "./historySlice";
+import selectedOrderReducer from "./selectedOrderSlice";
 
 export const store = configureStore({
   reducer: {
     categories: categoriesReducer,
+    history: historyReducer,
+    selectedOrder: selectedOrderReducer,
   },
 });
 

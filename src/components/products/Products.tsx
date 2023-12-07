@@ -93,6 +93,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
     }
     return [];
   };
+  console.log(categories);
 
   const filteredProducts = getFilteredProducts();
 
@@ -113,6 +114,13 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
           onChangeText={(query: string) => setSearchQuery(query)}
         />
       </InputContainer>
+    </Container>
+  );
+};
+
+export default Products;
+
+/*
       <FilterContainer>
         {categories.map((category) => (
           <FilterButton
@@ -147,8 +155,5 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
           </TouchableOpacity>
         ))}
       </StyledScrollView>
-    </Container>
-  );
-};
 
-export default Products;
+*/

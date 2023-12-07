@@ -22,3 +22,16 @@ export interface CategoriesState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
+
+// TODO add types for items
+export interface HistoryState {
+  items: [];
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
+}
+
+export interface SelecterOrderState {
+  selectedOrder: any;
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
+}
