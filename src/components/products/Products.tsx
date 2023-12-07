@@ -1,13 +1,14 @@
 import styled from "styled-components/native";
-import Text from "./Text";
+import Text from "../Text";
 import { TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native";
-import theme from "../theme";
+import theme from "../../theme";
 import { AntDesign } from "@expo/vector-icons";
-import { PRODUCT_FILTERS } from "../types/constants";
-import { mockData } from "../mockData";
-import { ProductsProps } from "../types/types";
+import { ProductsProps } from "../../types/StackTypes";
+import { Product } from "../../types/StateTypes";
+import useCategories from "../../hooks/useCategories";
+import LoadingComponent from "../LoadingComponent";
 
 const Container = styled.View`
   display: flex;
@@ -69,73 +70,90 @@ const ListItemContainer = styled.View`
 
 const Products: React.FC<ProductsProps> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState(1);
+  const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
+  const { categories, status, error } = useCategories();
+
+  //console.log(categories, status, error);
+
+  if (status === "loading") {
+    return <LoadingComponent />;
+  }
 
   // Function to get filtered data based on the selected filter
-  const getFilteredData = () => {
-    const filterKey = PRODUCT_FILTERS[selectedFilter].toLowerCase();
+  const getFilteredProducts = () => {
+    if (selectedFilter !== null) {
+      const selectedCategory = categories.find(
+        (category) => category.id === selectedFilter
+      );
+      const products = selectedCategory ? selectedCategory.products : [];
 
-    if (filterKey in mockData) {
-      const data = mockData[filterKey as keyof typeof mockData] || [];
-
-      return data.filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      return products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     return [];
   };
+  console.log(categories);
 
-  // Filter the data based on the selected filter
-  const filteredData = getFilteredData();
+  const filteredProducts = getFilteredProducts();
 
-  const goToProduct = (id: string) => {
-    navigation.navigate("Product", { id: id });
+  const goToProduct = (product: Product) => {
+    navigation.navigate("Product", { product: product });
   };
 
   return (
     <Container>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Produtos
+        Products
       </Text>
       <InputContainer>
         <AntDesign name="search1" size={24} color={theme.colors.textPrimary} />
         <StyledTextInput
           value={searchQuery}
-          placeholder="Produto a pesquisar..."
+          placeholder="Search for a product..."
           onChangeText={(query: string) => setSearchQuery(query)}
         />
       </InputContainer>
-      <FilterContainer>
-        {PRODUCT_FILTERS.map((option, index) => (
-          <FilterButton
-            key={index}
-            selected={selectedFilter === index}
-            onPress={() => setSelectedFilter(index)}
-          >
-            <Text
-              color={selectedFilter === index ? "textSecondary" : "textPrimary"}
-            >
-              {option}
-            </Text>
-          </FilterButton>
-        ))}
-      </FilterContainer>
-      <StyledScrollView>
-        {filteredData.map((item) => (
-          <TouchableOpacity key={item.id} onPress={() => goToProduct(item.id)}>
-            <ListItemContainer key={item.id}>
-              <Text fontSize="subheading" color="textSecondary">
-                {item.name}
-              </Text>
-              <Text fontSize="subheading" color="textSecondary">
-                {item.price}
-              </Text>
-            </ListItemContainer>
-          </TouchableOpacity>
-        ))}
-      </StyledScrollView>
     </Container>
   );
 };
 
 export default Products;
+
+/*
+      <FilterContainer>
+        {categories.map((category) => (
+          <FilterButton
+            key={category.id}
+            selected={selectedFilter === category.id}
+            onPress={() => setSelectedFilter(category.id)}
+          >
+            <Text
+              color={
+                selectedFilter === category.id ? "textSecondary" : "textPrimary"
+              }
+            >
+              {category.name}
+            </Text>
+          </FilterButton>
+        ))}
+      </FilterContainer>
+      <StyledScrollView>
+        {filteredProducts.map((product) => (
+          <TouchableOpacity
+            key={product.id}
+            onPress={() => goToProduct(product)}
+          >
+            <ListItemContainer>
+              <Text fontSize="subheading" color="textSecondary">
+                {product.name}
+              </Text>
+              <Text fontSize="subheading" color="textSecondary">
+                {product.price}
+              </Text>
+            </ListItemContainer>
+          </TouchableOpacity>
+        ))}
+      </StyledScrollView>
+
+*/

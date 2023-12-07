@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import Text from "./Text";
+import Text from "../Text";
 
 const ContentContainer = styled.View`
   display: flex;
@@ -9,7 +9,7 @@ const ContentContainer = styled.View`
   padding-top: 50px;
 `;
 
-const Settings = () => {
+const Settings: React.FC = () => {
   return (
     <ContentContainer>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
