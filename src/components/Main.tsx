@@ -9,7 +9,22 @@ import ProductStack from "./ProductsStack";
 
 const BottomTab = createBottomTabNavigator();
 
+import useAuth from "../hooks/useAuth";
+import { ActivityIndicator } from "react-native";
+import Login from "./auth/Login";
+import { deleteItemAsync } from "expo-secure-store";
+
 const Main = () => {
+  const { user, loading, error, revalidate } = useAuth();
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (error) {
+    return <Login revalidate={revalidate} />;
+  }
+
   return (
     <NavigationContainer>
       <BottomTab.Navigator
