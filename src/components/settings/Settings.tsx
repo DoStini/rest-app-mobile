@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import Text from "../components/Text";
+import Text from "../Text";
 
 const ContentContainer = styled.View`
   display: flex;
@@ -9,14 +9,14 @@ const ContentContainer = styled.View`
   padding-top: 50px;
 `;
 
-const Statistics: React.FC = () => {
+const Settings: React.FC = () => {
   return (
     <ContentContainer>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Statistics
+        Settings
       </Text>
     </ContentContainer>
   );
 };
 
-export default Statistics;
+export default Settings;

@@ -1,42 +1,44 @@
 import styled from "styled-components/native";
-import Text from "../components/Text";
-import { OrderHistoryProps } from "../types/StackTypes";
+import Text from "../Text";
+import { OrdersProps } from "../../types/StackTypes";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const ContentContainer = styled.View`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   padding-top: 50px;
+  position: relative;
 `;
+
 const IconContainer = styled.View`
   position: absolute;
   top: 50px;
-  left: 10px;
+  right: 10px;
   padding: 10px;
 `;
 
-const OrderHistory: React.FC<OrderHistoryProps> = ({ navigation }) => {
-  const goToOrders = () => {
-    navigation.navigate("Orders");
+const Orders: React.FC<OrdersProps> = ({ navigation }) => {
+  const goToHistory = () => {
+    navigation.navigate("OrderHistory");
   };
 
   return (
     <ContentContainer>
       <IconContainer>
         <MaterialIcons
-          name="arrow-back"
+          name="history"
           size={30}
           color="black"
-          onPress={goToOrders}
+          onPress={goToHistory}
         />
       </IconContainer>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Order History
+        History
       </Text>
     </ContentContainer>
   );
 };
 
-export default OrderHistory;
+export default Orders;

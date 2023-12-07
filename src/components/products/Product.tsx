@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
-import Text from "../components/Text";
-import { ProductProps } from "../types/StackTypes";
+import Text from "../Text";
+import { ProductProps } from "../../types/StackTypes";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Container = styled.View`

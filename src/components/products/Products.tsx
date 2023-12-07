@@ -1,14 +1,14 @@
 import styled from "styled-components/native";
-import Text from "../components/Text";
+import Text from "../Text";
 import { TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native";
-import theme from "../theme";
+import theme from "../../theme";
 import { AntDesign } from "@expo/vector-icons";
-import { ProductsProps } from "../types/StackTypes";
-import { Product } from "../types/StateTypes";
-import useCategories from "../hooks/useCategories";
-import LoadingComponent from "../components/LoadingComponent";
+import { ProductsProps } from "../../types/StackTypes";
+import { Product } from "../../types/StateTypes";
+import useCategories from "../../hooks/useCategories";
+import LoadingComponent from "../LoadingComponent";
 
 const Container = styled.View`
   display: flex;

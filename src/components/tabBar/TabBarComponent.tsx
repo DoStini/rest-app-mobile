@@ -1,10 +1,10 @@
 import React from "react";
 import { Pressable } from "react-native";
-import { TabBarItemProps } from "../types/TabBarTypes";
+import { TabBarItemProps } from "../../types/TabBarTypes";
 import styled from "styled-components/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import theme from "../theme";
-import Text from "./Text";
+import theme from "../../theme";
+import Text from "../Text";
 
 const StyledPressable = styled(Pressable)`
   flex: 1;
