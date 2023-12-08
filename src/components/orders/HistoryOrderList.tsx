@@ -7,6 +7,7 @@ import theme from "../../theme";
 import { TouchableOpacity } from "react-native";
 import { Order } from "../../types/Order";
 import { convertISOToFormattedDate, formatPrice } from "../../config/helpers";
+import { RefreshControl } from "react-native-gesture-handler";
 
 const ContentContainer = styled.View`
   display: flex;
@@ -41,23 +42,26 @@ const ItemRow = styled.View`
 `;
 
 const HistoryOrderList: React.FC<HistoryProps> = ({ navigation }) => {
-  const { items, status, error } = useHistory();
+  const { items, status, error, refresh } = useHistory();
 
   const goToHistoryOrder = (orderId: number) => {
     const id = String(orderId);
     navigation.navigate("HistoryOrder", { id });
   };
 
-  if (status === "loading") {
-    return <LoadingComponent />;
-  }
-
   return (
     <ContentContainer>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
         History
       </Text>
-      <StyledScrollView>
+      <StyledScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={status === "loading"}
+            onRefresh={refresh}
+          />
+        }
+      >
         {items.map((order: Order) => (
           <ListItemContainer
             activeOpacity={1}
