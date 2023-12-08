@@ -19,7 +19,11 @@ const initialState: SelecterOrderState = {
 const selectedOrderSlice = createSlice({
   name: "selectedOrder",
   initialState,
-  reducers: {},
+  reducers: {
+    clearSelectedOrder: (state) => {
+      state.selectedOrder = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchOrder.pending, (state, action) => {
       state.status = "loading";
@@ -32,9 +36,11 @@ const selectedOrderSlice = createSlice({
       state.status = "failed";
       state.error =
         action.error.message ||
-        "An unknown error occurred when fetching history";
+        "An unknown error occurred when fetching history for this order.";
     });
   },
 });
+
+export const { clearSelectedOrder } = selectedOrderSlice.actions;
 
 export default selectedOrderSlice.reducer;

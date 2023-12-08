@@ -5,8 +5,7 @@ export const fetchHistory = async () => {
     const response = await api.get("/orders/closed");
     return response.data.orders;
   } catch (error) {
-    console.error("Error fetching categories:", error);
-    throw error;
+    console.error("Error fetching history:", error);
   }
 };
 
@@ -15,19 +14,25 @@ export const fetchOrderById = async (id: string) => {
     const response = await api.get(`/orders/${id}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching categories:", error);
-    throw error;
+    console.error("Error fetching order:", error);
   }
 };
 
-/*
-TODO add right order id. Or dunno is there an api call to fetch all catefories without order id?
+export const fetchOrders = async () => {
+  try {
+    const response = await api.get(`/orders`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+  }
+};
+
+// TODO, waiting for backend
 export const fetchCategories = async () => {
   try {
-    const response = await api.get("/orders/471/categories");
-    return response.data.categories;
+    //const response = await api.get("/categories");
+    return [];
   } catch (error) {
     console.error("Error fetching categories:", error);
-    throw error;
   }
-};*/
+};

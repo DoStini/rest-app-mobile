@@ -32,7 +32,7 @@ const historySlice = createSlice({
       state.status = "failed";
       state.error =
         action.error.message ||
-        "An unknown error occurred when fetching history";
+        "An unknown error occurred when fetching order history";
     });
   },
 });

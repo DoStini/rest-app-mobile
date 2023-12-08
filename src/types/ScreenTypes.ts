@@ -1,6 +1,6 @@
 export const Screen = {
-  Statistics: { name: "STATISTICS", icon: "bar-chart" },
-  History: { name: "HISTORY", icon: "food-bank" },
+  Statistics: { name: "HOME", icon: "home" },
+  History: { name: "HISTORY", icon: "history" },
   Products: { name: "PRODUCTS", icon: "local-pizza" },
   Settings: { name: "SETTINGS", icon: "settings" },
 } as const;

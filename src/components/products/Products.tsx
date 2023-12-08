@@ -6,7 +6,8 @@ import { TextInput } from "react-native";
 import theme from "../../theme";
 import { AntDesign } from "@expo/vector-icons";
 import { ProductsProps } from "../../types/StackTypes";
-import { Product } from "../../types/StateTypes";
+import { Product } from "../../types/Product";
+import { Category } from "../../types/Category";
 import useCategories from "../../hooks/useCategories";
 import LoadingComponent from "../LoadingComponent";
 
@@ -73,8 +74,6 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
   const { categories, status, error } = useCategories();
 
-  //console.log(categories, status, error);
-
   if (status === "loading") {
     return <LoadingComponent />;
   }
@@ -87,13 +86,12 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
       );
       const products = selectedCategory ? selectedCategory.products : [];
 
-      return products.filter((product) =>
+      return products.filter((product: Product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     return [];
   };
-  console.log(categories);
 
   const filteredProducts = getFilteredProducts();
 
@@ -114,15 +112,9 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
           onChangeText={(query: string) => setSearchQuery(query)}
         />
       </InputContainer>
-    </Container>
-  );
-};
 
-export default Products;
-
-/*
       <FilterContainer>
-        {categories.map((category) => (
+        {categories.map((category: Category) => (
           <FilterButton
             key={category.id}
             selected={selectedFilter === category.id}
@@ -139,7 +131,7 @@ export default Products;
         ))}
       </FilterContainer>
       <StyledScrollView>
-        {filteredProducts.map((product) => (
+        {filteredProducts.map((product: Product) => (
           <TouchableOpacity
             key={product.id}
             onPress={() => goToProduct(product)}
@@ -155,5 +147,8 @@ export default Products;
           </TouchableOpacity>
         ))}
       </StyledScrollView>
+    </Container>
+  );
+};
 
-*/
+export default Products;
