@@ -18,6 +18,15 @@ export const fetchOrderById = async (id: string) => {
   }
 };
 
+export const fetchOrders = async () => {
+  try {
+    const response = await api.get(`/orders`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+  }
+};
+
 // TODO, waiting for backend
 export const fetchCategories = async () => {
   try {

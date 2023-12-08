@@ -9,7 +9,7 @@ import { convertISOToFormattedDate, formatPrice } from "../../config/helpers";
 import { OrderProduct } from "../../types/OrderProduct";
 
 const Container = styled.View`
-  display: flex;
+  flex: 1;
   flex-direction: column;
   padding-top: 60px;
 `;
@@ -49,6 +49,10 @@ const ProductBox = styled.View`
   border-bottom-width: 1px;
 `;
 
+const StyledScrollView = styled.ScrollView`
+  flex: 1;
+`;
+
 const HistoryOrder: React.FC<HistoryOrderProps> = ({ navigation, route }) => {
   const { id } = route.params;
   const { selectedOrder, status } = useSelectedOrder(id);
@@ -76,58 +80,60 @@ const HistoryOrder: React.FC<HistoryOrderProps> = ({ navigation, route }) => {
           {selectedOrder.name}
         </Text>
       </TopBar>
-
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
-          Creator
-        </Text>
-        <Text fontSize="subheading">{selectedOrder.creator.name}</Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
-          Created at
-        </Text>
-        <Text fontSize="subheading">
-          {convertISOToFormattedDate(selectedOrder.createdAt)}
-        </Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
-          Closed at
-        </Text>
-        <Text fontSize="subheading">
-          {convertISOToFormattedDate(selectedOrder.closedAt)}
-        </Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
-          Total price
-        </Text>
-        <Text fontSize="subheading">
-          {formatPrice(selectedOrder.closedTotal)}
-        </Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
-          Products
-        </Text>
-        {selectedOrder.OrderProduct.map((product: OrderProduct) => (
-          <ProductContainer key={product.productId}>
-            <ProductBox>
-              <Text fontSize="subheading" color="textSecondary">
-                {product.product.name}
-              </Text>
-              <Text fontSize="subheading" color="textSecondary">
-                {product.amount}
-                {" x "}
-                {formatPrice(product.product.price)}
-                {" = "}
-                {formatPrice(product.closedTotal)}
-              </Text>
-            </ProductBox>
-          </ProductContainer>
-        ))}
-      </InfoBox>
+      <StyledScrollView>
+        <InfoBox>
+          <Text fontSize="subheading" fontWeight="bold">
+            Creator
+          </Text>
+          <Text fontSize="subheading">{selectedOrder.creator.name}</Text>
+        </InfoBox>
+        <InfoBox>
+          <Text fontSize="subheading" fontWeight="bold">
+            Created at
+          </Text>
+          <Text fontSize="subheading">
+            {convertISOToFormattedDate(selectedOrder.createdAt)}
+          </Text>
+        </InfoBox>
+        <InfoBox>
+          <Text fontSize="subheading" fontWeight="bold">
+            Closed at
+          </Text>
+          <Text fontSize="subheading">
+            {convertISOToFormattedDate(selectedOrder.closedAt)}
+          </Text>
+        </InfoBox>
+        <InfoBox>
+          <Text fontSize="subheading" fontWeight="bold">
+            Total price
+          </Text>
+          <Text fontSize="subheading">
+            {formatPrice(selectedOrder.closedTotal)}
+          </Text>
+        </InfoBox>
+        <InfoBox>
+          <Text fontSize="subheading" fontWeight="bold">
+            Products
+          </Text>
+          {selectedOrder.OrderProduct &&
+            selectedOrder.OrderProduct.map((product: OrderProduct) => (
+              <ProductContainer key={product.productId}>
+                <ProductBox>
+                  <Text fontSize="subheading" color="textSecondary">
+                    {product.product.name}
+                  </Text>
+                  <Text fontSize="subheading" color="textSecondary">
+                    {product.amount}
+                    {" x "}
+                    {formatPrice(product.product.price)}
+                    {" = "}
+                    {formatPrice(product.closedTotal)}
+                  </Text>
+                </ProductBox>
+              </ProductContainer>
+            ))}
+        </InfoBox>
+      </StyledScrollView>
     </Container>
   );
 };

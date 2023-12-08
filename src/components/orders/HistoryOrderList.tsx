@@ -60,6 +60,7 @@ const HistoryOrderList: React.FC<HistoryProps> = ({ navigation }) => {
       <StyledScrollView>
         {items.map((order: Order) => (
           <ListItemContainer
+            activeOpacity={1}
             key={order.id}
             onPress={() => goToHistoryOrder(order.id)}
           >
