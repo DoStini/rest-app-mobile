@@ -27,11 +27,10 @@ export const fetchOrders = async () => {
   }
 };
 
-// TODO, waiting for backend
 export const fetchCategories = async () => {
   try {
-    //const response = await api.get("/categories");
-    return [];
+    const response = await api.get("/products");
+    return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
   }
