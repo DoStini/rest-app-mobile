@@ -41,7 +41,7 @@ const ItemRow = styled.View`
   justify-content: space-between;
 `;
 
-const Home: React.FC = () => {
+const Home = () => {
   const { items, status, error } = useOrders();
 
   if (status === "loading" || status === "idle") {

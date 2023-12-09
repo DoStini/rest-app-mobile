@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { fetchHistory } from "../store/historySlice";
 import { AppDispatch, RootState } from "../store/store";
 
@@ -9,13 +9,17 @@ const useHistory = () => {
   const status = useSelector((state: RootState) => state.history.status);
   const error = useSelector((state: RootState) => state.history.error);
 
+  const refresh = useCallback(() => {
+    dispatch(fetchHistory());
+  }, [dispatch, fetchHistory]);
+
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchHistory());
+      refresh();
     }
-  }, [dispatch, status]);
+  }, [refresh, status]);
 
-  return { items, status, error };
+  return { items, status, error, refresh };
 };
 
 export default useHistory;
