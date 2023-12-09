@@ -90,7 +90,7 @@ const PopupModal = ({ visible, onClose, categories }: PopupProps) => {
                 Add new product
               </Text>
               <TouchableOpacity activeOpacity={1} onPress={closePopup}>
-                <AntDesign name="close" size={24} color="black" />
+                <AntDesign name="close" size={28} color="black" />
               </TouchableOpacity>
             </TopContainer>
             <StyledInputContainer>
@@ -121,7 +121,7 @@ const PopupModal = ({ visible, onClose, categories }: PopupProps) => {
                 value={selectedCategory}
                 items={categories.map((category) => ({
                   label: category.name,
-                  value: category.id,
+                  value: category.id.toString(),
                 }))}
                 setOpen={setOpen}
                 setValue={setSelectedCategory}

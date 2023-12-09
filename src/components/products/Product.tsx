@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import Text from "../Text";
 import { ProductProps } from "../../types/StackTypes";
 import { MaterialIcons } from "@expo/vector-icons";
+import { formatPrice } from "../../config/helpers";
 
 const Container = styled.View`
   display: flex;
@@ -29,7 +30,6 @@ const InfoBox = styled.View`
 
 const Product: React.FC<ProductProps> = ({ navigation, route }) => {
   const { product } = route.params;
-  //console.log(product);
 
   const goToProducts = () => {
     navigation.navigate("Products");
@@ -40,11 +40,11 @@ const Product: React.FC<ProductProps> = ({ navigation, route }) => {
       <TopBar>
         <MaterialIcons
           name="arrow-back"
-          size={30}
+          size={36}
           color="black"
           onPress={goToProducts}
         />
-        <Text fontSize="heading" fontWeight="bold" shadow={true}>
+        <Text fontSize="heading" fontWeight="bold">
           Product details
         </Text>
       </TopBar>
@@ -58,16 +58,13 @@ const Product: React.FC<ProductProps> = ({ navigation, route }) => {
         <Text fontSize="subheading" fontWeight="bold">
           Price:
         </Text>
-        <Text fontSize="subheading">{product.price}</Text>
+        <Text fontSize="subheading">{formatPrice(product.price)}</Text>
       </InfoBox>
       <InfoBox>
         <Text fontSize="subheading" fontWeight="bold">
           Description:
         </Text>
-        <Text fontSize="subheading">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at
-          dolor velit.
-        </Text>
+        <Text fontSize="subheading">{product.manual}</Text>
       </InfoBox>
     </Container>
   );

@@ -41,7 +41,7 @@ const InputContainer = styled.View`
 const FilterButton = styled(TouchableOpacity)`
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: ${(props) =>
+  background-color: ${(props: any) =>
     props.selected ? theme.colors.selectedColor : theme.colors.unSelectedColor};
   margin: 5px;
 `;
@@ -55,6 +55,7 @@ const FilterContainer = styled.View`
 const StyledScrollView = styled.ScrollView`
   margin-top: 15px;
   flex: 1;
+  margin-bottom: 10px;
   width: 90%;
 `;
 
@@ -121,7 +122,7 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <Container>
         <PlusIcon activeOpacity={1} onPress={openModal}>
-          <AntDesign name="plus" size={32} color="black" />
+          <AntDesign name="plus" size={36} color="black" />
         </PlusIcon>
         <PopupModal
           visible={modalVisible}
