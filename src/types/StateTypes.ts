@@ -1,6 +1,6 @@
 import { Category } from "./Category";
 import { Order } from "./Order";
-import { Item } from "./Item";
+import { Table } from "./Table";
 
 export interface CategoriesState {
   items: Category[];
@@ -21,7 +21,7 @@ export interface SelecterOrderState {
 }
 
 export interface OrdersState {
-  items: Item[];
-  status: "idle" | "loading" | "succeeded" | "failed";
+  tables: Table[] | null;
+  status: "idle" | "loading" | "succeeded" | "failed" | "revalidating";
   error: string | null;
 }

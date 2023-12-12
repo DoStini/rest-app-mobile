@@ -1,11 +1,12 @@
 import styled from "styled-components/native";
-import Text from "../Text";
-import useOrders from "../../hooks/useOrders";
-import LoadingComponent from "../LoadingComponent";
-import theme from "../../theme";
-import { TouchableOpacity } from "react-native";
+import Text from "../../Text";
+import useOrders from "../../../hooks/useOrders";
+import LoadingComponent from "../../LoadingComponent";
+import theme from "../../../theme";
+import { TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Table } from "../../types/Table";
+import { Table } from "../../../types/Table";
+import ContainerStyle from "../../../styles/Containers";
 
 const ContentContainer = styled.View`
   display: flex;
@@ -19,7 +20,6 @@ const StyledScrollView = styled.ScrollView`
   margin-top: 20px;
   width: 90%;
   height: 90%;
-  border: 1px solid ${theme.colors.borderColor};
 `;
 
 const ListItemContainer = styled(TouchableOpacity)`
@@ -49,7 +49,7 @@ const Home = () => {
   }
 
   return (
-    <ContentContainer>
+    <View style={ContainerStyle.contentContainer}>
       <Text fontSize="heading" fontWeight="bold" shadow={true}>
         Home
       </Text>
@@ -92,7 +92,7 @@ const Home = () => {
               )
           )}
       </StyledScrollView>
-    </ContentContainer>
+    </View>
   );
 };
 

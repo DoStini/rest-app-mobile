@@ -1,10 +1,10 @@
 import { OrderProduct } from "./OrderProduct";
-import { Table } from "./Table";
 import { Creator } from "./Creator";
+import { SimpleTable } from "./Table";
 
 export type Order = {
   OrderProduct: OrderProduct[];
-  Table: Table;
+  Table: SimpleTable;
   closed: boolean;
   closedAt: string;
   closedTotal: string;
