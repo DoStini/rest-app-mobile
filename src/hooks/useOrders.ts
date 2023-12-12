@@ -6,7 +6,7 @@ import { fetchOrders } from "../store/ordersSlice";
 
 const useOrders = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const items = useSelector((state: RootState) => state.orders.tables);
+  const tables = useSelector((state: RootState) => state.orders.tables);
   const status = useSelector((state: RootState) => state.orders.status);
   const error = useSelector((state: RootState) => state.orders.error);
 
@@ -14,7 +14,7 @@ const useOrders = () => {
     refreshInterval: 2000,
   });
 
-  return { items, status, error };
+  return { tables, status, error };
 };
 
 export default useOrders;

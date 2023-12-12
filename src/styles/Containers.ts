@@ -17,6 +17,11 @@ const ContainerStyle = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.textSecondary,
   },
+  scrollView: {
+    marginTop: 20,
+    width: "90%",
+    height: "90%",
+  },
 });
 
 export default ContainerStyle;

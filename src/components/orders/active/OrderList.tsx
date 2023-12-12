@@ -7,6 +7,7 @@ import { TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Table } from "../../../types/Table";
 import ContainerStyle from "../../../styles/Containers";
+import { ScrollView } from "react-native-gesture-handler";
 
 const ContentContainer = styled.View`
   display: flex;
@@ -14,12 +15,6 @@ const ContentContainer = styled.View`
   justify-content: flex-end;
   align-items: center;
   padding-top: 50px;
-`;
-
-const StyledScrollView = styled.ScrollView`
-  margin-top: 20px;
-  width: 90%;
-  height: 90%;
 `;
 
 const ListItemContainer = styled(TouchableOpacity)`
@@ -35,14 +30,8 @@ const ItemTitle = styled.View`
   margin-bottom: 10px;
 `;
 
-const ItemRow = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
 const Home = () => {
-  const { items, status, error } = useOrders();
+  const { tables, status, error } = useOrders();
 
   if (status === "loading" || status === "idle") {
     return <LoadingComponent />;
@@ -54,44 +43,48 @@ const Home = () => {
         Home
       </Text>
 
-      <StyledScrollView>
-        {items &&
-          items.map(
-            (item: Table) =>
-              item.orders &&
-              item.orders.length > 0 && (
-                <React.Fragment key={item.id}>
-                  <Text fontSize="heading" fontWeight="bold">
-                    {item.name}
-                  </Text>
+      <ScrollView style={ContainerStyle.scrollView}>
+        {tables?.map(
+          (table: Table) =>
+            table.orders?.length > 0 && (
+              <View style={{ marginBottom: 10 }} key={table.id}>
+                <Text fontSize="heading" fontWeight="bold">
+                  {table.name}
+                </Text>
 
-                  {item.orders.map((order) => (
-                    <React.Fragment key={order.id}>
-                      <ListItemContainer activeOpacity={1}>
-                        <ItemTitle>
-                          <Text
-                            fontSize="subheading"
-                            fontWeight="bold"
-                            color="textSecondary"
-                          >
-                            {order.name}
-                          </Text>
-                        </ItemTitle>
-                        <ItemRow>
-                          <Text fontSize="body" color="textSecondary">
-                            Creator:
-                          </Text>
-                          <Text fontSize="body" color="textSecondary">
-                            {order.creator.name}
-                          </Text>
-                        </ItemRow>
-                      </ListItemContainer>
-                    </React.Fragment>
-                  ))}
-                </React.Fragment>
-              )
-          )}
-      </StyledScrollView>
+                {table.orders.map((order) => (
+                  <React.Fragment key={order.id}>
+                    <ListItemContainer activeOpacity={1}>
+                      <ItemTitle>
+                        <Text
+                          fontSize="medium"
+                          fontWeight="semibold"
+                          color="textSecondary"
+                        >
+                          {order.name}
+                        </Text>
+                      </ItemTitle>
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          flexWrap: "wrap",
+                        }}
+                      >
+                        <Text fontSize="small" color="textSecondary">
+                          Responsible:{" "}
+                        </Text>
+                        <Text fontSize="small" color="textSecondary">
+                          {order.creator.name}
+                        </Text>
+                      </View>
+                    </ListItemContainer>
+                  </React.Fragment>
+                ))}
+              </View>
+            )
+        )}
+      </ScrollView>
     </View>
   );
 };

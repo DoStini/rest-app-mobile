@@ -13,7 +13,9 @@ const theme = {
     error: "#d73a4a",
   },
   fontSizes: {
+    small: 14,
     body: 16,
+    medium: 18,
     subheading: 22,
     heading: 30,
   },
@@ -21,8 +23,15 @@ const theme = {
     main: "System",
   },
   fontWeights: {
+    thin: "100",
+    extralight: "200",
+    light: "300",
     normal: "400",
+    medium: "500",
+    semibold: "600",
     bold: "700",
+    extrabold: "800",
+    black: "900",
   },
 };
 
