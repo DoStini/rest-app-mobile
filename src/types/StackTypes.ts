@@ -1,6 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
 import { Product } from "./Product";
+import { Category } from "./Category";
 
 type HistoryStackNavigatorParamList = {
   HistoryOrderList: undefined;
@@ -28,6 +29,7 @@ export type HistoryOrderProps = {
 type ProductStackNavigatorParamList = {
   Products: undefined;
   Product: { product: Product };
+  NewProduct: { categories: Category[] };
 };
 
 type ProductsNavigationProp = StackNavigationProp<
@@ -38,6 +40,10 @@ type ProductNavigationProp = StackNavigationProp<
   ProductStackNavigatorParamList,
   "Product"
 >;
+type NewProductNavigationProp = StackNavigationProp<
+  ProductStackNavigatorParamList,
+  "NewProduct"
+>;
 
 export type ProductsProps = {
   navigation: ProductsNavigationProp;
@@ -46,4 +52,9 @@ export type ProductsProps = {
 export type ProductProps = {
   navigation: ProductNavigationProp;
   route: RouteProp<ProductStackNavigatorParamList, "Product">;
+};
+
+export type NewProductProps = {
+  navigation: NewProductNavigationProp;
+  route: RouteProp<ProductStackNavigatorParamList, "NewProduct">;
 };

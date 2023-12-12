@@ -15,7 +15,6 @@ import { Category } from "../../types/Category";
 import useCategories from "../../hooks/useCategories";
 import LoadingComponent from "../LoadingComponent";
 import { formatPrice } from "../../config/helpers";
-import PopupModal from "../PopupModal";
 
 const Container = styled.View`
   flex: 1;
@@ -77,14 +76,10 @@ const PlusIcon = styled(TouchableOpacity)`
   right: 20px;
 `;
 
-const Products: React.FC<ProductsProps> = ({ navigation }) => {
+const Products = ({ navigation }: ProductsProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
   const { categories, status, error } = useCategories();
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
 
   // Set the first category as a default filter
   useEffect(() => {
@@ -118,17 +113,16 @@ const Products: React.FC<ProductsProps> = ({ navigation }) => {
     navigation.navigate("Product", { product: product });
   };
 
+  const goToNewProduct = (categories: Category[]) => {
+    navigation.navigate("NewProduct", { categories: categories });
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <Container>
-        <PlusIcon activeOpacity={1} onPress={openModal}>
+        <PlusIcon activeOpacity={1} onPress={() => goToNewProduct(categories)}>
           <AntDesign name="plus" size={36} color="black" />
         </PlusIcon>
-        <PopupModal
-          visible={modalVisible}
-          onClose={closeModal}
-          categories={categories}
-        ></PopupModal>
 
         <Text fontSize="heading" fontWeight="bold">
           Products

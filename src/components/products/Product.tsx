@@ -28,7 +28,7 @@ const InfoBox = styled.View`
   border-bottom-width: 1px;
 `;
 
-const Product: React.FC<ProductProps> = ({ navigation, route }) => {
+const Product = ({ navigation, route }: ProductProps) => {
   const { product } = route.params;
 
   const goToProducts = () => {
