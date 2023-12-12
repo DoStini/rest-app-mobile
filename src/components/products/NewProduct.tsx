@@ -15,6 +15,7 @@ import * as Yup from "yup";
 
 const Container = styled.View`
   display: flex;
+  flex: 1;
   flex-direction: column;
   padding-top: 60px;
 `;
@@ -37,7 +38,7 @@ const InputContainer = styled.View`
 
 const StyledInputItem = styled.View`
   z-index: 1;
-  padding-top: 20px;
+  margin-top: 30px;
   width: 90%;
 `;
 
@@ -55,7 +56,7 @@ const StyledButton = styled(TouchableOpacity)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 40px;
   padding: 10px 15px;
   border-radius: 10px;
 `;
@@ -75,39 +76,37 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
   };
 
   return (
-    <Container>
-      <TopBar>
-        <MaterialIcons
-          name="arrow-back"
-          size={36}
-          color="black"
-          onPress={goToProducts}
-        />
-        <Text fontSize="heading" fontWeight="bold">
-          New product
-        </Text>
-      </TopBar>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Container>
+        <TopBar>
+          <MaterialIcons
+            name="arrow-back"
+            size={36}
+            color="black"
+            onPress={goToProducts}
+          />
+          <Text fontSize="heading" fontWeight="bold">
+            New product
+          </Text>
+        </TopBar>
 
-      <Formik
-        initialValues={{ name: "", price: "", category: "" }}
-        validationSchema={ProductSchema}
-        onSubmit={(values) => {
-          console.log(values);
-        }}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          setFieldValue,
-          errors,
-          touched,
-          values,
-        }) => (
-          <TouchableWithoutFeedback
-            onPress={Keyboard.dismiss}
-            accessible={false}
-          >
+        <Formik
+          initialValues={{ name: "", price: "", category: "" }}
+          validationSchema={ProductSchema}
+          onSubmit={(values) => {
+            console.log(values);
+            console.log("TODO add api call to the backend when available");
+          }}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            errors,
+            touched,
+            values,
+          }) => (
             <InputContainer>
               <StyledInputItem>
                 <Text fontSize="subheading" fontWeight="bold">
@@ -186,10 +185,10 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
                 </Text>
               </StyledButton>
             </InputContainer>
-          </TouchableWithoutFeedback>
-        )}
-      </Formik>
-    </Container>
+          )}
+        </Formik>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 
