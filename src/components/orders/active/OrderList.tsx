@@ -8,14 +8,7 @@ import React from "react";
 import { Table } from "../../../types/Table";
 import ContainerStyle from "../../../styles/Containers";
 import { ScrollView } from "react-native-gesture-handler";
-
-const ContentContainer = styled.View`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  padding-top: 50px;
-`;
+import { OrderListProps } from "../../../types/stack/OrderStack";
 
 const ListItemContainer = styled(TouchableOpacity)`
   display: flex;
@@ -30,7 +23,7 @@ const ItemTitle = styled.View`
   margin-bottom: 10px;
 `;
 
-const Home = () => {
+const OrderList = ({ navigation }: OrderListProps) => {
   const { tables, status, error } = useOrders();
 
   if (status === "loading" || status === "idle") {
@@ -39,11 +32,11 @@ const Home = () => {
 
   return (
     <View style={ContainerStyle.contentContainer}>
-      <Text fontSize="heading" fontWeight="bold" shadow={true}>
-        Home
+      <Text fontSize="heading" fontWeight="bold">
+        Orders
       </Text>
 
-      <ScrollView style={ContainerStyle.scrollView}>
+      <ScrollView style={{ marginTop: 20 }}>
         {tables?.map(
           (table: Table) =>
             table.orders?.length > 0 && (
@@ -54,7 +47,14 @@ const Home = () => {
 
                 {table.orders.map((order) => (
                   <React.Fragment key={order.id}>
-                    <ListItemContainer activeOpacity={1}>
+                    <ListItemContainer
+                      activeOpacity={1}
+                      onPress={() =>
+                        navigation.navigate("Order", {
+                          id: String(order.id),
+                        })
+                      }
+                    >
                       <ItemTitle>
                         <Text
                           fontSize="medium"
@@ -89,4 +89,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default OrderList;

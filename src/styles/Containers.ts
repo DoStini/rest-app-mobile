@@ -5,9 +5,8 @@ const ContainerStyle = StyleSheet.create({
   contentContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
     paddingTop: 50,
+    paddingHorizontal: 20,
   },
   listItemContainer: {
     display: "flex",
@@ -19,8 +18,11 @@ const ContainerStyle = StyleSheet.create({
   },
   scrollView: {
     marginTop: 20,
-    width: "90%",
-    height: "90%",
+  },
+  rowSpaceBetween: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
 });
 

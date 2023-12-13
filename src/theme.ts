@@ -17,7 +17,7 @@ const theme = {
     body: 16,
     medium: 18,
     subheading: 22,
-    heading: 30,
+    heading: 26,
   },
   fonts: {
     main: "System",
