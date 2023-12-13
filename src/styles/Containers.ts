@@ -24,6 +24,10 @@ const ContainerStyle = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+  },
 });
 
 export default ContainerStyle;

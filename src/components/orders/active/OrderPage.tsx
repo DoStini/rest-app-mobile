@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import useLiveOrder from "../../../hooks/useLiveOrder";
 import { OrderProps } from "../../../types/stack/OrderStack";
 import LoadingComponent from "../../LoadingComponent";
@@ -8,12 +8,9 @@ import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import theme from "../../../theme";
-
-const Divider = styled.View`
-  border-bottom-width: 1px;
-  border-bottom-color: ${theme.colors.barColor};
-  width: 100%;
-`;
+import NumberInput from "../../NumberInput";
+import Divider from "../../Divider";
+import { OrderProduct } from "../../../types/OrderProduct";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -22,12 +19,67 @@ const Styles = StyleSheet.create({
   },
 });
 
+const ProductLine = ({ product }: { product: OrderProduct }) => {
+  const [amount, setAmount] = React.useState(product.amount);
+  return (
+    <View style={ContainerStyle.listItemContainer}>
+      <View style={[ContainerStyle.rowSpaceBetween, { alignItems: "center" }]}>
+        <Text fontSize="small" fontWeight="light" color="textSecondary">
+          {product.product.name}
+        </Text>
+
+        <View style={ContainerStyle.row}>
+          <NumberInput value={amount} setValue={setAmount} />
+
+          <Pressable
+            style={{ paddingLeft: 10 }}
+            onPress={() => console.log("Add comment")}
+          >
+            <MaterialIcons
+              name="edit"
+              color={theme.colors.textSecondary}
+              size={26}
+              onPress={() => console.log("Delete product")}
+            />
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const Products = ({ products }: { products: OrderProduct[] }) => {
+  return (
+    <View>
+      <View style={[ContainerStyle.rowSpaceBetween, { paddingBottom: 15 }]}>
+        <Text fontSize="medium" fontWeight="bold">
+          Products
+        </Text>
+        <MaterialIcons
+          name="add-circle-outline"
+          size={30}
+          onPress={() => console.log("Add product")}
+        />
+      </View>
+
+      {products.map((product) => (
+        <ProductLine product={product} key={product.productId} />
+      ))}
+    </View>
+  );
+};
+
 const OrderPage = ({ navigation, route }: OrderProps) => {
   const { id } = route.params;
   const { order, status, error } = useLiveOrder(id);
 
   if (status === "idle") {
     return <LoadingComponent />;
+  }
+
+  if (!order) {
+    navigation.navigate("OrderList");
+    return null;
   }
 
   return (
@@ -40,9 +92,9 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
           onPress={() => navigation.navigate("OrderList")}
         />
         <Text fontSize="heading" fontWeight="medium">
-          {order?.Table.name}
+          {order.Table.name}
           {", "}
-          {order?.name}
+          {order.name}
         </Text>
       </View>
 
@@ -53,8 +105,12 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
           Responsible:{" "}
         </Text>
         <Text fontSize="body" color="textPrimary">
-          {order?.creator.name}
+          {order.creator.name}
         </Text>
+
+        <Divider />
+
+        <Products products={order.OrderProduct} />
       </View>
     </View>
   );
