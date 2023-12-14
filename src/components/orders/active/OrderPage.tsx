@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { BackHandler, Pressable, StyleSheet, View } from "react-native";
 import useLiveOrder from "../../../hooks/useLiveOrder";
 import { OrderProps } from "../../../types/stack/OrderStack";
 import LoadingComponent from "../../LoadingComponent";
@@ -13,6 +13,7 @@ import Divider from "../../Divider";
 import { OrderProduct } from "../../../types/OrderProduct";
 import {
   deleteOrderProduct,
+  resetOrderState,
   updateOrderProduct,
 } from "../../../store/selectedOrderSlice";
 import { useDispatch } from "react-redux";
@@ -112,14 +113,25 @@ const Products = ({ products }: { products: OrderProduct[] }) => {
 const OrderPage = ({ navigation, route }: OrderProps) => {
   const { id } = route.params;
   const { order, status, updating, refresh, error } = useLiveOrder(id);
+  const dispatch = useDispatch<AppDispatch>();
 
-  if (status === "idle") {
-    return <LoadingComponent />;
-  }
+  // If we navigate away from the page, we want to reset the order state
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      dispatch(resetOrderState());
+    });
 
-  if (!order) {
+    return unsubscribe;
+  }, [navigation]);
+
+  if (error) {
+    console.error(error);
     navigation.navigate("OrderList");
     return null;
+  }
+
+  if (status === "idle" || !order) {
+    return <LoadingComponent />;
   }
 
   return (

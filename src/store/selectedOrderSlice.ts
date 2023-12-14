@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { SelecterOrderState } from "../types/StateTypes";
 import * as service from "../services/orderService";
 
@@ -38,6 +38,8 @@ export const updateOrderProduct = createAsyncThunk(
   }
 );
 
+export const resetOrderState = createAction("orders/resetOrderState");
+
 const initialState: SelecterOrderState = {
   selectedOrder: null,
   status: "idle",
@@ -54,6 +56,13 @@ const selectedOrderSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(resetOrderState, (state, action) => {
+      state.selectedOrder = initialState.selectedOrder;
+      state.status = initialState.status;
+      state.updateStatus = initialState.updateStatus;
+      state.error = initialState.error;
+    });
+
     builder.addCase(fetchOrder.pending, (state, action) => {
       state.status = "loading";
     });
