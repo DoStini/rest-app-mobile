@@ -22,10 +22,7 @@ export default function useTablesInfo() {
   }, [dispatch]);
 
   return {
-    tables: [
-      { id: 1, name: "Mesa 1" },
-      { id: 2, name: "Mesa 2" },
-    ],
+    tables,
     status,
     error,
   };

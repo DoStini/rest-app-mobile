@@ -141,6 +141,7 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
         title={`${order.Table.name}, ${order.name}`}
         goBack={() => navigation.navigate("OrderList")}
       />
+
       <Divider />
 
       <View style={Styles.rowContainer}>
@@ -150,11 +151,11 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
         <Text fontSize="body" color="textPrimary">
           {order.creator.name}
         </Text>
-
-        <Divider />
-
-        <Products products={order.OrderProduct} />
       </View>
+
+      <Divider />
+
+      <Products products={order.OrderProduct} />
     </View>
   );
 };

@@ -40,6 +40,15 @@ export const updateOrderProduct = async (
   } catch (error) {}
 };
 
+export const createOrder = async (name: string, tableId: number) => {
+  try {
+    const response = await api.post("/orders", { orderName: name, tableId });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating order:", error);
+  }
+};
+
 // TODO, waiting for backend
 export const fetchCategories = async () => {
   try {
