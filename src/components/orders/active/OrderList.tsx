@@ -3,12 +3,14 @@ import Text from "../../Text";
 import useOrders from "../../../hooks/useOrders";
 import LoadingComponent from "../../LoadingComponent";
 import theme from "../../../theme";
-import { TouchableOpacity, View } from "react-native";
+import { Pressable, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Table } from "../../../types/Table";
 import ContainerStyle from "../../../styles/Containers";
 import { ScrollView } from "react-native-gesture-handler";
 import { OrderListProps } from "../../../types/stack/OrderStack";
+import { MaterialIcons } from "@expo/vector-icons";
+import Header from "../../Header";
 
 const ListItemContainer = styled(TouchableOpacity)`
   display: flex;
@@ -32,9 +34,21 @@ const OrderList = ({ navigation }: OrderListProps) => {
 
   return (
     <View style={ContainerStyle.contentContainer}>
-      <Text fontSize="heading" fontWeight="bold">
-        Orders
-      </Text>
+      <Header
+        title="Orders"
+        rightButton={
+          <Pressable
+            onPress={() => navigation.navigate("CreateOrder")}
+            style={{ padding: 10 }}
+          >
+            <MaterialIcons
+              name="add-circle-outline"
+              size={30}
+              color={theme.colors.textPrimary}
+            />
+          </Pressable>
+        }
+      />
 
       <ScrollView style={{ marginTop: 20 }}>
         {tables?.map(

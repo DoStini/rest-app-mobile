@@ -3,6 +3,7 @@ import categoriesReducer from "./categoriesSlice";
 import historyReducer from "./historySlice";
 import selectedOrderReducer from "./selectedOrderSlice";
 import ordersReducer from "./ordersSlice";
+import system from "./system";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     history: historyReducer,
     selectedOrder: selectedOrderReducer,
     orders: ordersReducer,
+    system: system,
   },
 });
 

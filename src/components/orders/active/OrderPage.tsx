@@ -18,6 +18,7 @@ import {
 } from "../../../store/selectedOrderSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
+import Header from "../../Header";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -136,20 +137,10 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
   return (
     <View style={ContainerStyle.contentContainer}>
-      <View style={ContainerStyle.rowSpaceBetween}>
-        <MaterialIcons
-          name="arrow-back"
-          size={30}
-          color="black"
-          onPress={() => navigation.navigate("OrderList")}
-        />
-        <Text fontSize="heading" fontWeight="medium">
-          {order.Table.name}
-          {", "}
-          {order.name}
-        </Text>
-      </View>
-
+      <Header
+        title={`${order.Table.name}, ${order.name}`}
+        goBack={() => navigation.navigate("OrderList")}
+      />
       <Divider />
 
       <View style={Styles.rowContainer}>
