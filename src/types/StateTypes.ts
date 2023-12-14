@@ -17,6 +17,7 @@ export interface HistoryState {
 export interface SelecterOrderState {
   selectedOrder: Order | null;
   status: "idle" | "loading" | "succeeded" | "failed";
+  updateStatus: "idle" | "loading";
   error: string | null;
 }
 

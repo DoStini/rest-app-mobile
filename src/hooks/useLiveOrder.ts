@@ -9,13 +9,26 @@ const useLiveOrder = (orderId: string) => {
     (state: RootState) => state.selectedOrder.selectedOrder
   );
   const status = useSelector((state: RootState) => state.selectedOrder.status);
+  const updateStatus = useSelector(
+    (state: RootState) => state.selectedOrder.updateStatus
+  );
   const error = useSelector((state: RootState) => state.selectedOrder.error);
 
-  useSWR(`/orders/${orderId}`, () => dispatch(fetchOrder(orderId)), {
-    refreshInterval: 2000,
-  });
+  const { mutate } = useSWR(
+    `/orders/${orderId}`,
+    () => dispatch(fetchOrder(orderId)),
+    {
+      refreshInterval: 5000,
+    }
+  );
 
-  return { order, status, error };
+  return {
+    order,
+    status,
+    updating: updateStatus === "loading",
+    refresh: () => mutate(),
+    error,
+  };
 };
 
 export default useLiveOrder;

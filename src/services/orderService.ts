@@ -27,6 +27,19 @@ export const fetchOrders = async () => {
   }
 };
 
+export const updateOrderProduct = async (
+  orderId: string,
+  productId: string,
+  amount: number
+) => {
+  try {
+    const response = await api.post(`/orders/${orderId}/update/${productId}`, {
+      amount,
+    });
+    return response.data;
+  } catch (error) {}
+};
+
 // TODO, waiting for backend
 export const fetchCategories = async () => {
   try {

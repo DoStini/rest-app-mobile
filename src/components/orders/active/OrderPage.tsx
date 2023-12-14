@@ -4,13 +4,19 @@ import { OrderProps } from "../../../types/stack/OrderStack";
 import LoadingComponent from "../../LoadingComponent";
 import Text from "../../Text";
 import ContainerStyle from "../../../styles/Containers";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import theme from "../../../theme";
 import NumberInput from "../../NumberInput";
 import Divider from "../../Divider";
 import { OrderProduct } from "../../../types/OrderProduct";
+import {
+  deleteOrderProduct,
+  updateOrderProduct,
+} from "../../../store/selectedOrderSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -21,6 +27,35 @@ const Styles = StyleSheet.create({
 
 const ProductLine = ({ product }: { product: OrderProduct }) => {
   const [amount, setAmount] = React.useState(product.amount);
+  const dispatch = useDispatch<AppDispatch>();
+
+  // If another user updates the amount, we want to update it in the UI
+  useEffect(() => {
+    setAmount(product.amount);
+  }, [product.amount]);
+
+  const onFinishChanges = useCallback(
+    (value: number) => {
+      dispatch(
+        updateOrderProduct({
+          productId: String(product.productId),
+          orderId: String(product.orderId),
+          amount: value,
+        })
+      );
+    },
+    [dispatch, updateOrderProduct, product]
+  );
+
+  const onDelete = () => {
+    dispatch(
+      deleteOrderProduct({
+        productId: String(product.productId),
+        orderId: String(product.orderId),
+      })
+    );
+  };
+
   return (
     <View style={ContainerStyle.listItemContainer}>
       <View style={[ContainerStyle.rowSpaceBetween, { alignItems: "center" }]}>
@@ -29,7 +64,12 @@ const ProductLine = ({ product }: { product: OrderProduct }) => {
         </Text>
 
         <View style={ContainerStyle.row}>
-          <NumberInput value={amount} setValue={setAmount} />
+          <NumberInput
+            value={amount}
+            setValue={setAmount}
+            handleDelete={onDelete}
+            onFinished={onFinishChanges}
+          />
 
           <Pressable
             style={{ paddingLeft: 10 }}
@@ -71,7 +111,7 @@ const Products = ({ products }: { products: OrderProduct[] }) => {
 
 const OrderPage = ({ navigation, route }: OrderProps) => {
   const { id } = route.params;
-  const { order, status, error } = useLiveOrder(id);
+  const { order, status, updating, refresh, error } = useLiveOrder(id);
 
   if (status === "idle") {
     return <LoadingComponent />;
