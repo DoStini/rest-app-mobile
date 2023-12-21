@@ -1,18 +1,20 @@
-import { View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { OrderAddProps, OrderProps } from "../../../types/stack/OrderStack";
 import Header from "../../Header";
 import Divider from "../../Divider";
 import ContainerStyle from "../../../styles/Containers";
 import useLiveOrder from "../../../hooks/useLiveOrder";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import LoadingComponent from "../../LoadingComponent";
-import { ProductWithAmount } from "../../../types/Order";
+import { CategoryProducts, ProductWithAmount } from "../../../types/Order";
 import { MaterialIcons } from "@expo/vector-icons";
 import Text from "../../Text";
 import { OrderProduct } from "../../../types/OrderProduct";
 import { Product } from "../../../types/Product";
 import { ProductLine } from "./OrderPage";
 import useProductsInOrder from "../../../hooks/useProductsInOrder";
+import { Category } from "../../../types/Category";
+import theme from "../../../theme";
 
 const Products = ({
   navigation,
@@ -25,17 +27,6 @@ const Products = ({
 }) => {
   return (
     <View>
-      <View style={[ContainerStyle.rowSpaceBetween, { paddingBottom: 15 }]}>
-        <Text fontSize="medium" fontWeight="bold">
-          Products
-        </Text>
-        <MaterialIcons
-          name="add-circle-outline"
-          size={30}
-          onPress={() => navigation.navigate("Order/Add", { id })}
-        />
-      </View>
-
       {products.map((product) => {
         const orderProduct = {
           amount: product.orderProduct[0]?.amount || 0,
@@ -56,10 +47,64 @@ const Products = ({
   );
 };
 
+const SelectCategory = ({
+  category,
+  setCategory,
+  categories,
+}: {
+  category: number;
+  setCategory: React.Dispatch<React.SetStateAction<number>>;
+  categories: CategoryProducts[];
+}) => {
+  return (
+    <View style={[ContainerStyle.rowSpaceBetween, { marginBottom: 10 }]}>
+      {categories.map((cat) => (
+        <Pressable
+          key={cat.id}
+          onPress={() => setCategory(cat.id)}
+          style={[
+            ContainerStyle.listItemContainer,
+            {
+              backgroundColor:
+                category === cat.id
+                  ? theme.colors.backgroundPrimary
+                  : theme.colors.tertiary,
+              paddingVertical: 15,
+            },
+          ]}
+        >
+          <Text
+            key={cat.id}
+            fontSize="small"
+            color="textSecondary"
+            fontWeight={category === cat.id ? "bold" : "normal"}
+            onPress={() => setCategory(cat.id)}
+          >
+            {cat.name}
+          </Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+};
+
 export default function ProductsList({ navigation, route }: OrderAddProps) {
   const { id } = route.params;
 
   const { order, status, error } = useProductsInOrder(id);
+
+  const [category, setCategory] = useState(0);
+
+  useEffect(() => {
+    if (order?.categories) {
+      setCategory(order.categories[0].id);
+    }
+  }, [order?.categories?.length]);
+
+  const selectedCategory = useMemo(() => {
+    if (!order?.categories) return null;
+    return order.categories.find((cat) => cat.id === category);
+  }, [category, order]);
 
   if (error) {
     console.error(error);
@@ -80,13 +125,23 @@ export default function ProductsList({ navigation, route }: OrderAddProps) {
 
       <Divider />
 
-      {order?.categories?.[0]?.products ? (
+      {order.categories ? (
+        <SelectCategory
+          category={category}
+          setCategory={setCategory}
+          categories={order.categories}
+        />
+      ) : (
+        <LoadingComponent />
+      )}
+
+      {selectedCategory?.products && (
         <Products
           navigation={navigation}
           id={id}
-          products={order.categories[0].products}
+          products={selectedCategory.products}
         />
-      ) : null}
+      )}
     </View>
   );
 }

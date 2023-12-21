@@ -67,7 +67,13 @@ export const ProductLine = ({
   return (
     <View style={ContainerStyle.listItemContainer}>
       <View style={[ContainerStyle.rowSpaceBetween, { alignItems: "center" }]}>
-        <Text fontSize="small" fontWeight="light" color="textSecondary">
+        <Text
+          fontSize="small"
+          fontWeight="light"
+          color="textSecondary"
+          numberOfLines={1}
+          style={{ overflow: "hidden", flex: 1 }}
+        >
           {product.product.name}
         </Text>
 
