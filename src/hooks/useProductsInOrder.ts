@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import useSWR from "swr";
 import { AppDispatch, RootState } from "../store/store";
-import { fetchOrder } from "../store/selectedOrderSlice";
+import { fetchOrderWithProducts } from "../store/selectedOrderSlice";
 
-const useLiveOrder = (orderId: string, active: boolean) => {
+const useProductsInOrder = (orderId: string) => {
   const dispatch = useDispatch<AppDispatch>();
   const order = useSelector(
     (state: RootState) => state.selectedOrder.selectedOrder
@@ -15,8 +15,8 @@ const useLiveOrder = (orderId: string, active: boolean) => {
   const error = useSelector((state: RootState) => state.selectedOrder.error);
 
   const { mutate } = useSWR(
-    `/orders/${orderId}`,
-    active ? () => dispatch(fetchOrder(orderId)) : null,
+    `/orders/${orderId}/categories`,
+    () => dispatch(fetchOrderWithProducts(orderId)),
     {
       refreshInterval: 5000,
     }
@@ -31,4 +31,4 @@ const useLiveOrder = (orderId: string, active: boolean) => {
   };
 };
 
-export default useLiveOrder;
+export default useProductsInOrder;

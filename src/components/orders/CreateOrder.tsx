@@ -52,7 +52,6 @@ const CreateOrder = ({ navigation }: CreateOrderProps) => {
       })
       .catch((err) => {
         setCreationLoading(false);
-        console.log(err);
       });
   };
 

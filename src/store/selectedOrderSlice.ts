@@ -10,6 +10,14 @@ export const fetchOrder = createAsyncThunk(
   }
 );
 
+export const fetchOrderWithProducts = createAsyncThunk(
+  "orders/fetchOrderProducts",
+  async (orderId: string) => {
+    const response = await service.fetchOrderByIdWithProducts(orderId);
+    return response;
+  }
+);
+
 export const deleteOrderProduct = createAsyncThunk(
   "orders/deleteOrderProduct",
   async ({ orderId, productId }: { orderId: string; productId: string }) => {
@@ -71,6 +79,20 @@ const selectedOrderSlice = createSlice({
       state.selectedOrder = action.payload;
     });
     builder.addCase(fetchOrder.rejected, (state, action) => {
+      state.status = "failed";
+      state.error =
+        action.error.message ||
+        "An unknown error occurred when fetching history for this order.";
+    });
+
+    builder.addCase(fetchOrderWithProducts.pending, (state, action) => {
+      state.status = "loading";
+    });
+    builder.addCase(fetchOrderWithProducts.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      state.selectedOrder = action.payload;
+    });
+    builder.addCase(fetchOrderWithProducts.rejected, (state, action) => {
       state.status = "failed";
       state.error =
         action.error.message ||

@@ -1,6 +1,6 @@
 import { BackHandler, Pressable, StyleSheet, View } from "react-native";
 import useLiveOrder from "../../../hooks/useLiveOrder";
-import { OrderProps } from "../../../types/stack/OrderStack";
+import { OrderAddProps, OrderProps } from "../../../types/stack/OrderStack";
 import LoadingComponent from "../../LoadingComponent";
 import Text from "../../Text";
 import ContainerStyle from "../../../styles/Containers";
@@ -27,7 +27,7 @@ const Styles = StyleSheet.create({
   },
 });
 
-const ProductLine = ({ product }: { product: OrderProduct }) => {
+export const ProductLine = ({ product }: { product: OrderProduct }) => {
   const [amount, setAmount] = React.useState(product.amount);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -38,6 +38,7 @@ const ProductLine = ({ product }: { product: OrderProduct }) => {
 
   const onFinishChanges = useCallback(
     (value: number) => {
+      console.log("onFinishChanges", value);
       dispatch(
         updateOrderProduct({
           productId: String(product.productId),
@@ -90,7 +91,15 @@ const ProductLine = ({ product }: { product: OrderProduct }) => {
   );
 };
 
-const Products = ({ products }: { products: OrderProduct[] }) => {
+const Products = ({
+  navigation,
+  id,
+  products,
+}: {
+  navigation: OrderProps["navigation"] | OrderAddProps["navigation"];
+  id: string;
+  products: OrderProduct[];
+}) => {
   return (
     <View>
       <View style={[ContainerStyle.rowSpaceBetween, { paddingBottom: 15 }]}>
@@ -100,7 +109,7 @@ const Products = ({ products }: { products: OrderProduct[] }) => {
         <MaterialIcons
           name="add-circle-outline"
           size={30}
-          onPress={() => console.log("Add product")}
+          onPress={() => navigation.navigate("Order/Add", { id })}
         />
       </View>
 
@@ -113,17 +122,22 @@ const Products = ({ products }: { products: OrderProduct[] }) => {
 
 const OrderPage = ({ navigation, route }: OrderProps) => {
   const { id } = route.params;
-  const { order, status, updating, refresh, error } = useLiveOrder(id);
+
+  const isVisible = navigation.isFocused();
+
+  const { order, status, updating, refresh, error } = useLiveOrder(
+    id,
+    isVisible
+  );
   const dispatch = useDispatch<AppDispatch>();
 
-  // If we navigate away from the page, we want to reset the order state
   useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      dispatch(resetOrderState());
-    });
+    if (String(order?.id) === id) {
+      return;
+    }
 
-    return unsubscribe;
-  }, [navigation]);
+    dispatch(resetOrderState());
+  }, [order]);
 
   if (error) {
     console.error(error);
@@ -155,7 +169,7 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
       <Divider />
 
-      <Products products={order.OrderProduct} />
+      <Products products={order.OrderProduct} navigation={navigation} id={id} />
     </View>
   );
 };

@@ -29,7 +29,6 @@ const InfoBox = styled.View`
 
 const Product: React.FC<ProductProps> = ({ navigation, route }) => {
   const { product } = route.params;
-  //console.log(product);
 
   const goToProducts = () => {
     navigation.navigate("Products");

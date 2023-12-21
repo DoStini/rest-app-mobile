@@ -3,6 +3,7 @@ import OrderList from "./OrderList";
 import OrderPage from "./OrderPage";
 import { OrderStackNavigatorParamList } from "../../../types/stack/OrderStack";
 import CreateOrder from "../CreateOrder";
+import ProductsList from "./ProductsList";
 
 const Stack = createStackNavigator<OrderStackNavigatorParamList>();
 
@@ -14,6 +15,7 @@ const OrdersStack = () => {
       <Stack.Screen name="OrderList" component={OrderList} />
       <Stack.Screen name="Order" component={OrderPage} />
       <Stack.Screen name="CreateOrder" component={CreateOrder} />
+      <Stack.Screen name="Order/Add" component={ProductsList} />
     </Stack.Navigator>
   );
 };
