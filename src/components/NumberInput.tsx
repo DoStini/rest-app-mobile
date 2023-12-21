@@ -9,7 +9,7 @@ import _debounce from "lodash/debounce";
 type NumberInputProps = {
   value: number;
   setValue: React.Dispatch<React.SetStateAction<number>>;
-  handleDelete: () => void;
+  handleDelete: (() => void) | null;
   onFinished: (amount: number) => void;
 };
 
@@ -21,13 +21,15 @@ const NumberInput = ({
 }: NumberInputProps) => {
   const debounceFn = useCallback(_debounce(onFinished, 500), []);
 
+  const deletable = handleDelete != null;
+
   const handleIncrement = () => {
     setValue((old: number) => old + 1);
     debounceFn(value + 1);
   };
 
   const handleDecrement = useCallback(() => {
-    if (value === 1) {
+    if (value === 1 && deletable) {
       handleDelete();
       return;
     }
@@ -38,12 +40,16 @@ const NumberInput = ({
 
   return (
     <View style={ContainerStyle.rowSpaceBetween}>
-      <Pressable style={{ paddingHorizontal: 5 }} onPress={handleDecrement}>
-        {value === 1 ? (
+      <Pressable
+        style={{ paddingHorizontal: 5 }}
+        disabled={value === 0}
+        onPress={handleDecrement}
+      >
+        {value === 1 && deletable ? (
           <MaterialIcons color={theme.colors.error} name="delete" size={26} />
         ) : (
           <MaterialIcons
-            color={theme.colors.textSecondary}
+            color={value > 0 ? theme.colors.textSecondary : "transparent"}
             name="remove-circle-outline"
             size={26}
           />

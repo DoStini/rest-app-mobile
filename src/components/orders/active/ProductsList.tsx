@@ -44,7 +44,13 @@ const Products = ({
           orderId: Number(id),
           productId: product.id,
         } as OrderProduct;
-        return <ProductLine product={orderProduct} key={product.id} />;
+        return (
+          <ProductLine
+            product={orderProduct}
+            key={product.id}
+            deletable={false}
+          />
+        );
       })}
     </View>
   );

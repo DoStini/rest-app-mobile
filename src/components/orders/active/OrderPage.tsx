@@ -27,7 +27,13 @@ const Styles = StyleSheet.create({
   },
 });
 
-export const ProductLine = ({ product }: { product: OrderProduct }) => {
+export const ProductLine = ({
+  product,
+  deletable,
+}: {
+  product: OrderProduct;
+  deletable: boolean;
+}) => {
   const [amount, setAmount] = React.useState(product.amount);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -38,7 +44,6 @@ export const ProductLine = ({ product }: { product: OrderProduct }) => {
 
   const onFinishChanges = useCallback(
     (value: number) => {
-      console.log("onFinishChanges", value);
       dispatch(
         updateOrderProduct({
           productId: String(product.productId),
@@ -70,7 +75,7 @@ export const ProductLine = ({ product }: { product: OrderProduct }) => {
           <NumberInput
             value={amount}
             setValue={setAmount}
-            handleDelete={onDelete}
+            handleDelete={deletable ? onDelete : null}
             onFinished={onFinishChanges}
           />
 
@@ -82,7 +87,7 @@ export const ProductLine = ({ product }: { product: OrderProduct }) => {
               name="edit"
               color={theme.colors.textSecondary}
               size={26}
-              onPress={() => console.log("Delete product")}
+              onPress={() => console.log("Comment product")}
             />
           </Pressable>
         </View>
@@ -114,7 +119,7 @@ const Products = ({
       </View>
 
       {products.map((product) => (
-        <ProductLine product={product} key={product.productId} />
+        <ProductLine product={product} key={product.productId} deletable />
       ))}
     </View>
   );
