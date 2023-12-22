@@ -16,8 +16,8 @@ import {
   resetOrderState,
   updateOrderProduct,
 } from "../../../store/selectedOrderSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
 import Header from "../../Header";
 
 const Styles = StyleSheet.create({
@@ -37,8 +37,15 @@ export const ProductLine = ({
   const [amount, setAmount] = React.useState(product.amount);
   const dispatch = useDispatch<AppDispatch>();
 
+  const [updatingValue, setUpdatingValue] = useState(false);
+
+  const updatingAmount =
+    useSelector((state: RootState) => state.selectedOrder.updateStatus) ===
+      "loading" || updatingValue;
+
   // If another user updates the amount, we want to update it in the UI
   useEffect(() => {
+    if (updatingAmount) return;
     setAmount(product.amount);
   }, [product.amount]);
 
@@ -51,11 +58,14 @@ export const ProductLine = ({
           amount: value,
         })
       );
+
+      setUpdatingValue(false);
     },
     [dispatch, updateOrderProduct, product]
   );
 
   const onDelete = () => {
+    setUpdatingValue(false);
     dispatch(
       deleteOrderProduct({
         productId: String(product.productId),
@@ -83,6 +93,7 @@ export const ProductLine = ({
             setValue={setAmount}
             handleDelete={deletable ? onDelete : null}
             onFinished={onFinishChanges}
+            onStarted={() => setUpdatingValue(true)}
           />
 
           <Pressable

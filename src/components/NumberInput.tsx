@@ -11,6 +11,7 @@ type NumberInputProps = {
   setValue: React.Dispatch<React.SetStateAction<number>>;
   handleDelete: (() => void) | null;
   onFinished: (amount: number) => void;
+  onStarted: () => void;
 };
 
 const NumberInput = ({
@@ -18,6 +19,7 @@ const NumberInput = ({
   setValue,
   handleDelete,
   onFinished,
+  onStarted,
 }: NumberInputProps) => {
   const debounceFn = useCallback(_debounce(onFinished, 500), []);
 
@@ -25,6 +27,7 @@ const NumberInput = ({
 
   const handleIncrement = () => {
     setValue((old: number) => old + 1);
+    onStarted();
     debounceFn(value + 1);
   };
 
@@ -34,6 +37,7 @@ const NumberInput = ({
       return;
     }
 
+    onStarted();
     setValue((old: number) => old - 1);
     debounceFn(value - 1);
   }, [value]);
@@ -57,7 +61,12 @@ const NumberInput = ({
       </Pressable>
       <Text
         fontSize="small"
-        style={{ textAlignVertical: "center", marginHorizontal: 5 }}
+        style={{
+          textAlignVertical: "center",
+          textAlign: "right",
+          marginHorizontal: 5,
+          width: 20,
+        }}
         color="textSecondary"
       >
         {value}
