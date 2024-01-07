@@ -1,8 +1,8 @@
 import useSWR from "swr";
-import { getFetcher } from "../services/axios";
+import { getFetcher } from "../../services/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
-import { fetchOrders } from "../store/ordersSlice";
+import { AppDispatch, RootState } from "../../store/store";
+import { fetchOrders } from "../../store/ordersSlice";
 
 const useOrders = () => {
   const dispatch = useDispatch<AppDispatch>();

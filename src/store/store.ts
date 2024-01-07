@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import categoriesReducer from "./categoriesSlice";
 import historyReducer from "./historySlice";
 import selectedOrderReducer from "./selectedOrderSlice";
+import finishedOrderReducer from "./finishedOrderSlice";
 import ordersReducer from "./ordersSlice";
 import system from "./system";
 
@@ -10,6 +11,7 @@ export const store = configureStore({
     categories: categoriesReducer,
     history: historyReducer,
     selectedOrder: selectedOrderReducer,
+    finishedOrder: finishedOrderReducer,
     orders: ordersReducer,
     system: system,
   },

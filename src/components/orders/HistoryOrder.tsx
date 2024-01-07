@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import Text from "../Text";
 import { HistoryOrderProps } from "../../types/StackTypes";
 import { MaterialIcons } from "@expo/vector-icons";
-import useSelectedOrder from "../../hooks/useSelectedOrder";
+import useSelectedOrder from "../../hooks/orders/useSelectedOrder";
 import LoadingComponent from "../LoadingComponent";
 import theme from "../../theme";
 import { convertISOToFormattedDate, formatPrice } from "../../config/helpers";

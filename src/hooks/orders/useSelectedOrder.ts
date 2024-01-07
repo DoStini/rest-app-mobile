@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchOrder, clearSelectedOrder } from "../store/selectedOrderSlice";
-import { AppDispatch, RootState } from "../store/store";
+import { fetchOrder, clearSelectedOrder } from "../../store/selectedOrderSlice";
+import { AppDispatch, RootState } from "../../store/store";
 
 const useSelectedOrder = (orderId: string) => {
   const dispatch = useDispatch<AppDispatch>();

@@ -3,7 +3,7 @@ import { OrderAddProps, OrderProps } from "../../../types/stack/OrderStack";
 import Header from "../../Header";
 import Divider from "../../Divider";
 import ContainerStyle from "../../../styles/Containers";
-import useLiveOrder from "../../../hooks/useLiveOrder";
+import useLiveOrder from "../../../hooks/orders/useLiveOrder";
 import React, { useEffect, useMemo, useState } from "react";
 import LoadingComponent from "../../LoadingComponent";
 import { CategoryProducts, ProductWithAmount } from "../../../types/Order";

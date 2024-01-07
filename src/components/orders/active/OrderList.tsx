@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import Text from "../../Text";
-import useOrders from "../../../hooks/useOrders";
+import useOrders from "../../../hooks/orders/useOrders";
 import LoadingComponent from "../../LoadingComponent";
 import theme from "../../../theme";
 import { Pressable, TouchableOpacity, View } from "react-native";

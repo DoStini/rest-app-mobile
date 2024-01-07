@@ -1,5 +1,5 @@
 import { BackHandler, Pressable, StyleSheet, View } from "react-native";
-import useLiveOrder from "../../../hooks/useLiveOrder";
+import useLiveOrder from "../../../hooks/orders/useLiveOrder";
 import { OrderAddProps, OrderProps } from "../../../types/stack/OrderStack";
 import LoadingComponent from "../../LoadingComponent";
 import Text from "../../Text";
@@ -105,7 +105,6 @@ export const ProductLine = ({
               name="edit"
               color={theme.colors.textSecondary}
               size={26}
-              onPress={() => console.log("Comment product")}
             />
           </Pressable>
         </View>
@@ -198,6 +197,7 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
         <Button
           text="Send order to kitchen"
+          icon="print"
           onPress={() => navigation.navigate("Order/Print", { id })}
           style={{ marginTop: 20, marginBottom: 20 }}
         />
@@ -205,6 +205,7 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
         <Button
           text="Close order"
           onPress={() => navigation.navigate("Order/Print", { id })}
+          icon="shopping-cart"
           style={{ backgroundColor: theme.colors.error, marginBottom: 20 }}
         />
       </ScrollView>

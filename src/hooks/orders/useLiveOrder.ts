@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import useSWR from "swr";
-import { AppDispatch, RootState } from "../store/store";
-import { fetchOrder } from "../store/selectedOrderSlice";
+import { AppDispatch, RootState } from "../../store/store";
+import { fetchOrder } from "../../store/selectedOrderSlice";
 
 const useLiveOrder = (orderId: string, active: boolean) => {
   const dispatch = useDispatch<AppDispatch>();

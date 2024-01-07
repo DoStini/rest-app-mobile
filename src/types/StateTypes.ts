@@ -21,6 +21,12 @@ export interface SelecterOrderState {
   error: string | null;
 }
 
+export type FininshedOrderState = {
+  order: Order | null;
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
+};
+
 export interface OrdersState {
   tables: Table[] | null;
   status: "idle" | "loading" | "succeeded" | "failed" | "revalidating";

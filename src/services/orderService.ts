@@ -18,6 +18,27 @@ export const fetchOrderById = async (id: string) => {
   }
 };
 
+export const fetchPrintableOrderById = async (id: string) => {
+  try {
+    const response = await api.get(`/orders/${id}/request`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching order:", error);
+  }
+};
+
+export const printOrderById = async (
+  id: string,
+  amounts: { productId: number; amount: number }[]
+) => {
+  try {
+    const response = await api.post(`/orders/${id}/request`, amounts);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching order:", error);
+  }
+};
+
 export const fetchOrderByIdWithProducts = async (id: string) => {
   try {
     const response = await api.get(`/orders/${id}/categories`);
