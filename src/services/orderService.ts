@@ -48,6 +48,21 @@ export const closeOrderById = async (id: string) => {
   }
 };
 
+export const updateCommentById = async (
+  orderId: string,
+  productId: string,
+  comment: string
+) => {
+  try {
+    const response = await api.post(`/orders/${orderId}/comment/${productId}`, {
+      comment,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating comment:", error);
+  }
+};
+
 export const fetchOrderByIdWithProducts = async (id: string) => {
   try {
     const response = await api.get(`/orders/${id}/categories`);

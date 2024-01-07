@@ -1,4 +1,4 @@
-import { BackHandler, Pressable, StyleSheet, View } from "react-native";
+import { BackHandler, Modal, Pressable, StyleSheet, View } from "react-native";
 import useLiveOrder from "../../../hooks/orders/useLiveOrder";
 import { OrderAddProps, OrderProps } from "../../../types/stack/OrderStack";
 import LoadingComponent from "../../LoadingComponent";
@@ -13,14 +13,18 @@ import { OrderProduct } from "../../../types/OrderProduct";
 import {
   deleteOrderProduct,
   resetOrderState,
+  updateComment,
   updateOrderProduct,
 } from "../../../store/selectedOrderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import Header from "../../Header";
 import Button from "../../Button";
-import { ScrollView } from "react-native-gesture-handler";
-import { closeOrderById } from "../../../services/orderService";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
+import {
+  closeOrderById,
+  updateCommentById,
+} from "../../../services/orderService";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -28,6 +32,73 @@ const Styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
 });
+
+const CommentModal = ({
+  defaultComment,
+  commandModalOpen,
+  setCommandModalOpen,
+  updatingComment,
+  onSaveComment,
+}: {
+  defaultComment: string;
+  commandModalOpen: boolean;
+  setCommandModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  updatingComment: boolean;
+  onSaveComment: (comment: string) => void;
+}) => {
+  const [comment, setComment] = useState(defaultComment);
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={commandModalOpen}
+      onRequestClose={() => setCommandModalOpen(false)}
+      style={ContainerStyle.modalContainer}
+    >
+      <Pressable
+        onPress={() => setCommandModalOpen(false)}
+        style={ContainerStyle.modalContainer}
+      >
+        <View style={ContainerStyle.modal}>
+          <Text
+            fontSize="medium"
+            fontWeight="bold"
+            style={{ paddingBottom: 15 }}
+          >
+            Comment
+          </Text>
+
+          <Divider marginHorizontal={-35} />
+
+          <TextInput
+            multiline
+            textAlignVertical="top"
+            numberOfLines={6}
+            placeholder="Comment"
+            value={comment}
+            onChangeText={setComment}
+          />
+
+          <Divider marginHorizontal={-35} />
+
+          <View style={ContainerStyle.rowSpaceBetween}>
+            <Button
+              text="Cancel"
+              loading={updatingComment}
+              onPress={() => setCommandModalOpen(false)}
+              style={{ backgroundColor: theme.colors.error }}
+            />
+            <Button
+              text="Save"
+              loading={updatingComment}
+              onPress={() => onSaveComment(comment)}
+            />
+          </View>
+        </View>
+      </Pressable>
+    </Modal>
+  );
+};
 
 export const ProductLine = ({
   product,
@@ -40,6 +111,8 @@ export const ProductLine = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const [updatingValue, setUpdatingValue] = useState(false);
+  const [commandModalOpen, setCommandModalOpen] = useState(false);
+  const [updatingComment, setUpdatingComment] = useState(false);
 
   const updatingAmount =
     useSelector((state: RootState) => state.selectedOrder.updateStatus) ===
@@ -76,6 +149,20 @@ export const ProductLine = ({
     );
   };
 
+  const onSaveComment = (comment: string) => {
+    setUpdatingComment(true);
+
+    updateCommentById(
+      String(product.orderId),
+      String(product.productId),
+      comment
+    ).then(() => {
+      setUpdatingComment(false);
+      dispatch(updateComment(String(product.productId), comment));
+      setCommandModalOpen(false);
+    });
+  };
+
   return (
     <View style={ContainerStyle.listItemContainer}>
       <View style={[ContainerStyle.rowSpaceBetween, { alignItems: "center" }]}>
@@ -89,6 +176,14 @@ export const ProductLine = ({
           {product.product.name}
         </Text>
 
+        <CommentModal
+          defaultComment={product.comment || ""}
+          commandModalOpen={commandModalOpen}
+          setCommandModalOpen={setCommandModalOpen}
+          updatingComment={updatingComment}
+          onSaveComment={onSaveComment}
+        />
+
         <View style={ContainerStyle.row}>
           <NumberInput
             value={amount}
@@ -100,7 +195,7 @@ export const ProductLine = ({
 
           <Pressable
             style={{ paddingLeft: 10 }}
-            onPress={() => console.log("Add comment")}
+            onPress={() => setCommandModalOpen(true)}
           >
             <MaterialIcons
               name="edit"

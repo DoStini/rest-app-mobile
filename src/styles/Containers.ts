@@ -29,6 +29,29 @@ const ContainerStyle = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
+  modalContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    padding: 20,
+  },
+  modal: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 5,
+  },
 });
 
 export default ContainerStyle;

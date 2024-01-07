@@ -26,6 +26,18 @@ export const deleteOrderProduct = createAsyncThunk(
   }
 );
 
+export const updateComment = createAction(
+  "orders/updateComment",
+  function prepare(productId: string, comment: string) {
+    return {
+      payload: {
+        productId,
+        comment,
+      },
+    };
+  }
+);
+
 export const updateOrderProduct = createAsyncThunk(
   "orders/updateOrderProduct",
   async ({
@@ -129,6 +141,21 @@ const selectedOrderSlice = createSlice({
       state.error =
         action.error.message ||
         "An unknown error occurred when updating this order.";
+    });
+
+    builder.addCase(updateComment, (state, action) => {
+      state.updateStatus = "idle";
+      const index = state.selectedOrder?.OrderProduct.findIndex(
+        (row) => String(row.productId) === action.payload.productId
+      );
+      if (
+        index === undefined ||
+        index === -1 ||
+        !state.selectedOrder?.OrderProduct[index]
+      )
+        return;
+
+      state.selectedOrder.OrderProduct[index].comment = action.payload.comment;
     });
   },
 });
