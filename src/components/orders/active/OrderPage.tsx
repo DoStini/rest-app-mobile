@@ -20,6 +20,7 @@ import { AppDispatch, RootState } from "../../../store/store";
 import Header from "../../Header";
 import Button from "../../Button";
 import { ScrollView } from "react-native-gesture-handler";
+import { closeOrderById } from "../../../services/orderService";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -149,6 +150,15 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
   const { order, status, error } = useLiveOrder(id, isVisible);
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false);
+
+  const onClose = useCallback(() => {
+    setLoading(true);
+    closeOrderById(id).then(() => {
+      setLoading(false);
+      navigation.navigate("OrderList");
+    });
+  }, [id]);
 
   useEffect(() => {
     if (String(order?.id) === id) {
@@ -204,7 +214,8 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
         <Button
           text="Close order"
-          onPress={() => navigation.navigate("Order/Print", { id })}
+          loading={loading}
+          onPress={onClose}
           icon="shopping-cart"
           style={{ backgroundColor: theme.colors.error, marginBottom: 20 }}
         />

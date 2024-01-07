@@ -39,6 +39,15 @@ export const printOrderById = async (
   }
 };
 
+export const closeOrderById = async (id: string) => {
+  try {
+    const response = await api.post(`/orders/${id}/close`);
+    return response.data;
+  } catch (error) {
+    console.error("Error closing order:", error);
+  }
+};
+
 export const fetchOrderByIdWithProducts = async (id: string) => {
   try {
     const response = await api.get(`/orders/${id}/categories`);
