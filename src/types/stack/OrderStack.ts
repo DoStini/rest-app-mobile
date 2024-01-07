@@ -6,6 +6,7 @@ export type OrderStackNavigatorParamList = {
   OrderList: undefined;
   Order: { id: string };
   "Order/Add": { id: string };
+  "Order/Print": { id: string };
 };
 
 type OrderNavigationProp = StackNavigationProp<
@@ -34,6 +35,18 @@ export type CreateOrderProps = {
 export type OrderProps = {
   navigation: OrderListNavigationProp;
   route: RouteProp<OrderStackNavigatorParamList, "Order">;
+};
+
+// Print order props
+
+type OrderPrintNavigationProp = StackNavigationProp<
+  OrderStackNavigatorParamList,
+  "Order/Print"
+>;
+
+export type OrderPrintProps = {
+  navigation: OrderPrintNavigationProp;
+  route: RouteProp<OrderStackNavigatorParamList, "Order/Print">;
 };
 
 export type OrderAddProps = {

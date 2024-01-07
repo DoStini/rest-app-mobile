@@ -6,7 +6,6 @@ import Text from "../../Text";
 import ContainerStyle from "../../../styles/Containers";
 import React, { useCallback, useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import styled from "styled-components/native";
 import theme from "../../../theme";
 import NumberInput from "../../NumberInput";
 import Divider from "../../Divider";
@@ -19,6 +18,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import Header from "../../Header";
+import Button from "../../Button";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -147,10 +148,7 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
   const isVisible = navigation.isFocused();
 
-  const { order, status, updating, refresh, error } = useLiveOrder(
-    id,
-    isVisible
-  );
+  const { order, status, error } = useLiveOrder(id, isVisible);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -191,7 +189,25 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
       <Divider />
 
-      <Products products={order.OrderProduct} navigation={navigation} id={id} />
+      <ScrollView>
+        <Products
+          products={order.OrderProduct}
+          navigation={navigation}
+          id={id}
+        />
+
+        <Button
+          text="Send order to kitchen"
+          onPress={() => navigation.navigate("Order/Print", { id })}
+          style={{ marginTop: 20, marginBottom: 20 }}
+        />
+
+        <Button
+          text="Close order"
+          onPress={() => navigation.navigate("Order/Print", { id })}
+          style={{ backgroundColor: theme.colors.error, marginBottom: 20 }}
+        />
+      </ScrollView>
     </View>
   );
 };

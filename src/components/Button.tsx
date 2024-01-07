@@ -2,6 +2,7 @@ import { ActivityIndicator, Pressable, Text } from "react-native";
 import ButtonStyle from "../styles/Button";
 import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 import theme from "../theme";
+import React from "react";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -9,9 +10,10 @@ export type ButtonProps = {
   text: string;
   onPress: () => void;
   loading?: boolean;
+  style?: React.CSSProperties;
 };
 
-export default function Button({ text, onPress, loading }: ButtonProps) {
+export default function Button({ text, onPress, loading, style }: ButtonProps) {
   const opacity = useSharedValue(1);
 
   const handlePressIn = () => {
@@ -30,7 +32,7 @@ export default function Button({ text, onPress, loading }: ButtonProps) {
     <AnimatedPressable
       onPressIn={() => !loading && handlePressIn()}
       onPressOut={() => !loading && handlePressOut()}
-      style={{ ...ButtonStyle.button, opacity, backgroundColor }}
+      style={{ ...ButtonStyle.button, opacity, backgroundColor, ...style }}
       onPress={() => !loading && onPress()}
     >
       {loading ? (

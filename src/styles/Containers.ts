@@ -7,6 +7,7 @@ const ContainerStyle = StyleSheet.create({
     flexDirection: "column",
     paddingTop: 50,
     paddingHorizontal: 20,
+    height: "99%",
   },
   listItemContainer: {
     display: "flex",

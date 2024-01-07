@@ -15,6 +15,7 @@ import { ProductLine } from "./OrderPage";
 import useProductsInOrder from "../../../hooks/useProductsInOrder";
 import { Category } from "../../../types/Category";
 import theme from "../../../theme";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Products = ({
   navigation,
@@ -26,7 +27,7 @@ const Products = ({
   products: ProductWithAmount[];
 }) => {
   return (
-    <View>
+    <ScrollView>
       {products.map((product) => {
         const orderProduct = {
           amount: product.orderProduct[0]?.amount || 0,
@@ -43,7 +44,7 @@ const Products = ({
           />
         );
       })}
-    </View>
+    </ScrollView>
   );
 };
 

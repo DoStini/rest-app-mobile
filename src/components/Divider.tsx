@@ -1,4 +1,4 @@
-import { StyleProp, View, ViewStyle } from "react-native";
+import { Dimensions, StyleProp, View, ViewStyle } from "react-native";
 import theme from "../theme";
 import styled from "styled-components";
 
