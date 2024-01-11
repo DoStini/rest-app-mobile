@@ -8,9 +8,15 @@ type HeaderProps = {
   goBack?: () => void;
   title: string;
   rightButton?: React.ReactNode;
+  afterTitle?: React.ReactNode;
 };
 
-export default function Header({ goBack, title, rightButton }: HeaderProps) {
+export default function Header({
+  goBack,
+  title,
+  afterTitle,
+  rightButton,
+}: HeaderProps) {
   return (
     <View style={[ContainerStyle.rowSpaceBetween, { alignItems: "center" }]}>
       {goBack && (
@@ -21,9 +27,12 @@ export default function Header({ goBack, title, rightButton }: HeaderProps) {
           onPress={goBack}
         />
       )}
-      <Text fontSize="heading" fontWeight="medium">
-        {title}
-      </Text>
+      <View style={[ContainerStyle.row, { alignItems: "center" }]}>
+        <Text fontSize="heading" fontWeight="medium">
+          {title}
+        </Text>
+        {afterTitle}
+      </View>
       {rightButton}
     </View>
   );

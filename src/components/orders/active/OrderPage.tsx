@@ -256,7 +256,7 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
   }, [id]);
 
   useEffect(() => {
-    if (String(order?.id) === id) {
+    if (String(order?.id) === String(id) || order === null) {
       return;
     }
 
@@ -277,6 +277,15 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
     <View style={ContainerStyle.contentContainer}>
       <Header
         title={`${order.Table.name}, ${order.name}`}
+        afterTitle={
+          <Pressable style={{ paddingLeft: 10 }} onPress={() => {}}>
+            <MaterialIcons
+              name="edit"
+              color={theme.colors.textPrimary}
+              size={26}
+            />
+          </Pressable>
+        }
         goBack={() => navigation.navigate("OrderList")}
       />
 
