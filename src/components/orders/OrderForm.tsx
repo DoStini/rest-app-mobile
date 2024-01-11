@@ -13,6 +13,7 @@ type OrderFormProps = {
   handleSubmit: (values: { name: string; tableId: number }) => void;
   tables: { name: string; id: number }[];
   loading: boolean;
+  submitText: string;
 };
 
 const FormValidationSchema = Yup.object().shape({
@@ -25,6 +26,7 @@ const OrderForm = ({
   handleSubmit,
   tables,
   loading,
+  submitText,
 }: OrderFormProps) => {
   return (
     <ScrollView
@@ -87,7 +89,7 @@ const OrderForm = ({
             <Divider />
 
             <Button
-              text="Create Order"
+              text={submitText}
               onPress={handleSubmit}
               loading={loading}
             />

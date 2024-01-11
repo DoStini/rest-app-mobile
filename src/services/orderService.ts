@@ -106,6 +106,18 @@ export const createOrder = async (name: string, tableId: number) => {
   }
 };
 
+export const editOrder = async (id: string, name: string, tableId: number) => {
+  try {
+    const response = await api.patch(`/orders/${id}`, {
+      orderName: name,
+      tableId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error editing order:", error);
+  }
+};
+
 // TODO, waiting for backend
 export const fetchCategories = async () => {
   try {

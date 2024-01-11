@@ -278,7 +278,12 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
       <Header
         title={`${order.Table.name}, ${order.name}`}
         afterTitle={
-          <Pressable style={{ paddingLeft: 10 }} onPress={() => {}}>
+          <Pressable
+            style={{ paddingLeft: 10 }}
+            onPress={() => {
+              navigation.navigate("Order/Edit", { id });
+            }}
+          >
             <MaterialIcons
               name="edit"
               color={theme.colors.textPrimary}

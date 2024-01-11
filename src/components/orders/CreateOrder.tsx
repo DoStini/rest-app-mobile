@@ -70,6 +70,7 @@ const CreateOrder = ({ navigation }: CreateOrderProps) => {
         initialValues={{ name: "", tableId: 0 }}
         handleSubmit={handleSubmit}
         loading={creationLoading}
+        submitText="Create Order"
       />
     </View>
   );
