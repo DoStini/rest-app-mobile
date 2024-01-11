@@ -60,40 +60,39 @@ const OrderList = ({ navigation }: OrderListProps) => {
                 </Text>
 
                 {table.orders.map((order) => (
-                  <React.Fragment key={order.id}>
-                    <ListItemContainer
-                      activeOpacity={1}
-                      onPress={() =>
-                        navigation.navigate("Order", {
-                          id: String(order.id),
-                        })
-                      }
-                    >
-                      <ItemTitle>
-                        <Text
-                          fontSize="medium"
-                          fontWeight="semibold"
-                          color="textSecondary"
-                        >
-                          {order.name}
-                        </Text>
-                      </ItemTitle>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          flexWrap: "wrap",
-                        }}
+                  <ListItemContainer
+                    key={order.id}
+                    activeOpacity={1}
+                    onPress={() =>
+                      navigation.navigate("Order", {
+                        id: String(order.id),
+                      })
+                    }
+                  >
+                    <ItemTitle>
+                      <Text
+                        fontSize="medium"
+                        fontWeight="semibold"
+                        color="textSecondary"
                       >
-                        <Text fontSize="small" color="textSecondary">
-                          Responsible:{" "}
-                        </Text>
-                        <Text fontSize="small" color="textSecondary">
-                          {order.creator.name}
-                        </Text>
-                      </View>
-                    </ListItemContainer>
-                  </React.Fragment>
+                        {order.name}
+                      </Text>
+                    </ItemTitle>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <Text fontSize="small" color="textSecondary">
+                        Responsible:{" "}
+                      </Text>
+                      <Text fontSize="small" color="textSecondary">
+                        {order.creator.name}
+                      </Text>
+                    </View>
+                  </ListItemContainer>
                 ))}
               </View>
             )

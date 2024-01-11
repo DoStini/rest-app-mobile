@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import theme from "../../theme";
 import Button from "../Button";
 import { Formik } from "formik";
-import { ScrollView, TextInput, View } from "react-native";
+import { Keyboard, ScrollView, TextInput, View } from "react-native";
 import Text from "../Text";
 import React from "react";
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
