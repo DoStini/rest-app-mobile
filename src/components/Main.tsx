@@ -39,7 +39,7 @@ const Main = () => {
           name={Screen.Products.name}
           component={ProductStack}
         />
-        <BottomTab.Screen name={Screen.Settings.name} component={Settings} />
+        <BottomTab.Screen name={Screen.Statistics.name} component={Settings} />
       </BottomTab.Navigator>
     </NavigationContainer>
   );
