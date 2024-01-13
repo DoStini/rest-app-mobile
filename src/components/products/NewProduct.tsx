@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import Text from "../Text";
 import { NewProductProps } from "../../types/StackTypes";
@@ -76,119 +72,116 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Container>
-        <TopBar>
-          <MaterialIcons
-            name="arrow-back"
-            size={36}
-            color="black"
-            onPress={goToProducts}
-          />
-          <Text fontSize="heading" fontWeight="bold">
-            New product
-          </Text>
-        </TopBar>
+    <Container>
+      <TopBar>
+        <MaterialIcons
+          name="arrow-back"
+          size={36}
+          color="black"
+          onPress={goToProducts}
+        />
+        <Text fontSize="heading" fontWeight="bold">
+          New product
+        </Text>
+      </TopBar>
 
-        <Formik
-          initialValues={{ name: "", price: "", category: "" }}
-          validationSchema={ProductSchema}
-          onSubmit={(values) => {
-            console.log(values);
-            console.log("TODO add api call to the backend when available");
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            setFieldValue,
-            errors,
-            touched,
-            values,
-          }) => (
-            <InputContainer>
-              <StyledInputItem>
-                <Text fontSize="subheading" fontWeight="bold">
-                  Product name
-                </Text>
-                <StyledTextInput
-                  placeholder="Name for the product"
-                  placeholderTextColor="#000"
-                  onChangeText={handleChange("name")}
-                  onBlur={handleBlur("name")}
-                  value={values.name}
-                />
-                {touched.name && errors.name && (
-                  <Text style={{ color: "red" }}>{errors.name}</Text>
-                )}
-              </StyledInputItem>
+      <Formik
+        initialValues={{ name: "", price: "", category: "" }}
+        validationSchema={ProductSchema}
+        onSubmit={(values) => {
+          console.log(values);
+          console.log("TODO add api call to the backend when available");
+        }}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          errors,
+          touched,
+          values,
+        }) => (
+          <InputContainer>
+            <StyledInputItem>
+              <Text fontSize="subheading" fontWeight="bold">
+                Product name
+              </Text>
+              <StyledTextInput
+                placeholder="Name for the product"
+                placeholderTextColor="#000"
+                onChangeText={handleChange("name")}
+                onBlur={handleBlur("name")}
+                value={values.name}
+              />
+              {touched.name && errors.name && (
+                <Text style={{ color: "red" }}>{errors.name}</Text>
+              )}
+            </StyledInputItem>
 
-              <StyledInputItem>
-                <Text fontSize="subheading" fontWeight="bold">
-                  Price
-                </Text>
-                <StyledTextInput
-                  placeholder="Price in euros (€)"
-                  placeholderTextColor="#000"
-                  onChangeText={handleChange("price")}
-                  onBlur={handleBlur("price")}
-                  value={values.price}
-                  keyboardType="numeric"
-                />
-                {touched.price && errors.price && (
-                  <Text style={{ color: "red" }}>{errors.price}</Text>
-                )}
-              </StyledInputItem>
+            <StyledInputItem>
+              <Text fontSize="subheading" fontWeight="bold">
+                Price
+              </Text>
+              <StyledTextInput
+                placeholder="Price in euros (€)"
+                placeholderTextColor="#000"
+                onChangeText={handleChange("price")}
+                onBlur={handleBlur("price")}
+                value={values.price}
+                keyboardType="numeric"
+              />
+              {touched.price && errors.price && (
+                <Text style={{ color: "red" }}>{errors.price}</Text>
+              )}
+            </StyledInputItem>
 
-              <StyledInputItem>
-                <Text fontSize="subheading" fontWeight="bold">
-                  Category
-                </Text>
-                <DropDownPicker
-                  open={open}
-                  value={values.category}
-                  items={categories.map((category) => ({
-                    label: category.name,
-                    value: category.id.toString(),
-                  }))}
-                  onOpen={Keyboard.dismiss}
-                  setOpen={(isOpen) => {
-                    setOpen(isOpen);
-                  }}
-                  setValue={(val) => {
-                    const actualValue = val({});
-                    setFieldValue("category", actualValue);
-                  }}
-                  placeholder="Select a category"
-                  style={{
-                    borderColor: theme.colors.borderColor,
-                    backgroundColor: theme.colors.barColor,
-                    minHeight: 40,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                  }}
-                  dropDownContainerStyle={{
-                    zIndex: 2,
-                    borderWidth: 0,
-                  }}
-                />
-                {touched.category && errors.category && (
-                  <Text style={{ color: "red" }}>{errors.category}</Text>
-                )}
-              </StyledInputItem>
+            <StyledInputItem>
+              <Text fontSize="subheading" fontWeight="bold">
+                Category
+              </Text>
+              <DropDownPicker
+                open={open}
+                value={values.category}
+                items={categories.map((category) => ({
+                  label: category.name,
+                  value: category.id.toString(),
+                }))}
+                setOpen={(isOpen) => {
+                  setOpen(isOpen);
+                }}
+                setValue={(val) => {
+                  const actualValue = val({});
+                  setFieldValue("category", actualValue);
+                }}
+                placeholder="Select a category"
+                style={{
+                  borderColor: theme.colors.borderColor,
+                  backgroundColor: theme.colors.barColor,
+                  minHeight: 40,
+                  borderWidth: 1,
+                  borderRadius: 5,
+                }}
+                dropDownContainerStyle={{
+                  zIndex: 2,
+                  borderWidth: 0,
+                }}
+              />
+              {touched.category && errors.category && (
+                <Text style={{ color: "red" }}>{errors.category}</Text>
+              )}
+            </StyledInputItem>
 
-              <StyledButton activeOpacity={1} onPress={handleSubmit}>
-                <AntDesign name="plus" size={24} color="white" />
-                <Text color="textSecondary" style={{ marginLeft: 10 }}>
-                  Create
-                </Text>
-              </StyledButton>
-            </InputContainer>
-          )}
-        </Formik>
-      </Container>
-    </TouchableWithoutFeedback>
+            <StyledButton activeOpacity={1} onPress={handleSubmit}>
+              <AntDesign name="plus" size={24} color="white" />
+              <Text color="textSecondary" style={{ marginLeft: 10 }}>
+                Create
+              </Text>
+            </StyledButton>
+          </InputContainer>
+        )}
+      </Formik>
+    </Container>
   );
 };
 

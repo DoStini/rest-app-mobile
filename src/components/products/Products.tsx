@@ -1,10 +1,10 @@
-import styled from "styled-components/native";
 import Text from "../Text";
 import {
   TouchableOpacity,
   TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
+  Pressable,
+  View,
+  StyleSheet,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import theme from "../../theme";
@@ -15,66 +15,21 @@ import { Category } from "../../types/Category";
 import useCategories from "../../hooks/useCategories";
 import LoadingComponent from "../LoadingComponent";
 import { formatPrice } from "../../config/helpers";
+import { MaterialIcons } from "@expo/vector-icons";
+import Header from "../Header";
+import ContainerStyle from "../../styles/Containers";
+import { ScrollView } from "react-native-gesture-handler";
 
-const Container = styled.View`
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 60px;
-  width: 100%;
-  position: relative;
-`;
-
-const InputContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  width: 90%;
-  padding: 10px;
-  margin: 10px;
-  background-color: ${theme.colors.backgroundSecondary};
-  border-radius: 10px;
-`;
-
-const FilterButton = styled(TouchableOpacity)`
-  padding: 10px 20px;
-  border-radius: 20px;
-  background-color: ${(props: any) =>
-    props.selected ? theme.colors.selectedColor : theme.colors.unSelectedColor};
-  margin: 5px;
-`;
-
-const FilterContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const StyledScrollView = styled.ScrollView`
-  margin-top: 15px;
-  flex: 1;
-  margin-bottom: 10px;
-  width: 90%;
-`;
-
-const ListItemContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: ${theme.colors.selectedColor};
-  height: 50px;
-  padding: 10px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${theme.colors.textSecondary};
-`;
-
-const PlusIcon = styled(TouchableOpacity)`
-  position: absolute;
-  top: 65px;
-  right: 20px;
-`;
+const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: theme.colors.backgroundSecondary,
+  },
+});
 
 const Products = ({ navigation }: ProductsProps) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -118,71 +73,104 @@ const Products = ({ navigation }: ProductsProps) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Container>
-        <PlusIcon activeOpacity={1} onPress={() => goToNewProduct(categories)}>
-          <AntDesign name="plus" size={36} color="black" />
-        </PlusIcon>
+    <View style={ContainerStyle.contentContainer}>
+      <Header
+        title="Products"
+        rightButton={
+          <Pressable
+            onPress={() => goToNewProduct(categories)}
+            style={{ padding: 10 }}
+          >
+            <MaterialIcons
+              name="add-circle-outline"
+              size={30}
+              color={theme.colors.textPrimary}
+            />
+          </Pressable>
+        }
+      />
 
-        <Text fontSize="heading" fontWeight="bold">
-          Products
-        </Text>
-        <InputContainer>
-          <AntDesign
-            name="search1"
-            size={24}
-            color={theme.colors.textPrimary}
-            style={{ paddingRight: 10 }}
-          />
-          <TextInput
-            value={searchQuery}
-            placeholder="Search for a product..."
-            onChangeText={(query: string) => setSearchQuery(query)}
-            style={{ flex: 1 }}
-          />
-        </InputContainer>
+      <View style={styles.inputContainer}>
+        <AntDesign
+          name="search1"
+          size={24}
+          color={theme.colors.textPrimary}
+          style={{ paddingRight: 10 }}
+        />
+        <TextInput
+          value={searchQuery}
+          placeholder="Search for a product..."
+          onChangeText={(query: string) => setSearchQuery(query)}
+          style={{ flex: 1 }}
+        />
+      </View>
 
-        <FilterContainer>
-          {categories.map((category: Category) => (
-            <FilterButton
+      <View style={[ContainerStyle.rowSpaceBetween, { marginBottom: 10 }]}>
+        {categories.map((category: Category) => (
+          <Pressable
+            key={category.id}
+            onPress={() => setSelectedFilter(category.id)}
+            style={[
+              ContainerStyle.listItemContainer,
+              {
+                backgroundColor:
+                  selectedFilter === category.id
+                    ? theme.colors.backgroundPrimary
+                    : theme.colors.tertiary,
+                paddingVertical: 15,
+              },
+            ]}
+          >
+            <Text
               key={category.id}
-              activeOpacity={1}
-              selected={selectedFilter === category.id}
+              fontSize="small"
+              color="textSecondary"
+              fontWeight={selectedFilter === category.id ? "bold" : "normal"}
               onPress={() => setSelectedFilter(category.id)}
             >
-              <Text
-                color={
-                  selectedFilter === category.id
-                    ? "textSecondary"
-                    : "textPrimary"
-                }
-              >
-                {category.name}
-              </Text>
-            </FilterButton>
-          ))}
-        </FilterContainer>
-        <StyledScrollView>
-          {filteredProducts &&
-            filteredProducts.map((product: Product) => (
-              <TouchableOpacity
-                activeOpacity={1}
-                key={product.id}
-                onPress={() => goToProduct(product)}
-              >
-                <ListItemContainer>
-                  <Text fontSize="subheading" color="textSecondary">
+              {category.name}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+
+      <ScrollView>
+        {filteredProducts &&
+          filteredProducts.map((product: Product) => (
+            <TouchableOpacity
+              activeOpacity={1}
+              key={product.id}
+              onPress={() => goToProduct(product)}
+            >
+              <View style={ContainerStyle.listItemContainer}>
+                <View
+                  style={[
+                    ContainerStyle.rowSpaceBetween,
+                    { alignItems: "center" },
+                  ]}
+                >
+                  <Text
+                    fontSize="small"
+                    fontWeight="light"
+                    color="textSecondary"
+                    numberOfLines={1}
+                  >
                     {product.name}
                   </Text>
-                  <Text fontSize="subheading" color="textSecondary">
+                  <Text
+                    fontSize="small"
+                    fontWeight="light"
+                    color="textSecondary"
+                    numberOfLines={1}
+                  >
                     {formatPrice(product.price)}
                   </Text>
-                </ListItemContainer>
-              </TouchableOpacity>
-            ))}
-        </StyledScrollView>
-      </Container>
-    </TouchableWithoutFeedback>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+      </ScrollView>
+    </View>
   );
 };
 
