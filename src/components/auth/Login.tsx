@@ -3,7 +3,7 @@ import { TextInput, View, StyleSheet, Text } from "react-native";
 import FormStyles from "../../styles/Forms";
 import Button from "../Button";
 import TextStyles from "../../styles/Text";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { login } from "../../services/auth";
 
@@ -49,11 +49,13 @@ const Login = ({ revalidate }: { revalidate: () => void }) => {
           validationSchema={LoginSchema}
           onSubmit={handleLogin}
         >
-          {({ handleChange, handleBlur, handleSubmit, errors }) => (
+          {({ handleChange, handleBlur, handleSubmit, errors, values }) => (
             <>
               <TextInput
                 style={FormStyles.input}
                 placeholder="Email"
+                value={values.email}
+                testID="email"
                 onChangeText={handleChange("email")}
                 onBlur={handleBlur("email")}
               />
@@ -63,11 +65,18 @@ const Login = ({ revalidate }: { revalidate: () => void }) => {
 
               <TextInput
                 style={FormStyles.input}
+                value={values.password}
+                testID="password"
                 placeholder="Password"
                 secureTextEntry
                 onChangeText={handleChange("password")}
                 onBlur={handleBlur("password")}
               />
+              {errors.password && (
+                <Text style={{ ...FormStyles.error, paddingBottom: 12 }}>
+                  {errors.password}
+                </Text>
+              )}
 
               {authError && (
                 <Text style={{ ...FormStyles.error, paddingBottom: 12 }}>
@@ -75,7 +84,12 @@ const Login = ({ revalidate }: { revalidate: () => void }) => {
                 </Text>
               )}
 
-              <Button text="Login" onPress={handleSubmit} loading={loading} />
+              <Button
+                testID="submit"
+                text="Login"
+                onPress={handleSubmit}
+                loading={loading}
+              />
             </>
           )}
         </Formik>

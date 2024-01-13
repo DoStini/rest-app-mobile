@@ -8,7 +8,6 @@ import Text from "../../Text";
 import Divider from "../../Divider";
 import { OrderProduct } from "../../../types/OrderProduct";
 import { useMemo, useState } from "react";
-import { Form, Formik } from "formik";
 import FormNumberInput from "../../FormNumberInput";
 import Button from "../../Button";
 import { printOrderById } from "../../../services/orderService";
@@ -109,7 +108,7 @@ const PrintOrderPage = ({ navigation, route }: OrderPrintProps) => {
   const { order, status, error } = usePrintableorder(id);
 
   if (error) {
-    console.error(error);
+    //console.error(error); <- Lets have a notification for informing about errors
     navigation.navigate("OrderList");
     return null;
   }
