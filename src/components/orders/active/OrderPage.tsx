@@ -25,6 +25,7 @@ import {
   closeOrderById,
   updateCommentById,
 } from "../../../services/orderService";
+import useSnackbar from "../../../hooks/useSnackbar";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -243,6 +244,8 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
   const isVisible = navigation.isFocused();
 
+  const { open: openSnackbar } = useSnackbar();
+
   const { order, status, error } = useLiveOrder(id, isVisible);
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
@@ -265,6 +268,7 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
   if (error) {
     console.error(error);
+    openSnackbar("An error occurred. Please try again later.");
     navigation.navigate("OrderList");
     return null;
   }

@@ -25,6 +25,7 @@ const EditOrder = ({ navigation, route }: EditOrderProps) => {
 
   if (error) {
     console.error(error);
+    openSnackbar("An error occurred. Please try again later.");
     navigation.navigate("OrderList");
     return null;
   }

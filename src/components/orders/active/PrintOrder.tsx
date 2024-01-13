@@ -12,6 +12,7 @@ import { Form, Formik } from "formik";
 import FormNumberInput from "../../FormNumberInput";
 import Button from "../../Button";
 import { printOrderById } from "../../../services/orderService";
+import useSnackbar from "../../../hooks/useSnackbar";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -105,11 +106,14 @@ const Products = ({
 
 const PrintOrderPage = ({ navigation, route }: OrderPrintProps) => {
   const { id } = route.params;
+  const { open: openSnackbar } = useSnackbar();
 
   const { order, status, error } = usePrintableorder(id);
 
   if (error) {
     console.error(error);
+    openSnackbar("An error occurred. Please try again later.");
+
     navigation.navigate("OrderList");
     return null;
   }
