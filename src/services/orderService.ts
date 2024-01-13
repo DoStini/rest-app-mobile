@@ -115,6 +115,7 @@ export const editOrder = async (id: string, name: string, tableId: number) => {
     return response.data;
   } catch (error) {
     console.error("Error editing order:", error);
+    throw error;
   }
 };
 

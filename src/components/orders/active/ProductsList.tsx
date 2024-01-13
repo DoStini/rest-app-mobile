@@ -11,11 +11,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Text from "../../Text";
 import { OrderProduct } from "../../../types/OrderProduct";
 import { Product } from "../../../types/Product";
-import { ProductLine } from "./OrderPage";
+import { ProductLine } from "./ProductLine";
 import useProductsInOrder from "../../../hooks/useProductsInOrder";
 import { Category } from "../../../types/Category";
 import theme from "../../../theme";
 import { ScrollView } from "react-native-gesture-handler";
+import useSnackbar from "../../../hooks/useSnackbar";
 
 const Products = ({
   navigation,
@@ -95,6 +96,7 @@ export default function ProductsList({ navigation, route }: OrderAddProps) {
   const { order, status, error } = useProductsInOrder(id);
 
   const [category, setCategory] = useState(0);
+  const { open: openSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (order?.categories) {
@@ -109,6 +111,7 @@ export default function ProductsList({ navigation, route }: OrderAddProps) {
 
   if (error) {
     console.error(error);
+    openSnackbar("An error occurred. Please try again later.");
     navigation.navigate("OrderList");
     return null;
   }

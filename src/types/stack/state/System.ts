@@ -8,4 +8,5 @@ export interface TablesInfo {
 
 export interface SystemInfo {
   tablesInfo: TablesInfo;
+  snackbar: string | null;
 }

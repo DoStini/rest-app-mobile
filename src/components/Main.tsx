@@ -7,13 +7,14 @@ import HistoryStack from "./orders/HistoryStack";
 import Settings from "./settings/Settings";
 import ProductStack from "./products/ProductsStack";
 import LoadingComponent from "./LoadingComponent";
+import SnackBar from "react-native-snackbar-component";
 
 const BottomTab = createBottomTabNavigator();
 
 import useAuth from "../hooks/useAuth";
 import Login from "./auth/Login";
-import { deleteItemAsync } from "expo-secure-store";
 import OrdersStack from "./orders/active/OrderStack";
+import React from "react";
 
 const Main = () => {
   const { user, loading, error, revalidate } = useAuth();

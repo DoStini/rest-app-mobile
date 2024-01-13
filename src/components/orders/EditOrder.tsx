@@ -9,6 +9,10 @@ import OrderForm from "./OrderForm";
 import { useState } from "react";
 import LoadingComponent from "../LoadingComponent";
 import { editOrder } from "../../services/orderService";
+import { useDispatch } from "react-redux";
+import { openSnackbar } from "../../store/system";
+import { AppDispatch } from "../../store/store";
+import useSnackbar from "../../hooks/useSnackbar";
 
 const EditOrder = ({ navigation, route }: EditOrderProps) => {
   const { id } = route.params;
@@ -17,8 +21,11 @@ const EditOrder = ({ navigation, route }: EditOrderProps) => {
   const { tables, status: tableStatus, error: errorTables } = useTablesInfo();
   const [loading, setLoading] = useState(false);
 
+  const { open: openSnackbar } = useSnackbar();
+
   if (error) {
     console.error(error);
+    openSnackbar("An error occurred. Please try again later.");
     navigation.navigate("OrderList");
     return null;
   }
@@ -27,10 +34,12 @@ const EditOrder = ({ navigation, route }: EditOrderProps) => {
     setLoading(true);
     editOrder(id, values.name, values.tableId)
       .then(() => {
-        navigation.navigate("OrderList");
+        navigation.goBack();
       })
       .catch((error) => {
+        openSnackbar("An error occurred. Please try again later.");
         console.error(error);
+        navigation.navigate("OrderList");
       })
       .finally(() => {
         setLoading(false);
