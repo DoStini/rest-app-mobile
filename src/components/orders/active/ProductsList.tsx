@@ -11,7 +11,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Text from "../../Text";
 import { OrderProduct } from "../../../types/OrderProduct";
 import { Product } from "../../../types/Product";
-import { ProductLine } from "./OrderPage";
+import { ProductLine } from "./ProductLine";
 import useProductsInOrder from "../../../hooks/useProductsInOrder";
 import { Category } from "../../../types/Category";
 import theme from "../../../theme";
