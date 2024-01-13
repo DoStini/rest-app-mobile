@@ -1,72 +1,61 @@
-import styled from "styled-components/native";
 import Text from "../Text";
 import { ProductProps } from "../../types/StackTypes";
-import { MaterialIcons } from "@expo/vector-icons";
 import { formatPrice } from "../../config/helpers";
+import { View, StyleSheet } from "react-native";
+import ContainerStyle from "../../styles/Containers";
+import Header from "../Header";
+import Divider from "../Divider";
 
-const Container = styled.View`
-  display: flex;
-  flex-direction: column;
-  padding-top: 60px;
-`;
-
-const TopBar = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom-color: black;
-  border-bottom-width: 1px;
-`;
-
-const InfoBox = styled.View`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border-bottom-color: black;
-  border-bottom-width: 1px;
-`;
+const Styles = StyleSheet.create({
+  rowContainer: {
+    paddingVertical: 5,
+    paddingHorizontal: 0,
+  },
+});
 
 const Product = ({ navigation, route }: ProductProps) => {
   const { product } = route.params;
 
-  const goToProducts = () => {
-    navigation.navigate("Products");
-  };
-
   return (
-    <Container>
-      <TopBar>
-        <MaterialIcons
-          name="arrow-back"
-          size={36}
-          color="black"
-          onPress={goToProducts}
-        />
-        <Text fontSize="heading" fontWeight="bold">
-          Product details
-        </Text>
-      </TopBar>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
+    <View style={ContainerStyle.contentContainer}>
+      <Header
+        title="Product details"
+        goBack={() => navigation.navigate("Products")}
+      />
+
+      <Divider />
+
+      <View style={Styles.rowContainer}>
+        <Text fontSize="body" fontWeight="bold" color="textPrimary">
           Name:
         </Text>
-        <Text fontSize="subheading">{product.name}</Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
+        <Text fontSize="body" color="textPrimary">
+          {product.name}
+        </Text>
+      </View>
+
+      <Divider />
+
+      <View style={Styles.rowContainer}>
+        <Text fontSize="body" fontWeight="bold" color="textPrimary">
           Price:
         </Text>
-        <Text fontSize="subheading">{formatPrice(product.price)}</Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
+        <Text fontSize="body" color="textPrimary">
+          {formatPrice(product.price)}
+        </Text>
+      </View>
+
+      <Divider />
+
+      <View style={Styles.rowContainer}>
+        <Text fontSize="body" fontWeight="bold" color="textPrimary">
           Description:
         </Text>
-        <Text fontSize="subheading">{product.manual}</Text>
-      </InfoBox>
-    </Container>
+        <Text fontSize="body" color="textPrimary">
+          {product.manual}
+        </Text>
+      </View>
+    </View>
   );
 };
 
