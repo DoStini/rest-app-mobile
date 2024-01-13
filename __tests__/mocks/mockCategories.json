@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "name": "Food",
+    "position": 1,
+    "printable": true,
+    "products": [
+      {
+        "category": {
+          "id": 1,
+          "name": "Food",
+          "position": 1,
+          "printable": true
+        },
+        "categoryId": 1,
+        "id": 101,
+        "image": "food_product_image1.jpg",
+        "manual": true,
+        "name": "Pizza",
+        "position": 1,
+        "price": "12.99"
+      },
+      {
+        "category": {
+          "id": 1,
+          "name": "Food",
+          "position": 1,
+          "printable": true
+        },
+        "categoryId": 1,
+        "id": 102,
+        "image": "food_product_image2.jpg",
+        "manual": true,
+        "name": "Burger",
+        "position": 2,
+        "price": "8.99"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Drink",
+    "position": 2,
+    "printable": true,
+    "products": [
+      {
+        "category": {
+          "id": 2,
+          "name": "Drink",
+          "position": 2,
+          "printable": true
+        },
+        "categoryId": 2,
+        "id": 201,
+        "image": "drink_product_image1.jpg",
+        "manual": true,
+        "name": "Soda",
+        "position": 1,
+        "price": "1.99"
+      },
+      {
+        "category": {
+          "id": 2,
+          "name": "Drink",
+          "position": 2,
+          "printable": true
+        },
+        "categoryId": 2,
+        "id": 202,
+        "image": "drink_product_image2.jpg",
+        "manual": true,
+        "name": "Coffee",
+        "position": 2,
+        "price": "3.49"
+      }
+    ]
+  }
+]
+

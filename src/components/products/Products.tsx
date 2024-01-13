@@ -82,6 +82,7 @@ const Products = ({ navigation }: ProductsProps) => {
             style={{ padding: 10 }}
           >
             <MaterialIcons
+              testID="addProductButton"
               name="add-circle-outline"
               size={30}
               color={theme.colors.textPrimary}
