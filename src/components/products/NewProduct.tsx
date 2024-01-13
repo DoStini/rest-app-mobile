@@ -1,61 +1,26 @@
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
-import styled from "styled-components/native";
 import Text from "../Text";
 import { NewProductProps } from "../../types/StackTypes";
 import DropDownPicker from "react-native-dropdown-picker";
 import theme from "../../theme";
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { View, StyleSheet, TextInput } from "react-native";
+import ContainerStyle from "../../styles/Containers";
+import Header from "../Header";
+import Divider from "../Divider";
+import Button from "../Button";
 
-const Container = styled.View`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding-top: 60px;
-`;
-
-const TopBar = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom-color: black;
-  border-bottom-width: 1px;
-`;
-
-const InputContainer = styled.View`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StyledInputItem = styled.View`
-  z-index: 1;
-  margin-top: 30px;
-  width: 90%;
-`;
-
-const StyledTextInput = styled.TextInput`
-  border: 1px solid ${theme.colors.borderColor};
-  background-color: ${theme.colors.barColor};
-  padding: 10px;
-  height: 40px;
-  border-radius: 5px;
-`;
-
-const StyledButton = styled(TouchableOpacity)`
-  background-color: ${theme.colors.unSelectedColor};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 40px;
-  padding: 10px 15px;
-  border-radius: 10px;
-`;
+const Styles = StyleSheet.create({
+  rowContainer: {
+    paddingVertical: 5,
+    paddingHorizontal: 0,
+  },
+  inputContainer: {
+    padding: 12,
+    backgroundColor: theme.colors.backgroundSecondary,
+  },
+});
 
 const ProductSchema = Yup.object().shape({
   name: Yup.string().required("Product name is required"),
@@ -67,23 +32,14 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
   const { categories } = route.params;
   const [open, setOpen] = useState(false);
 
-  const goToProducts = () => {
-    navigation.navigate("Products");
-  };
-
   return (
-    <Container>
-      <TopBar>
-        <MaterialIcons
-          name="arrow-back"
-          size={36}
-          color="black"
-          onPress={goToProducts}
-        />
-        <Text fontSize="heading" fontWeight="bold">
-          New product
-        </Text>
-      </TopBar>
+    <View style={ContainerStyle.contentContainer}>
+      <Header
+        title="New product"
+        goBack={() => navigation.navigate("Products")}
+      />
+
+      <Divider />
 
       <Formik
         initialValues={{ name: "", price: "", category: "" }}
@@ -102,42 +58,48 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
           touched,
           values,
         }) => (
-          <InputContainer>
-            <StyledInputItem>
-              <Text fontSize="subheading" fontWeight="bold">
+          <View>
+            <View style={Styles.rowContainer}>
+              <Text fontSize="body" fontWeight="bold" color="textPrimary">
                 Product name
               </Text>
-              <StyledTextInput
-                placeholder="Name for the product"
-                placeholderTextColor="#000"
-                onChangeText={handleChange("name")}
-                onBlur={handleBlur("name")}
-                value={values.name}
-              />
+              <View style={Styles.inputContainer}>
+                <TextInput
+                  placeholder="Name for the product"
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  value={values.name}
+                ></TextInput>
+              </View>
               {touched.name && errors.name && (
                 <Text style={{ color: "red" }}>{errors.name}</Text>
               )}
-            </StyledInputItem>
+            </View>
 
-            <StyledInputItem>
-              <Text fontSize="subheading" fontWeight="bold">
+            <Divider />
+
+            <View style={Styles.rowContainer}>
+              <Text fontSize="body" fontWeight="bold" color="textPrimary">
                 Price
               </Text>
-              <StyledTextInput
-                placeholder="Price in euros (€)"
-                placeholderTextColor="#000"
-                onChangeText={handleChange("price")}
-                onBlur={handleBlur("price")}
-                value={values.price}
-                keyboardType="numeric"
-              />
+              <View style={Styles.inputContainer}>
+                <TextInput
+                  placeholder="Price in euros (€)"
+                  onChangeText={handleChange("price")}
+                  onBlur={handleBlur("price")}
+                  value={values.price}
+                  keyboardType="numeric"
+                ></TextInput>
+              </View>
               {touched.price && errors.price && (
                 <Text style={{ color: "red" }}>{errors.price}</Text>
               )}
-            </StyledInputItem>
+            </View>
 
-            <StyledInputItem>
-              <Text fontSize="subheading" fontWeight="bold">
+            <Divider />
+
+            <View style={[Styles.rowContainer, { zIndex: 1 }]}>
+              <Text fontSize="body" fontWeight="bold" color="textPrimary">
                 Category
               </Text>
               <DropDownPicker
@@ -156,32 +118,30 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
                 }}
                 placeholder="Select a category"
                 style={{
-                  borderColor: theme.colors.borderColor,
                   backgroundColor: theme.colors.barColor,
                   minHeight: 40,
-                  borderWidth: 1,
-                  borderRadius: 5,
+                  borderWidth: 0,
+                  borderRadius: 0,
                 }}
                 dropDownContainerStyle={{
                   zIndex: 2,
                   borderWidth: 0,
                 }}
+                placeholderStyle={{
+                  color: "#C2B7AB",
+                }}
               />
               {touched.category && errors.category && (
                 <Text style={{ color: "red" }}>{errors.category}</Text>
               )}
-            </StyledInputItem>
+            </View>
+            <Divider />
 
-            <StyledButton activeOpacity={1} onPress={handleSubmit}>
-              <AntDesign name="plus" size={24} color="white" />
-              <Text color="textSecondary" style={{ marginLeft: 10 }}>
-                Create
-              </Text>
-            </StyledButton>
-          </InputContainer>
+            <Button text="Create" onPress={handleSubmit} icon="add"></Button>
+          </View>
         )}
       </Formik>
-    </Container>
+    </View>
   );
 };
 
