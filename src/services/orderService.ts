@@ -107,6 +107,8 @@ export const createOrder = async (name: string, tableId: number) => {
 };
 
 export const editOrder = async (id: string, name: string, tableId: number) => {
+  throw new Error("Not implemented");
+
   try {
     const response = await api.patch(`/orders/${id}`, {
       orderName: name,

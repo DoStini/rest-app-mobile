@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { SystemInfo } from "../types/stack/state/System";
 import * as service from "../services/system";
 
@@ -10,12 +10,24 @@ export const fetchTablesInfo = createAsyncThunk(
   }
 );
 
+export const openSnackbar = createAction(
+  "system/openSnackbar",
+  (message: string) => ({
+    payload: {
+      message,
+    },
+  })
+);
+
+export const closeSnackbar = createAction("system/closeSnackbar");
+
 const initialState: SystemInfo = {
   tablesInfo: {
     tables: [],
     status: "idle",
     error: null,
   },
+  snackbar: null,
 };
 
 const systemSlice = createSlice({
@@ -35,6 +47,14 @@ const systemSlice = createSlice({
       state.tablesInfo.error =
         action.error.message ||
         "An unknown error occurred when fetching tables";
+    });
+
+    builder.addCase(openSnackbar, (state, action) => {
+      state.snackbar = action.payload.message;
+    });
+
+    builder.addCase(closeSnackbar, (state, action) => {
+      state.snackbar = null;
     });
   },
 });
