@@ -12,6 +12,7 @@ const LoadingComponent = () => {
         justifyContent: "center",
         alignItems: "center",
       }}
+      testID="loading-component"
     >
       <ActivityIndicator size="large" color="black" />
     </View>

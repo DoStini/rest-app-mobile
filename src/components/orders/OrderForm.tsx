@@ -89,6 +89,7 @@ const OrderForm = ({
             <Divider />
 
             <Button
+              testID="orderFormButton"
               text={submitText}
               onPress={handleSubmit}
               loading={loading}
