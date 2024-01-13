@@ -1,11 +1,11 @@
 import styled from "styled-components/native";
 import Text from "../Text";
-import useOrders from "../../hooks/useOrders";
+import useOrders from "../../hooks/orders/useOrders";
 import LoadingComponent from "../LoadingComponent";
 import theme from "../../theme";
 import { TouchableOpacity } from "react-native";
 import React from "react";
-import { Item } from "../../types/Item";
+import { Table } from "../../types/Table";
 
 const ContentContainer = styled.View`
   display: flex;
@@ -57,7 +57,7 @@ const Home = () => {
       <StyledScrollView>
         {items &&
           items.map(
-            (item: Item) =>
+            (item: Table) =>
               item.orders &&
               item.orders.length > 0 && (
                 <React.Fragment key={item.id}>

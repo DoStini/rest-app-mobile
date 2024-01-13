@@ -16,4 +16,13 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+export const getFetcher = async (url: string) => {
+  try {
+    const response = await api.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
 export default api;

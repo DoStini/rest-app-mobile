@@ -4,14 +4,14 @@ type BottomTabRouteMap = Record<ScreenTitle, string>;
 type BottomTabIconMap = Record<ScreenTitle, ScreenIcon>;
 
 const bottomTabBarRoutesMap: BottomTabRouteMap = {
-  HOME: "Home",
+  ORDERS: "Orders",
   HISTORY: "History",
   PRODUCTS: "Products",
   SETTINGS: "Settings",
 };
 
 const bottomTabBarIconsMap: BottomTabIconMap = {
-  HOME: "home",
+  ORDERS: "list",
   HISTORY: "history",
   PRODUCTS: "local-pizza",
   SETTINGS: "settings",
