@@ -13,6 +13,7 @@ const BottomTab = createBottomTabNavigator();
 import useAuth from "../hooks/useAuth";
 import Login from "./auth/Login";
 import { deleteItemAsync } from "expo-secure-store";
+import OrdersStack from "./orders/active/OrderStack";
 
 const Main = () => {
   const { user, loading, error, revalidate } = useAuth();
@@ -31,7 +32,7 @@ const Main = () => {
         tabBar={(props) => <TabBar {...props} />}
         screenOptions={{ headerShown: false }}
       >
-        <BottomTab.Screen name={Screen.Statistics.name} component={Home} />
+        <BottomTab.Screen name={Screen.Orders.name} component={OrdersStack} />
         <BottomTab.Screen name={Screen.History.name} component={HistoryStack} />
         <BottomTab.Screen
           name={Screen.Products.name}

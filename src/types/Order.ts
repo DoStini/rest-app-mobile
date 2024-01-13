@@ -1,10 +1,20 @@
 import { OrderProduct } from "./OrderProduct";
-import { Table } from "./Table";
 import { Creator } from "./Creator";
+import { SimpleTable } from "./Table";
+import { Category } from "./Category";
+import { Product } from "./Product";
+
+export type ProductWithAmount = Product & {
+  orderProduct: OrderProduct[];
+};
+
+export type CategoryProducts = Category & {
+  products: ProductWithAmount[];
+};
 
 export type Order = {
   OrderProduct: OrderProduct[];
-  Table: Table;
+  Table: SimpleTable;
   closed: boolean;
   closedAt: string;
   closedTotal: string;
@@ -15,4 +25,5 @@ export type Order = {
   name: string;
   tableId: number;
   userId: number;
+  categories: CategoryProducts[] | undefined;
 };

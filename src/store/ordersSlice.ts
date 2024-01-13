@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { OrdersState } from "../types/StateTypes";
-import { fetchOrders as fethOrdersApi } from "../services/orderService";
+import { fetchOrders as fetchOrdersApi } from "../services/orderService";
 
 export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
-  const orders = await fethOrdersApi();
+  const orders = await fetchOrdersApi();
   return orders;
 });
 
 const initialState: OrdersState = {
-  items: [],
+  tables: null,
   status: "idle",
   error: null,
 };
@@ -19,11 +19,15 @@ const orderSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchOrders.pending, (state, action) => {
-      state.status = "loading";
+      if (state.tables === null) {
+        state.status = "loading";
+      } else {
+        state.status = "revalidating";
+      }
     });
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
       state.status = "succeeded";
-      state.items = action.payload;
+      state.tables = action.payload;
     });
     builder.addCase(fetchOrders.rejected, (state, action) => {
       state.status = "failed";
