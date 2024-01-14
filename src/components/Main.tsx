@@ -2,7 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Screen } from "../types/ScreenTypes";
 import TabBar from "./tabBar/TabBar";
-import HistoryStack from "./history/HistoryStack";
 import Settings from "./settings/Settings";
 import ProductStack from "./products/ProductsStack";
 import LoadingComponent from "./LoadingComponent";
@@ -32,7 +31,6 @@ const Main = () => {
         screenOptions={{ headerShown: false }}
       >
         <BottomTab.Screen name={Screen.Orders.name} component={OrdersStack} />
-        <BottomTab.Screen name={Screen.History.name} component={HistoryStack} />
         <BottomTab.Screen
           name={Screen.Products.name}
           component={ProductStack}

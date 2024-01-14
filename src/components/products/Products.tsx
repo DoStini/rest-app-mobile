@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { TextInput } from "react-native";
 import theme from "../../theme";
 import { AntDesign } from "@expo/vector-icons";
-import { ProductsProps } from "../../types/StackTypes";
+import { ProductsProps } from "../../types/stack/ProductStack";
 import { Product } from "../../types/Product";
 import { Category } from "../../types/Category";
 import useCategories from "../../hooks/useCategories";

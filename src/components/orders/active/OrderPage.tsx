@@ -18,6 +18,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { closeOrderById } from "../../../services/orderService";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { ProductLine } from "./ProductLine";
+import useHistory from "../../../hooks/useHistory";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -65,11 +66,13 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
   const { order, status, error } = useLiveOrder(id, isVisible);
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
+  const { refresh } = useHistory();
 
   const onClose = useCallback(() => {
     setLoading(true);
     closeOrderById(id).then(() => {
       setLoading(false);
+      refresh();
       navigation.navigate("OrderList");
     });
   }, [id]);

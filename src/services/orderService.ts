@@ -48,6 +48,15 @@ export const closeOrderById = async (id: string) => {
   }
 };
 
+export const reopenOrderById = async (id: string) => {
+  try {
+    const response = await api.patch(`/orders/${id}/reopen`);
+    return response.data;
+  } catch (error) {
+    console.error("Error reopening order order:", error);
+  }
+};
+
 export const updateCommentById = async (
   orderId: string,
   productId: string,
