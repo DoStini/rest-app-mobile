@@ -47,3 +47,16 @@ export type ProductProps = {
   navigation: ProductNavigationProp;
   route: RouteProp<ProductStackNavigatorParamList, "Product">;
 };
+
+type StatisticsStackNavigatorParamList = {
+  Statistics: undefined;
+};
+
+type StatisticsScreenNavigationProp = StackNavigationProp<
+  StatisticsStackNavigatorParamList,
+  "Statistics"
+>;
+
+export type StatisticsProps = {
+  navigation: StatisticsScreenNavigationProp;
+};

@@ -4,7 +4,7 @@ import { Screen } from "../types/ScreenTypes";
 import TabBar from "./tabBar/TabBar";
 import Home from "./home/Home";
 import HistoryStack from "./orders/HistoryStack";
-import Settings from "./settings/Settings";
+import Statistics from "./statistics/Statistics";
 import ProductStack from "./products/ProductsStack";
 import LoadingComponent from "./LoadingComponent";
 import SnackBar from "react-native-snackbar-component";
@@ -39,7 +39,10 @@ const Main = () => {
           name={Screen.Products.name}
           component={ProductStack}
         />
-        <BottomTab.Screen name={Screen.Statistics.name} component={Settings} />
+        <BottomTab.Screen
+          name={Screen.Statistics.name}
+          component={Statistics}
+        />
       </BottomTab.Navigator>
     </NavigationContainer>
   );

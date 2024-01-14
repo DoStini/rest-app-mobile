@@ -38,6 +38,15 @@ const ContainerStyle = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
     padding: 20,
   },
+  statisticsCard: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: theme.colors.backgroundSecondary,
+    padding: 20,
+    borderRadius: 15,
+    marginVertical: 10,
+  },
   modal: {
     width: "100%",
     backgroundColor: "white",
