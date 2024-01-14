@@ -45,6 +45,8 @@ const Product = ({ navigation, route }: ProductProps) => {
         );
         navigation.navigate("Products");
         refetchCategories();
+      } else {
+        setEditing(!editing);
       }
     } else {
       setEditing(!editing);
