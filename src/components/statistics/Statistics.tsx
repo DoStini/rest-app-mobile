@@ -1,7 +1,7 @@
 import Header from "../Header";
 import ContainerStyle from "../../styles/Containers";
 import { RefreshControl, View, ScrollView } from "react-native";
-import { StatisticsProps } from "../../types/StackTypes";
+import { StatisticsProps } from "../../types/stack/StatisticsStack";
 import StatisticsCard from "./StatisticsCard";
 import useStatistics from "../../hooks/statistics/useStatistics";
 
