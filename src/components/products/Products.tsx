@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 const Products = ({ navigation }: ProductsProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
-  const { categories, status, error } = useCategories();
+  const { categories, status, error, refetch } = useCategories();
 
   // Set the first category as a default filter
   useEffect(() => {
@@ -69,7 +69,9 @@ const Products = ({ navigation }: ProductsProps) => {
   };
 
   const goToNewProduct = (categories: Category[]) => {
-    navigation.navigate("NewProduct", { categories: categories });
+    navigation.navigate("NewProduct", {
+      categories: categories,
+    });
   };
 
   return (

@@ -9,13 +9,17 @@ const useCategories = () => {
   const status = useSelector((state: RootState) => state.categories.status);
   const error = useSelector((state: RootState) => state.categories.error);
 
+  const refetch = () => {
+    dispatch(fetchCategories());
+  };
+
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchCategories());
     }
   }, [dispatch, status]);
 
-  return { categories, status, error };
+  return { categories, status, error, refetch };
 };
 
 export default useCategories;

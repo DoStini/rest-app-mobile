@@ -10,6 +10,8 @@ import ContainerStyle from "../../styles/Containers";
 import Header from "../Header";
 import Divider from "../Divider";
 import Button from "../Button";
+import { createProduct } from "../../services/orderService";
+import useCategories from "../../hooks/useCategories";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -30,6 +32,7 @@ const ProductSchema = Yup.object().shape({
 
 const NewProduct = ({ navigation, route }: NewProductProps) => {
   const { categories } = route.params;
+  const { refetch: refetchCategories } = useCategories();
   const [open, setOpen] = useState(false);
 
   return (
@@ -44,9 +47,14 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
       <Formik
         initialValues={{ name: "", price: "", category: "" }}
         validationSchema={ProductSchema}
-        onSubmit={(values) => {
-          console.log(values);
-          console.log("TODO add api call to the backend when available");
+        onSubmit={async (values) => {
+          await createProduct(
+            values.name,
+            Number(values.price),
+            Number(values.category)
+          );
+          refetchCategories();
+          navigation.navigate("Products");
         }}
       >
         {({
@@ -85,7 +93,11 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
               <View style={Styles.inputContainer}>
                 <TextInput
                   placeholder="Price in euros (€)"
-                  onChangeText={handleChange("price")}
+                  onChangeText={(text) => {
+                    const cleanedText = text.replace(",", ".");
+                    setFieldValue("price", cleanedText);
+                    handleChange("price")(cleanedText);
+                  }}
                   onBlur={handleBlur("price")}
                   value={values.price}
                   keyboardType="numeric"

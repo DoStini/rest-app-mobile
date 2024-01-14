@@ -2,6 +2,7 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import Product from "../../src/components/products/Product";
 import { formatPrice } from "../../src/config/helpers";
+import useCategories from "../../src/hooks/useCategories";
 
 describe("Product component", () => {
   const mockProduct = {
@@ -15,6 +16,9 @@ describe("Product component", () => {
   };
 
   it("renders correctly", () => {
+    useCategories.mockReturnValue({
+      refetch: jest.fn(),
+    });
     const { getByText } = render(
       <Product
         navigation={mockNavigation}
@@ -33,6 +37,9 @@ describe("Product component", () => {
   });
 
   it("navigates back to Products screen on header back button press", () => {
+    useCategories.mockReturnValue({
+      refetch: jest.fn(),
+    });
     const { getByTestId } = render(
       <Product
         navigation={mockNavigation}

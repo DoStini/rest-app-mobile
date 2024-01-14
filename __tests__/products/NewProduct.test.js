@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import NewProduct from "../../src/components/products/NewProduct";
+import useCategories from "../../src/hooks/useCategories";
 
 describe("NewProduct component", () => {
   const mockNavigation = {
@@ -13,6 +14,9 @@ describe("NewProduct component", () => {
   ];
 
   it("renders correctly", () => {
+    useCategories.mockReturnValue({
+      refetch: jest.fn(),
+    });
     const { getByText, getByPlaceholderText } = render(
       <NewProduct
         navigation={mockNavigation}
