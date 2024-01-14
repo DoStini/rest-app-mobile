@@ -2,21 +2,33 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import NewProduct from "../../src/components/products/NewProduct";
 import useCategories from "../../src/hooks/useCategories";
+import { createProduct } from "../../src/services/orderService";
+
+jest.mock("../../src/hooks/useCategories");
+jest.mock("../../src/services/orderService");
 
 describe("NewProduct component", () => {
+  // Mock navigation parameters
   const mockNavigation = {
     navigate: jest.fn(),
   };
-
   const categories = [
     { id: 1, name: "Category1" },
     { id: 2, name: "Category2" },
   ];
+  const mockCreateProduct = jest.fn();
 
-  it("renders correctly", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
     useCategories.mockReturnValue({
       refetch: jest.fn(),
+      loading: false,
+      error: null,
     });
+  });
+
+  it("renders correctly", () => {
     const { getByText, getByPlaceholderText } = render(
       <NewProduct
         navigation={mockNavigation}
@@ -82,21 +94,25 @@ describe("NewProduct component", () => {
     expect(mockNavigation.navigate).toHaveBeenCalledWith("Products");
   });
 
-  /*it('calls the create function with valid input', async () => {
-    const { getByPlaceholderText, getByText } = render(
-      <NewProduct navigation={mockNavigation} route={{ params: { categories } }} />
+  // The dropdown picker is not working properly in the test environment. Need to mock it
+  /*it("calls the create function with valid input", async () => {
+    const { getByPlaceholderText, getByText, getByTestId } = render(
+      <NewProduct
+        navigation={mockNavigation}
+        route={{ params: { categories } }}
+      />
     );
 
-    fireEvent.changeText(getByPlaceholderText('Name for the product'), 'Test Product');
-    fireEvent.changeText(getByPlaceholderText('Price in euros (€)'), '15');
+    fireEvent.changeText(
+      getByPlaceholderText("Name for the product"),
+      "Test Product"
+    );
+    fireEvent.changeText(getByPlaceholderText("Price in euros (€)"), "15");
 
-    fireEvent(getByText('Select a category'), 'onPress');
-    fireEvent(getByText('Category1'), 'onPress');
-
-    fireEvent.press(getByText('Create'));
+    fireEvent.press(getByText("Create"));
 
     await waitFor(() => {
-      expect(mockNavigation.navigate).toHaveBeenCalledWith('Products');
+      expect(mockNavigation.navigate).toHaveBeenCalledWith("Products");
     });
   });*/
 });
