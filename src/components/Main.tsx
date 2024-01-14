@@ -2,7 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Screen } from "../types/ScreenTypes";
 import TabBar from "./tabBar/TabBar";
-import Home from "./home/Home";
 import HistoryStack from "./orders/HistoryStack";
 import Settings from "./settings/Settings";
 import ProductStack from "./products/ProductsStack";
