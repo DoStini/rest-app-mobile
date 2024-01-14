@@ -27,6 +27,7 @@ const Statistics = ({ navigation }: StatisticsProps) => {
             value={statistic.value}
             preValue={statistic.preValue}
             subValue={statistic.subValue}
+            navigation={navigation}
           />
         ))}
       </ScrollView>

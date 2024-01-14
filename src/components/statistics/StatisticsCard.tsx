@@ -1,12 +1,17 @@
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import ContainerStyle from "../../styles/Containers";
 import Text from "../Text";
+import {
+  StatisticsProps,
+  StatisticsStackScreens,
+} from "../../types/stack/StatisticsStack";
 
 type StatisticsCardProps = {
   title: string;
   value: string;
   preValue?: string;
   subValue?: string;
+  navigation: StatisticsProps["navigation"];
 };
 
 const StatisticsCard = ({
@@ -14,9 +19,18 @@ const StatisticsCard = ({
   value,
   preValue,
   subValue,
+  navigation,
 }: StatisticsCardProps) => {
+  const route = StatisticsStackScreens[title];
+
+  console.log(route);
+
   return (
-    <View style={ContainerStyle.statisticsCard}>
+    <Pressable
+      disabled={!route}
+      onPress={() => navigation.navigate(route)}
+      style={ContainerStyle.statisticsCard}
+    >
       <View
         style={{ display: "flex", flexDirection: "column", marginBottom: 15 }}
       >
@@ -53,7 +67,7 @@ const StatisticsCard = ({
       >
         {title}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 
