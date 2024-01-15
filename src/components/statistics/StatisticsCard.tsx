@@ -5,6 +5,7 @@ import {
   StatisticsProps,
   StatisticsStackScreens,
 } from "../../types/stack/StatisticsStack";
+import { MaterialIcons } from "@expo/vector-icons";
 
 type StatisticsCardProps = {
   title: string;
@@ -29,6 +30,16 @@ const StatisticsCard = ({
       onPress={() => navigation.navigate(route)}
       style={ContainerStyle.statisticsCard}
     >
+      {route && (
+        <View style={{ position: "absolute", top: 15, right: 15 }}>
+          <MaterialIcons
+            name="arrow-forward"
+            size={24}
+            color="black"
+            style={{ textAlign: "center" }}
+          />
+        </View>
+      )}
       <View
         style={{ display: "flex", flexDirection: "column", marginBottom: 15 }}
       >
