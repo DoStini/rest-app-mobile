@@ -74,6 +74,7 @@ describe("Products component", () => {
 
     expect(mockNavigation.navigate).toHaveBeenCalledWith("Product", {
       product: mockCategories[0].products[0],
+      categoryName: mockCategories[0].name,
     });
   });
 });

@@ -19,6 +19,7 @@ describe("Product component", () => {
     manual: "Product description goes here.",
     id: "123",
   };
+  const mockCategoryName = "Test Category";
   const mockNavigation = {
     navigate: jest.fn(),
   };
@@ -37,18 +38,20 @@ describe("Product component", () => {
     const { getByText } = render(
       <Product
         navigation={mockNavigation}
-        route={{ params: { product: mockProduct } }}
+        route={{
+          params: { product: mockProduct, categoryName: mockCategoryName },
+        }}
       />
     );
 
     expect(getByText("Product details")).toBeTruthy();
     expect(getByText("Name:")).toBeTruthy();
     expect(getByText("Price:")).toBeTruthy();
-    expect(getByText("Description:")).toBeTruthy();
+    expect(getByText("Category:")).toBeTruthy();
 
     expect(getByText(`${mockProduct.name}`)).toBeTruthy();
     expect(getByText(`${formatPrice(mockProduct.price)}`)).toBeTruthy();
-    expect(getByText(`${mockProduct.manual}`)).toBeTruthy();
+    expect(getByText(`${mockCategoryName}`)).toBeTruthy();
   });
 
   it("navigates back to Products screen on header back button press", () => {
