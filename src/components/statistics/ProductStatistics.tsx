@@ -3,14 +3,14 @@ import { StatisticsProductsProps } from "../../types/stack/StatisticsStack";
 import Header from "../Header";
 import ContainerStyle from "../../styles/Containers";
 import useProductStatistics from "../../hooks/statistics/useProductsStatistics";
-import { PieChart } from "react-native-chart-kit";
+import { BarChart, PieChart } from "react-native-chart-kit";
 import { SCREEN_WIDTH } from "../../constants";
 import theme from "../../theme";
 import { useMemo } from "react";
 import { ProductsStatistics } from "../../types/state/Statistics";
 import Text from "../Text";
 
-const COLORS = ["#f6c445", "#e45f2b", "#a0e548", "#9ac1f0", "#315098"];
+const COLORS = ["#faedcb", "#dbcdf0", "#c6def1", "#f2c6de", "#f7d9c4"];
 
 const CategoriesStatistics = ({
   categories,
@@ -60,13 +60,14 @@ const MostSoldProducts = ({
   total: number;
 }) => {
   const chartData = useMemo(() => {
-    return products.map((product, idx) => ({
-      name: product.name,
-      amount: product.amount,
-      color: COLORS[idx],
-      legendFontColor: theme.colors.textPrimary,
-      legendFontSize: 12,
-    }));
+    return {
+      labels: products.map((product) => product.name),
+      datasets: [
+        {
+          data: products.map((product) => product.amount),
+        },
+      ],
+    };
   }, [products]);
 
   return (
@@ -81,20 +82,28 @@ const MostSoldProducts = ({
         </Text>
       </View>
 
-      <PieChart
-        data={chartData || []}
-        width={SCREEN_WIDTH}
-        height={200}
-        chartConfig={{
-          color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
-          strokeWidth: 2,
-        }}
-        accessor="amount"
-        paddingLeft="0"
-        backgroundColor="transparent"
-        center={[0, 0]}
-        absolute
-      />
+      <ScrollView horizontal>
+        <BarChart
+          data={chartData || []}
+          width={SCREEN_WIDTH}
+          yAxisLabel=""
+          yAxisSuffix=""
+          height={200}
+          showValuesOnTopOfBars
+          chartConfig={{
+            backgroundGradientFrom: "white",
+            backgroundGradientTo: "white",
+            color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
+            strokeWidth: 2,
+            decimalPlaces: 0,
+            formatXLabel: (value) =>
+              value.length <= 8 ? value : value.slice(0, 5) + "...",
+            propsForLabels: {
+              onPressIn: () => console.log("pressed"),
+            },
+          }}
+        />
+      </ScrollView>
     </View>
   );
 };
