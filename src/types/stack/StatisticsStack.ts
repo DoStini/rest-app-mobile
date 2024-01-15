@@ -4,6 +4,7 @@ export type StatisticsStackNavigatorParamList = {
   Statistics: undefined;
   "Statistics/Products": undefined;
   "Statistics/Employees": undefined;
+  "Statistics/Weekly": undefined;
 };
 
 type StatisticsScreenNavigationProp = StackNavigationProp<
@@ -30,7 +31,16 @@ type StatisticsEmployeesScreenNavigationProp = StackNavigationProp<
 >;
 
 export type StatisticsEmployeesProps = {
-  navigation: StatisticsProductsScreenNavigationProp;
+  navigation: StatisticsEmployeesScreenNavigationProp;
+};
+
+type StatisticsWeeklyScreenNavigationProp = StackNavigationProp<
+  StatisticsStackNavigatorParamList,
+  "Statistics/Weekly"
+>;
+
+export type StatisticsWeeklyProps = {
+  navigation: StatisticsWeeklyScreenNavigationProp;
 };
 
 // Statistics names from backend to the respective screen names
@@ -42,4 +52,5 @@ export const StatisticsStackScreens: Record<
   "Most Sold Product": "Statistics/Products",
   "Best Employee": "Statistics/Employees",
   "Biggest Order": "Statistics/Employees",
+  "Best day of the Week": "Statistics/Weekly",
 };

@@ -47,4 +47,12 @@ export type Statistics = {
     statistics: EmployeeStatistics | null;
     status: "idle" | "loading" | "succeeded" | "failed";
   };
+  weekly: {
+    statistics: {
+      name: string;
+      day: string;
+      value: number;
+    }[];
+    status: "idle" | "loading" | "succeeded" | "failed";
+  };
 };

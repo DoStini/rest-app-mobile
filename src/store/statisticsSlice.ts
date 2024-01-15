@@ -25,6 +25,14 @@ export const fetchEmployeesStatistics = createAsyncThunk(
   }
 );
 
+export const fetchWeeklyStatistics = createAsyncThunk(
+  "statistics/fetchWeeklyStatistics",
+  async () => {
+    const data = await service.weeklyStatistics();
+    return data;
+  }
+);
+
 const initialState: Statistics = {
   main: {
     status: "idle",
@@ -40,6 +48,10 @@ const initialState: Statistics = {
   },
   employees: {
     statistics: null,
+    status: "idle",
+  },
+  weekly: {
+    statistics: [],
     status: "idle",
   },
 };
@@ -80,6 +92,17 @@ const statisticsSlice = createSlice({
     });
     builder.addCase(fetchEmployeesStatistics.rejected, (state, action) => {
       state.employees.status = "idle";
+    });
+
+    builder.addCase(fetchWeeklyStatistics.pending, (state, action) => {
+      state.weekly.status = "loading";
+    });
+    builder.addCase(fetchWeeklyStatistics.fulfilled, (state, action) => {
+      state.weekly.status = "succeeded";
+      state.weekly.statistics = action.payload;
+    });
+    builder.addCase(fetchWeeklyStatistics.rejected, (state, action) => {
+      state.weekly.status = "idle";
     });
   },
 });

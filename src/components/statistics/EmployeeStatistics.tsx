@@ -1,5 +1,5 @@
 import { RefreshControl, ScrollView, View } from "react-native";
-import { StatisticsProductsProps } from "../../types/stack/StatisticsStack";
+import { StatisticsEmployeesProps } from "../../types/stack/StatisticsStack";
 import Header from "../Header";
 import ContainerStyle from "../../styles/Containers";
 import { SCREEN_WIDTH } from "../../constants";
@@ -9,7 +9,7 @@ import useEmployeeStatistics from "../../hooks/statistics/useEmployeeStatistics"
 
 const EmployeeStatisticsComponent = ({
   navigation,
-}: StatisticsProductsProps) => {
+}: StatisticsEmployeesProps) => {
   const { statistics, status, refresh } = useEmployeeStatistics();
 
   const mostValuableData = useBarChartData(
@@ -28,7 +28,7 @@ const EmployeeStatisticsComponent = ({
 
   return (
     <View style={ContainerStyle.contentContainer}>
-      <Header title={"Product Statistics"} goBack={navigation.goBack} />
+      <Header title="Employee Statistics" goBack={navigation.goBack} />
 
       <ScrollView
         refreshControl={
