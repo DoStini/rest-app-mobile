@@ -17,6 +17,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { reopenOrderById } from "../../../services/orderService";
 import { HistoryOrderProps } from "../../../types/stack/OrderStack";
 import useHistory from "../../../hooks/useHistory";
+import { useState } from "react";
 
 const Styles = StyleSheet.create({
   InfoBox: {
@@ -40,16 +41,19 @@ const Styles = StyleSheet.create({
 const HistoryOrder = ({ navigation, route }: HistoryOrderProps) => {
   const { id } = route.params;
   const { selectedOrder, status } = useSelectedOrder(id);
-  const { refresh } = useHistory();
+  const { refresh: refreshHistory } = useHistory();
+  const [loading, setLoading] = useState(false);
 
   if (!selectedOrder || status === "loading") {
     return <LoadingComponent />;
   }
 
   const handleReopenOrder = async (id: number) => {
+    setLoading(true);
     await reopenOrderById(id.toString());
     navigation.navigate("OrderList");
-    refresh();
+    refreshHistory();
+    setLoading(false);
   };
 
   return (
@@ -62,6 +66,7 @@ const HistoryOrder = ({ navigation, route }: HistoryOrderProps) => {
             onPress={() => {
               console.log("print");
             }}
+            disabled={loading}
           >
             <MaterialIcons
               name="print"
@@ -165,6 +170,7 @@ const HistoryOrder = ({ navigation, route }: HistoryOrderProps) => {
           icon="shopping-cart"
           onPress={() => handleReopenOrder(selectedOrder.id)}
           style={{ marginTop: 20, marginBottom: 20 }}
+          loading={loading}
         />
       </ScrollView>
     </View>
