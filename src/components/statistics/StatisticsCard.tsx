@@ -23,8 +23,6 @@ const StatisticsCard = ({
 }: StatisticsCardProps) => {
   const route = StatisticsStackScreens[title];
 
-  console.log(route);
-
   return (
     <Pressable
       disabled={!route}

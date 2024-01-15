@@ -30,8 +30,8 @@ const CategoriesStatistics = ({
   return (
     <View style={ContainerStyle.statisticChart}>
       <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
-        <Text fontSize="body" fontWeight="bold">
-          Most Sold Cateogories
+        <Text fontSize="medium" fontWeight="bold">
+          Most Sold Categories
         </Text>
       </View>
       <PieChart
@@ -82,25 +82,25 @@ const MostSoldProducts = ({
         </Text>
       </View>
 
-      <ScrollView horizontal>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator
+        style={{ paddingVertical: 20 }}
+      >
         <BarChart
           data={chartData || []}
-          width={SCREEN_WIDTH}
+          width={SCREEN_WIDTH * 1.3}
           yAxisLabel=""
           yAxisSuffix=""
           height={200}
           showValuesOnTopOfBars
+          fromZero
           chartConfig={{
             backgroundGradientFrom: "white",
             backgroundGradientTo: "white",
             color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
             strokeWidth: 2,
             decimalPlaces: 0,
-            formatXLabel: (value) =>
-              value.length <= 8 ? value : value.slice(0, 5) + "...",
-            propsForLabels: {
-              onPressIn: () => console.log("pressed"),
-            },
           }}
         />
       </ScrollView>
