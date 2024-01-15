@@ -1,4 +1,5 @@
 import api from "./axios";
+import * as Sentry from "sentry-expo";
 
 export const fetchTablesInfo = async () => {
   try {
@@ -6,5 +7,6 @@ export const fetchTablesInfo = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching history:", error);
+    Sentry.Native.captureException(error);
   }
 };

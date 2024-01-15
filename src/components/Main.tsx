@@ -7,7 +7,6 @@ import HistoryStack from "./orders/HistoryStack";
 import Settings from "./settings/Settings";
 import ProductStack from "./products/ProductsStack";
 import LoadingComponent from "./LoadingComponent";
-import SnackBar from "react-native-snackbar-component";
 
 const BottomTab = createBottomTabNavigator();
 
