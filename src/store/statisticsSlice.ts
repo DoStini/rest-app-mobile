@@ -17,6 +17,14 @@ export const fetchProductsStatistics = createAsyncThunk(
   }
 );
 
+export const fetchEmployeesStatistics = createAsyncThunk(
+  "statistics/fetchEmployeesStatistics",
+  async () => {
+    const data = await service.employeesStatistics();
+    return data;
+  }
+);
+
 const initialState: Statistics = {
   main: {
     status: "idle",
@@ -28,6 +36,10 @@ const initialState: Statistics = {
       products: [],
       categories: [],
     },
+    status: "idle",
+  },
+  employees: {
+    statistics: null,
     status: "idle",
   },
 };
@@ -57,6 +69,17 @@ const statisticsSlice = createSlice({
     });
     builder.addCase(fetchProductsStatistics.rejected, (state, action) => {
       state.products.status = "idle";
+    });
+
+    builder.addCase(fetchEmployeesStatistics.pending, (state, action) => {
+      state.employees.status = "loading";
+    });
+    builder.addCase(fetchEmployeesStatistics.fulfilled, (state, action) => {
+      state.employees.status = "succeeded";
+      state.employees.statistics = action.payload;
+    });
+    builder.addCase(fetchEmployeesStatistics.rejected, (state, action) => {
+      state.employees.status = "idle";
     });
   },
 });

@@ -17,3 +17,12 @@ export const productsStatistics = async () => {
     console.error("Error fetching products statistics:", error);
   }
 };
+
+export const employeesStatistics = async () => {
+  try {
+    const response = await api.get("/statistics/employees");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching employees statistics:", error);
+  }
+};

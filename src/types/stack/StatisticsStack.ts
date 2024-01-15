@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 export type StatisticsStackNavigatorParamList = {
   Statistics: undefined;
   "Statistics/Products": undefined;
+  "Statistics/Employees": undefined;
 };
 
 type StatisticsScreenNavigationProp = StackNavigationProp<
@@ -23,6 +24,15 @@ export type StatisticsProductsProps = {
   navigation: StatisticsProductsScreenNavigationProp;
 };
 
+type StatisticsEmployeesScreenNavigationProp = StackNavigationProp<
+  StatisticsStackNavigatorParamList,
+  "Statistics/Employees"
+>;
+
+export type StatisticsEmployeesProps = {
+  navigation: StatisticsProductsScreenNavigationProp;
+};
+
 // Statistics names from backend to the respective screen names
 
 export const StatisticsStackScreens: Record<
@@ -30,4 +40,6 @@ export const StatisticsStackScreens: Record<
   keyof StatisticsStackNavigatorParamList
 > = {
   "Most Sold Product": "Statistics/Products",
+  "Best Employee": "Statistics/Employees",
+  "Biggest Order": "Statistics/Employees",
 };

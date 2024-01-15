@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatisticsStackNavigatorParamList } from "../../types/stack/StatisticsStack";
 import Statistics from "./Statistics";
 import ProductStatistics from "./ProductStatistics";
+import EmployeeStatistics from "./EmployeeStatistics";
 
 const Stack = createStackNavigator<StatisticsStackNavigatorParamList>();
 
@@ -16,6 +17,11 @@ const StatisticsStack = () => {
       <Stack.Screen
         name="Statistics/Products"
         component={ProductStatistics}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Statistics/Employees"
+        component={EmployeeStatistics}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

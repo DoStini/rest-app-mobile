@@ -17,6 +17,21 @@ export type ProductsStatistics = {
   }[];
 };
 
+export type EmployeeStatistics = {
+  monetary: {
+    name: string;
+    value: number;
+  }[];
+  biggest: {
+    name: string;
+    value: number;
+  }[];
+  quantity: {
+    name: string;
+    value: number;
+  }[];
+};
+
 export type MainStatistics = Statistic[];
 
 export type Statistics = {
@@ -26,6 +41,10 @@ export type Statistics = {
   };
   products: {
     statistics: ProductsStatistics | null;
+    status: "idle" | "loading" | "succeeded" | "failed";
+  };
+  employees: {
+    statistics: EmployeeStatistics | null;
     status: "idle" | "loading" | "succeeded" | "failed";
   };
 };
