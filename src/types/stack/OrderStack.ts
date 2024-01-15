@@ -4,7 +4,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 export type OrderStackNavigatorParamList = {
   CreateOrder: undefined;
   OrderList: undefined;
-  HistoryOrder: { id: string };
   HistoryOrderList: undefined;
   Order: { id: string };
   "Order/Add": { id: string };
@@ -25,11 +24,6 @@ type OrderAddNavigationProp = StackNavigationProp<
 type OrderListNavigationProp = StackNavigationProp<
   OrderStackNavigatorParamList,
   "OrderList"
->;
-
-type HistoryOrderNavigationProp = StackNavigationProp<
-  OrderStackNavigatorParamList,
-  "HistoryOrder"
 >;
 
 type HistoryOrderListNavigationProp = StackNavigationProp<
@@ -54,11 +48,6 @@ export type OrderProps = {
 
 export type HistoryOrderListProps = {
   navigation: HistoryOrderListNavigationProp;
-};
-
-export type HistoryOrderProps = {
-  navigation: HistoryOrderNavigationProp;
-  route: RouteProp<OrderStackNavigatorParamList, "HistoryOrder">;
 };
 
 // Print order props

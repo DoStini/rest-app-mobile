@@ -74,7 +74,7 @@ const HistoryOrderList = ({ navigation }: HistoryOrderListProps) => {
                 <TouchableOpacity
                   activeOpacity={1}
                   onPress={() =>
-                    navigation.navigate("HistoryOrder", {
+                    navigation.navigate("Order", {
                       id: String(order.id),
                     })
                   }

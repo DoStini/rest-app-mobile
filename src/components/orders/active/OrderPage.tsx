@@ -15,10 +15,17 @@ import { AppDispatch } from "../../../store/store";
 import Header from "../../Header";
 import Button from "../../Button";
 import { ScrollView } from "react-native-gesture-handler";
-import { closeOrderById } from "../../../services/orderService";
+import {
+  closeOrderById,
+  reopenOrderById,
+} from "../../../services/orderService";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { ProductLine } from "./ProductLine";
 import useHistory from "../../../hooks/useHistory";
+import {
+  convertISOToFormattedDate,
+  formatPrice,
+} from "../../../config/helpers";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -31,10 +38,12 @@ const Products = ({
   navigation,
   id,
   products,
+  closed,
 }: {
   navigation: OrderProps["navigation"] | OrderAddProps["navigation"];
   id: string;
   products: OrderProduct[];
+  closed: boolean;
 }) => {
   return (
     <View>
@@ -42,15 +51,22 @@ const Products = ({
         <Text fontSize="medium" fontWeight="bold">
           Products
         </Text>
-        <MaterialIcons
-          name="add-circle-outline"
-          size={30}
-          onPress={() => navigation.navigate("Order/Add", { id })}
-        />
+        {!closed && (
+          <MaterialIcons
+            name="add-circle-outline"
+            size={30}
+            onPress={() => navigation.navigate("Order/Add", { id })}
+          />
+        )}
       </View>
 
       {products.map((product) => (
-        <ProductLine product={product} key={product.productId} deletable />
+        <ProductLine
+          product={product}
+          key={product.productId}
+          deletable
+          orderClosed={closed}
+        />
       ))}
     </View>
   );
@@ -60,22 +76,30 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
   const { id } = route.params;
 
   const isVisible = navigation.isFocused();
-
   const { open: openSnackbar } = useSnackbar();
-
   const { order, status, error } = useLiveOrder(id, isVisible);
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
-  const { refresh } = useHistory();
+  const { refresh: refreshHistory } = useHistory();
 
   const onClose = useCallback(() => {
     setLoading(true);
     closeOrderById(id).then(() => {
-      setLoading(false);
-      refresh();
-      navigation.navigate("OrderList");
+      refreshHistory();
     });
   }, [id]);
+
+  const onReopen = useCallback(() => {
+    setLoading(true);
+    reopenOrderById(id).then(() => {
+      refreshHistory();
+    });
+  }, [id]);
+
+  // set loading to false when the order.closed changes
+  useEffect(() => {
+    setLoading(false);
+  }, [order?.closed]);
 
   useEffect(() => {
     if (String(order?.id) === String(id) || order === null) {
@@ -101,27 +125,35 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
       <Header
         title={`${order.Table.name}, ${order.name}`}
         afterTitle={
-          <Pressable
-            style={{ paddingLeft: 10 }}
-            onPress={() => {
-              navigation.navigate("Order/Edit", { id });
-            }}
-          >
-            <MaterialIcons
-              name="edit"
-              color={theme.colors.textPrimary}
-              size={26}
-            />
-          </Pressable>
+          // Show edit button only if the order is not closed
+          !order?.closed && (
+            <Pressable
+              style={{ paddingLeft: 10 }}
+              onPress={() => {
+                navigation.navigate("Order/Edit", { id });
+              }}
+            >
+              <MaterialIcons
+                name="edit"
+                color={theme.colors.textPrimary}
+                size={26}
+              />
+            </Pressable>
+          )
         }
-        goBack={() => navigation.navigate("OrderList")}
+        /* Go back to HistoryOrderList if the order was closed*/
+        goBack={() => {
+          order.closed
+            ? navigation.navigate("HistoryOrderList")
+            : navigation.navigate("OrderList");
+        }}
       />
 
       <Divider />
 
       <View style={Styles.rowContainer}>
         <Text fontSize="body" fontWeight="bold" color="textPrimary">
-          Responsible:{" "}
+          Responsible:
         </Text>
         <Text fontSize="body" color="textPrimary">
           {order.creator.name}
@@ -130,27 +162,76 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
       <Divider />
 
+      {/* Render CreatedAt, ClosedAt and Total price only when the order is closed*/}
+      {order.closed && (
+        <View>
+          <View style={Styles.rowContainer}>
+            <Text fontSize="body" fontWeight="bold">
+              Created at:
+            </Text>
+            <Text fontSize="body">
+              {convertISOToFormattedDate(order.createdAt)}
+            </Text>
+          </View>
+
+          <Divider />
+
+          <View style={Styles.rowContainer}>
+            <Text fontSize="body" fontWeight="bold">
+              Closed at:
+            </Text>
+            <Text fontSize="body">
+              {convertISOToFormattedDate(order.closedAt)}
+            </Text>
+          </View>
+
+          <Divider />
+
+          <View style={Styles.rowContainer}>
+            <Text fontSize="body" fontWeight="bold">
+              Total price:
+            </Text>
+            <Text fontSize="body">{formatPrice(order.closedTotal)}</Text>
+          </View>
+          <Divider />
+        </View>
+      )}
+
       <ScrollView>
         <Products
           products={order.OrderProduct}
           navigation={navigation}
           id={id}
+          closed={order.closed}
         />
 
-        <Button
-          text="Send order to kitchen"
-          icon="print"
-          onPress={() => navigation.navigate("Order/Print", { id })}
-          style={{ marginTop: 20, marginBottom: 20 }}
-        />
+        {/* Render buttons based on the order state*/}
+        {order.closed ? (
+          <Button
+            text="Reopen order"
+            loading={loading}
+            onPress={onReopen}
+            icon="shopping-cart"
+            style={{ marginTop: 20, marginBottom: 20 }}
+          />
+        ) : (
+          <View>
+            <Button
+              text="Send order to kitchen"
+              icon="print"
+              onPress={() => navigation.navigate("Order/Print", { id })}
+              style={{ marginTop: 20, marginBottom: 20 }}
+            />
 
-        <Button
-          text="Close order"
-          loading={loading}
-          onPress={onClose}
-          icon="shopping-cart"
-          style={{ backgroundColor: theme.colors.error, marginBottom: 20 }}
-        />
+            <Button
+              text="Close order"
+              loading={loading}
+              onPress={onClose}
+              icon="shopping-cart"
+              style={{ backgroundColor: theme.colors.error, marginBottom: 20 }}
+            />
+          </View>
+        )}
       </ScrollView>
     </View>
   );
