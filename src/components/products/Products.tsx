@@ -14,7 +14,7 @@ import { Product } from "../../types/Product";
 import { Category } from "../../types/Category";
 import useCategories from "../../hooks/useCategories";
 import LoadingComponent from "../LoadingComponent";
-import { formatPrice } from "../../config/helpers";
+import { formatPrice, getCategoryNameById } from "../../config/helpers";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../Header";
 import ContainerStyle from "../../styles/Containers";
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 const Products = ({ navigation }: ProductsProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
-  const { categories, status, error, refetch } = useCategories();
+  const { categories, status, error } = useCategories();
 
   // Set the first category as a default filter
   useEffect(() => {
@@ -65,7 +65,10 @@ const Products = ({ navigation }: ProductsProps) => {
   const filteredProducts = getFilteredProducts();
 
   const goToProduct = (product: Product) => {
-    navigation.navigate("Product", { product: product });
+    navigation.navigate("Product", {
+      product: product,
+      categoryName: getCategoryNameById(categories, selectedFilter),
+    });
   };
 
   const goToNewProduct = (categories: Category[]) => {

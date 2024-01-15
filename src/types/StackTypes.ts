@@ -28,7 +28,7 @@ export type HistoryOrderProps = {
 
 type ProductStackNavigatorParamList = {
   Products: undefined;
-  Product: { product: Product };
+  Product: { product: Product; categoryName: string | null };
   NewProduct: { categories: Category[] };
 };
 

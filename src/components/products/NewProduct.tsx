@@ -12,15 +12,13 @@ import Divider from "../Divider";
 import Button from "../Button";
 import { createProduct } from "../../services/orderService";
 import useCategories from "../../hooks/useCategories";
+import { getCategoryNameById } from "../../config/helpers";
+import { Product } from "../../types/Product";
 
 const Styles = StyleSheet.create({
   rowContainer: {
     paddingVertical: 5,
     paddingHorizontal: 0,
-  },
-  inputContainer: {
-    padding: 12,
-    backgroundColor: theme.colors.backgroundSecondary,
   },
 });
 
@@ -34,7 +32,26 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
   const { categories } = route.params;
   const { refetch: refetchCategories } = useCategories();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  const onCreateProduct = async (
+    name: string,
+    price: string,
+    category: string
+  ) => {
+    setLoading(true);
+    const response: Product = await createProduct(
+      name,
+      Number(price),
+      Number(category)
+    );
+    refetchCategories();
+    navigation.navigate("Product", {
+      product: response,
+      categoryName: getCategoryNameById(categories, response.categoryId),
+    });
+    setLoading(false);
+  };
   return (
     <View style={ContainerStyle.contentContainer}>
       <Header
@@ -47,14 +64,8 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
       <Formik
         initialValues={{ name: "", price: "", category: "" }}
         validationSchema={ProductSchema}
-        onSubmit={async (values) => {
-          await createProduct(
-            values.name,
-            Number(values.price),
-            Number(values.category)
-          );
-          refetchCategories();
-          navigation.navigate("Products");
+        onSubmit={(values) => {
+          onCreateProduct(values.name, values.price, values.category);
         }}
       >
         {({
@@ -71,16 +82,15 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
               <Text fontSize="body" fontWeight="bold" color="textPrimary">
                 Product name
               </Text>
-              <View style={Styles.inputContainer}>
-                <TextInput
-                  placeholder="Name for the product"
-                  onChangeText={handleChange("name")}
-                  onBlur={handleBlur("name")}
-                  value={values.name}
-                ></TextInput>
-              </View>
+              <TextInput
+                placeholder="Name for the product"
+                onChangeText={handleChange("name")}
+                onBlur={handleBlur("name")}
+                value={values.name}
+                style={{ paddingTop: 5 }}
+              ></TextInput>
               {touched.name && errors.name && (
-                <Text style={{ color: "red" }}>{errors.name}</Text>
+                <Text style={{ color: theme.colors.error }}>{errors.name}</Text>
               )}
             </View>
 
@@ -90,21 +100,22 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
               <Text fontSize="body" fontWeight="bold" color="textPrimary">
                 Price
               </Text>
-              <View style={Styles.inputContainer}>
-                <TextInput
-                  placeholder="Price in euros (€)"
-                  onChangeText={(text) => {
-                    const cleanedText = text.replace(",", ".");
-                    setFieldValue("price", cleanedText);
-                    handleChange("price")(cleanedText);
-                  }}
-                  onBlur={handleBlur("price")}
-                  value={values.price}
-                  keyboardType="numeric"
-                ></TextInput>
-              </View>
+              <TextInput
+                placeholder="Price in euros (€)"
+                onChangeText={(text) => {
+                  const cleanedText = text.replace(",", ".");
+                  setFieldValue("price", cleanedText);
+                  handleChange("price")(cleanedText);
+                }}
+                onBlur={handleBlur("price")}
+                value={values.price}
+                keyboardType="numeric"
+                style={{ paddingTop: 5 }}
+              ></TextInput>
               {touched.price && errors.price && (
-                <Text style={{ color: "red" }}>{errors.price}</Text>
+                <Text style={{ color: theme.colors.error }}>
+                  {errors.price}
+                </Text>
               )}
             </View>
 
@@ -130,10 +141,11 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
                 }}
                 placeholder="Select a category"
                 style={{
-                  backgroundColor: theme.colors.barColor,
-                  minHeight: 40,
+                  backgroundColor: "transparent",
+                  minHeight: 30,
                   borderWidth: 0,
                   borderRadius: 0,
+                  paddingLeft: 0,
                 }}
                 dropDownContainerStyle={{
                   zIndex: 2,
@@ -144,12 +156,19 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
                 }}
               />
               {touched.category && errors.category && (
-                <Text style={{ color: "red" }}>{errors.category}</Text>
+                <Text style={{ color: theme.colors.error }}>
+                  {errors.category}
+                </Text>
               )}
             </View>
             <Divider />
 
-            <Button text="Create" onPress={handleSubmit} icon="add"></Button>
+            <Button
+              text="Create"
+              onPress={handleSubmit}
+              icon="add"
+              loading={loading}
+            ></Button>
           </View>
         )}
       </Formik>

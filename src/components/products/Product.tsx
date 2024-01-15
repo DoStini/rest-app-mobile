@@ -20,23 +20,31 @@ const Styles = StyleSheet.create({
 });
 
 const Product = ({ navigation, route }: ProductProps) => {
-  const { product } = route.params;
+  const { product, categoryName } = route.params;
   const { refetch: refetchCategories } = useCategories();
-
   const [editing, setEditing] = useState(false);
   const [editedName, setEditedName] = useState(product.name);
-  const [editedPrice, setEditedPrice] = useState(String(product.price));
-  //const [editedDescription, setEditedDescription] = useState(product.manual);
+  const [editedPrice, setEditedPrice] = useState(
+    parseFloat(product.price).toFixed(2)
+  );
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
+    setLoading(true);
     await deleteProduct(product.id);
     refetchCategories();
     navigation.navigate("Products");
+    setLoading(false);
   };
 
   const handleUpdate = async () => {
     if (editing) {
-      if (editedName != product.name || editedPrice != String(product.price)) {
+      // Call updateProduct only if the name or price has changed
+      if (
+        editedName != product.name ||
+        editedPrice != parseFloat(product.price).toFixed(2)
+      ) {
+        setLoading(true);
         await updateProduct(
           product.id,
           editedName,
@@ -45,6 +53,7 @@ const Product = ({ navigation, route }: ProductProps) => {
         );
         navigation.navigate("Products");
         refetchCategories();
+        setLoading(false);
       } else {
         setEditing(!editing);
       }
@@ -58,7 +67,11 @@ const Product = ({ navigation, route }: ProductProps) => {
       <Header
         title="Product details"
         afterTitle={
-          <Pressable style={{ paddingLeft: 10 }} onPress={handleUpdate}>
+          <Pressable
+            style={{ paddingLeft: 10 }}
+            onPress={handleUpdate}
+            disabled={loading}
+          >
             <MaterialIcons
               name={editing ? "save" : "edit"}
               color={theme.colors.textPrimary}
@@ -115,10 +128,10 @@ const Product = ({ navigation, route }: ProductProps) => {
 
       <View style={Styles.rowContainer}>
         <Text fontSize="body" fontWeight="bold" color="textPrimary">
-          Description:
+          Category:
         </Text>
         <Text fontSize="body" color="textPrimary">
-          {product.manual}
+          {categoryName}
         </Text>
       </View>
 
@@ -127,7 +140,8 @@ const Product = ({ navigation, route }: ProductProps) => {
       <Button
         text="Delete product"
         onPress={handleDelete}
-        style={{ backgroundColor: "red", marginTop: 10 }}
+        loading={loading}
+        style={{ backgroundColor: theme.colors.error, marginTop: 10 }}
       ></Button>
     </View>
   );
