@@ -6,7 +6,7 @@ import StatisticsCard from "./StatisticsCard";
 import useStatistics from "../../hooks/statistics/useStatistics";
 
 const Statistics = ({ navigation }: StatisticsProps) => {
-  const { statistics, status, error, refresh } = useStatistics();
+  const { statistics, status, refresh } = useStatistics();
 
   return (
     <View style={ContainerStyle.contentContainer}>

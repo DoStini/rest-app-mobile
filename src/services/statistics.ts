@@ -8,3 +8,12 @@ export const mainStatistics = async () => {
     console.error("Error fetching statistics:", error);
   }
 };
+
+export const productsStatistics = async () => {
+  try {
+    const response = await api.get("/statistics/product");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching products statistics:", error);
+  }
+};

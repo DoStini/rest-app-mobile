@@ -47,6 +47,19 @@ const ContainerStyle = StyleSheet.create({
     borderRadius: 15,
     marginVertical: 10,
   },
+  statisticChart: {
+    marginVertical: 10,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    borderRadius: 15,
+    shadowOpacity: 0.5,
+    shadowRadius: 15,
+    elevation: 3,
+  },
   modal: {
     width: "100%",
     backgroundColor: "white",

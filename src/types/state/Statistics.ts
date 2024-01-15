@@ -5,10 +5,27 @@ export type Statistic = {
   subValue?: string;
 };
 
+export type ProductsStatistics = {
+  total: number;
+  products: {
+    name: string;
+    amount: number;
+  }[];
+  categories: {
+    name: string;
+    amount: number;
+  }[];
+};
+
 export type MainStatistics = Statistic[];
 
 export type Statistics = {
-  main: MainStatistics;
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
+  main: {
+    status: "idle" | "loading" | "succeeded" | "failed";
+    statistics: MainStatistics;
+  };
+  products: {
+    statistics: ProductsStatistics | null;
+    status: "idle" | "loading" | "succeeded" | "failed";
+  };
 };

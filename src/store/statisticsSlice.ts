@@ -9,11 +9,27 @@ export const fetchStatistics = createAsyncThunk(
     return data;
   }
 );
+export const fetchProductsStatistics = createAsyncThunk(
+  "statistics/fetchProductsStatistics",
+  async () => {
+    const data = await service.productsStatistics();
+    return data;
+  }
+);
 
 const initialState: Statistics = {
-  main: [],
-  status: "idle",
-  error: null,
+  main: {
+    status: "idle",
+    statistics: [],
+  },
+  products: {
+    statistics: {
+      total: 0,
+      products: [],
+      categories: [],
+    },
+    status: "idle",
+  },
 };
 
 const statisticsSlice = createSlice({
@@ -22,17 +38,25 @@ const statisticsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchStatistics.pending, (state, action) => {
-      state.status = "loading";
+      state.main.status = "loading";
     });
     builder.addCase(fetchStatistics.fulfilled, (state, action) => {
-      state.status = "succeeded";
-      state.main = action.payload;
+      state.main.status = "succeeded";
+      state.main.statistics = action.payload;
     });
     builder.addCase(fetchStatistics.rejected, (state, action) => {
-      state.status = "failed";
-      state.error =
-        action.error.message ||
-        "An unknown error occurred when fetching statistics";
+      state.main.status = "idle";
+    });
+
+    builder.addCase(fetchProductsStatistics.pending, (state, action) => {
+      state.products.status = "loading";
+    });
+    builder.addCase(fetchProductsStatistics.fulfilled, (state, action) => {
+      state.products.status = "succeeded";
+      state.products.statistics = action.payload;
+    });
+    builder.addCase(fetchProductsStatistics.rejected, (state, action) => {
+      state.products.status = "idle";
     });
   },
 });
