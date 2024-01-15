@@ -9,6 +9,8 @@ import theme from "../../theme";
 import { useMemo } from "react";
 import { ProductsStatistics } from "../../types/state/Statistics";
 import Text from "../Text";
+import useBarChartData from "../../hooks/statistics/useBarChartData";
+import BarChartWrapper from "./BarChartWrapper";
 
 const COLORS = ["#faedcb", "#dbcdf0", "#c6def1", "#f2c6de", "#f7d9c4"];
 
@@ -59,52 +61,15 @@ const MostSoldProducts = ({
   products: ProductsStatistics["products"];
   total: number;
 }) => {
-  const chartData = useMemo(() => {
-    return {
-      labels: products.map((product) => product.name),
-      datasets: [
-        {
-          data: products.map((product) => product.amount),
-        },
-      ],
-    };
-  }, [products]);
+  const chartData = useBarChartData(products, "name", "amount");
 
   return (
-    <View style={ContainerStyle.statisticChart}>
-      <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
-        <Text fontSize="medium" fontWeight="bold">
-          Most Sold Products
-        </Text>
-
-        <Text fontSize="heading" fontWeight="bold">
-          {total}
-        </Text>
-      </View>
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator
-        style={{ paddingVertical: 20 }}
-      >
-        <BarChart
-          data={chartData || []}
-          width={SCREEN_WIDTH * 1.3}
-          yAxisLabel=""
-          yAxisSuffix=""
-          height={200}
-          showValuesOnTopOfBars
-          fromZero
-          chartConfig={{
-            backgroundGradientFrom: "white",
-            backgroundGradientTo: "white",
-            color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
-            strokeWidth: 2,
-            decimalPlaces: 0,
-          }}
-        />
-      </ScrollView>
-    </View>
+    <BarChartWrapper
+      title="Most Sold Products"
+      width={SCREEN_WIDTH * 1.3}
+      data={chartData}
+      subValue={String(total)}
+    />
   );
 };
 
