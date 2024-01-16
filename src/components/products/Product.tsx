@@ -1,74 +1,169 @@
-import styled from "styled-components/native";
 import Text from "../Text";
 import { ProductProps } from "../../types/stack/ProductStack";
+import { formatPrice } from "../../config/helpers";
+import { View, StyleSheet, Pressable, TextInput } from "react-native";
+import ContainerStyle from "../../styles/Containers";
+import Header from "../Header";
+import Divider from "../Divider";
+import Button from "../Button";
+import { deleteProduct, updateProduct } from "../../services/orderService";
 import { MaterialIcons } from "@expo/vector-icons";
+import theme from "../../theme";
+import { useState } from "react";
+import useCategories from "../../hooks/useCategories";
+import LoadingComponent from "../LoadingComponent";
 
-const Container = styled.View`
-  display: flex;
-  flex-direction: column;
-  padding-top: 60px;
-`;
+const Styles = StyleSheet.create({
+  rowContainer: {
+    paddingVertical: 5,
+    paddingHorizontal: 0,
+  },
+});
 
-const TopBar = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom-color: black;
-  border-bottom-width: 1px;
-`;
+const Product = ({ navigation, route }: ProductProps) => {
+  const { product, categoryName } = route.params;
+  const { refetch: refetchCategories } = useCategories();
+  const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-const InfoBox = styled.View`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border-bottom-color: black;
-  border-bottom-width: 1px;
-`;
+  const [productDetails, setProductDetails] = useState({
+    currentName: product.name,
+    currentPrice: product.price,
+    editedName: product.name,
+    editedPrice: product.price,
+  });
 
-const Product: React.FC<ProductProps> = ({ navigation, route }) => {
-  const { product } = route.params;
-
-  const goToProducts = () => {
+  const handleDelete = async () => {
+    setLoading(true);
+    await deleteProduct(product.id);
+    refetchCategories();
     navigation.navigate("Products");
+    setLoading(false);
+  };
+
+  const handleUpdate = async () => {
+    if (editing) {
+      // Call updateProduct only if the name or price has changed
+      if (
+        productDetails.currentName != productDetails.editedName ||
+        productDetails.currentPrice != productDetails.editedPrice
+      ) {
+        setLoading(true);
+        await updateProduct(
+          product.id,
+          productDetails.editedName,
+          Number(productDetails.editedPrice),
+          product.categoryId
+        );
+        setProductDetails((prevDetails) => ({
+          ...prevDetails,
+          currentName: productDetails.editedName,
+          currentPrice: productDetails.editedPrice,
+        }));
+        setLoading(false);
+        refetchCategories();
+      }
+    }
+    setEditing(!editing);
   };
 
   return (
-    <Container>
-      <TopBar>
-        <MaterialIcons
-          name="arrow-back"
-          size={30}
-          color="black"
-          onPress={goToProducts}
-        />
-        <Text fontSize="heading" fontWeight="bold" shadow={true}>
-          Product details
-        </Text>
-      </TopBar>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
+    <View style={ContainerStyle.contentContainer}>
+      <Header
+        title="Product details"
+        afterTitle={
+          <Pressable
+            style={{ paddingLeft: 10 }}
+            onPress={handleUpdate}
+            disabled={loading}
+          >
+            {loading ? (
+              <LoadingComponent />
+            ) : (
+              <MaterialIcons
+                name={editing ? "save" : "edit"}
+                color={theme.colors.textPrimary}
+                size={26}
+              />
+            )}
+          </Pressable>
+        }
+        goBack={() => navigation.navigate("Products")}
+      />
+
+      <Divider />
+
+      <View style={Styles.rowContainer}>
+        <Text fontSize="body" fontWeight="bold" color="textPrimary">
           Name:
         </Text>
-        <Text fontSize="subheading">{product.name}</Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
+        {editing ? (
+          <TextInput
+            value={productDetails.editedName}
+            onChangeText={(text) =>
+              setProductDetails((prevDetails) => ({
+                ...prevDetails,
+                editedName: text,
+              }))
+            }
+            style={{ fontSize: 16 }}
+          />
+        ) : (
+          <Text fontSize="body" color="textPrimary">
+            {productDetails.currentName}
+          </Text>
+        )}
+      </View>
+
+      <Divider />
+
+      <View style={Styles.rowContainer}>
+        <Text fontSize="body" fontWeight="bold" color="textPrimary">
           Price:
         </Text>
-        <Text fontSize="subheading">{product.price}</Text>
-      </InfoBox>
-      <InfoBox>
-        <Text fontSize="subheading" fontWeight="bold">
-          Description:
+        {editing ? (
+          <TextInput
+            value={productDetails.editedPrice}
+            onChangeText={(text) => {
+              const cleanedText = text.replace(",", ".");
+              const validated = cleanedText.match(/^(\d*\.{0,1}\d{0,2}$)/);
+              if (validated) {
+                setProductDetails((prevDetails) => ({
+                  ...prevDetails,
+                  editedPrice: cleanedText,
+                }));
+              }
+            }}
+            style={{ fontSize: 16 }}
+            keyboardType="numeric"
+          />
+        ) : (
+          <Text fontSize="body" color="textPrimary">
+            {formatPrice(productDetails.currentPrice)}
+          </Text>
+        )}
+      </View>
+
+      <Divider />
+
+      <View style={Styles.rowContainer}>
+        <Text fontSize="body" fontWeight="bold" color="textPrimary">
+          Category:
         </Text>
-        <Text fontSize="subheading">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at
-          dolor velit.
+        <Text fontSize="body" color="textPrimary">
+          {categoryName}
         </Text>
-      </InfoBox>
-    </Container>
+      </View>
+
+      <Divider />
+
+      <Button
+        text="Delete product"
+        onPress={handleDelete}
+        loading={loading}
+        style={{ backgroundColor: theme.colors.error, marginTop: 10 }}
+      ></Button>
+    </View>
   );
 };
 

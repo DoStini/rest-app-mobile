@@ -1,3 +1,5 @@
+import { Category } from "../types/Category";
+
 export const convertISOToFormattedDate = (isoString: string): string => {
   const date = new Date(isoString);
   const day = date.getDate();
@@ -21,4 +23,14 @@ export const formatPrice = (priceString: string): string => {
   const formattedPrice = price.toFixed(2) + " €";
 
   return formattedPrice;
+};
+
+export const getCategoryNameById = (
+  categories: Category[],
+  selectedCategoryId: number | null
+) => {
+  const category = categories.find(
+    (category) => category.id === selectedCategoryId
+  );
+  return category ? category.name : null;
 };

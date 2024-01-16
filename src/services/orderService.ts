@@ -128,12 +128,51 @@ export const editOrder = async (id: string, name: string, tableId: number) => {
   }
 };
 
-// TODO, waiting for backend
 export const fetchCategories = async () => {
   try {
-    //const response = await api.get("/categories");
-    return [];
+    const response = await api.get("/products");
+    return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
+  }
+};
+
+export const createProduct = async (
+  name: string,
+  price: number,
+  categoryId: number
+) => {
+  try {
+    const response = await api.post("/products", { name, price, categoryId });
+    return response.data;
+  } catch (error) {
+    console.error("Error in creating a product:", error);
+  }
+};
+
+export const updateProduct = async (
+  id: number,
+  name: string,
+  price: number,
+  categoryId: number
+) => {
+  try {
+    const response = await api.patch(`/products/${id}`, {
+      name,
+      price,
+      categoryId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error in updating a product:", error);
+  }
+};
+
+export const deleteProduct = async (id: number) => {
+  try {
+    const response = await api.delete(`/products/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error in deleting a product:", error);
   }
 };

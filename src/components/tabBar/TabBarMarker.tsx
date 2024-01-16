@@ -13,7 +13,7 @@ const Container = styled(Animated.View)`
 `;
 
 const TabBarMarker = ({ animatedStyle }: TabBarMarkerProps) => (
-  <Container style={animatedStyle} />
+  <Container style={animatedStyle} testID="tabBarMarker" />
 );
 
 export default TabBarMarker;

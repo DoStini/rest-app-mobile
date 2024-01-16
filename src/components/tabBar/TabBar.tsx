@@ -29,7 +29,7 @@ const TabBar = ({
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <Container>
+    <Container testID="tabBar">
       <TabBarMarker animatedStyle={animatedStyle} />
       <StyledTabBar style={{ paddingBottom: bottom }}>
         {routeNames.map((routeName, idx) => (
