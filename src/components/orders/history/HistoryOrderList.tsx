@@ -52,7 +52,7 @@ const HistoryOrderList = ({ navigation }: HistoryOrderListProps) => {
           />
         }
       >
-        {items.map((order: Order) => (
+        {items?.map((order: Order) => (
           <View style={styles.ListItemContainer} key={order.id}>
             <TouchableOpacity
               activeOpacity={1}
