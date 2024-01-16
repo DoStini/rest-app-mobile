@@ -11,6 +11,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import theme from "../../theme";
 import { useState } from "react";
 import useCategories from "../../hooks/useCategories";
+import LoadingComponent from "../LoadingComponent";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -23,11 +24,14 @@ const Product = ({ navigation, route }: ProductProps) => {
   const { product, categoryName } = route.params;
   const { refetch: refetchCategories } = useCategories();
   const [editing, setEditing] = useState(false);
-  const [editedName, setEditedName] = useState(product.name);
-  const [editedPrice, setEditedPrice] = useState(
-    parseFloat(product.price).toFixed(2)
-  );
   const [loading, setLoading] = useState(false);
+
+  const [productDetails, setProductDetails] = useState({
+    currentName: product.name,
+    currentPrice: product.price,
+    editedName: product.name,
+    editedPrice: product.price,
+  });
 
   const handleDelete = async () => {
     setLoading(true);
@@ -41,25 +45,26 @@ const Product = ({ navigation, route }: ProductProps) => {
     if (editing) {
       // Call updateProduct only if the name or price has changed
       if (
-        editedName != product.name ||
-        editedPrice != parseFloat(product.price).toFixed(2)
+        productDetails.currentName != productDetails.editedName ||
+        productDetails.currentPrice != productDetails.editedPrice
       ) {
         setLoading(true);
         await updateProduct(
           product.id,
-          editedName,
-          Number(editedPrice),
+          productDetails.editedName,
+          Number(productDetails.editedPrice),
           product.categoryId
         );
-        navigation.navigate("Products");
-        refetchCategories();
+        setProductDetails((prevDetails) => ({
+          ...prevDetails,
+          currentName: productDetails.editedName,
+          currentPrice: productDetails.editedPrice,
+        }));
         setLoading(false);
-      } else {
-        setEditing(!editing);
+        refetchCategories();
       }
-    } else {
-      setEditing(!editing);
     }
+    setEditing(!editing);
   };
 
   return (
@@ -72,11 +77,15 @@ const Product = ({ navigation, route }: ProductProps) => {
             onPress={handleUpdate}
             disabled={loading}
           >
-            <MaterialIcons
-              name={editing ? "save" : "edit"}
-              color={theme.colors.textPrimary}
-              size={26}
-            />
+            {loading ? (
+              <LoadingComponent />
+            ) : (
+              <MaterialIcons
+                name={editing ? "save" : "edit"}
+                color={theme.colors.textPrimary}
+                size={26}
+              />
+            )}
           </Pressable>
         }
         goBack={() => navigation.navigate("Products")}
@@ -90,13 +99,18 @@ const Product = ({ navigation, route }: ProductProps) => {
         </Text>
         {editing ? (
           <TextInput
-            value={editedName}
-            onChangeText={setEditedName}
+            value={productDetails.editedName}
+            onChangeText={(text) =>
+              setProductDetails((prevDetails) => ({
+                ...prevDetails,
+                editedName: text,
+              }))
+            }
             style={{ fontSize: 16 }}
           />
         ) : (
           <Text fontSize="body" color="textPrimary">
-            {product.name}
+            {productDetails.currentName}
           </Text>
         )}
       </View>
@@ -109,17 +123,23 @@ const Product = ({ navigation, route }: ProductProps) => {
         </Text>
         {editing ? (
           <TextInput
-            value={editedPrice}
+            value={productDetails.editedPrice}
             onChangeText={(text) => {
               const cleanedText = text.replace(",", ".");
-              setEditedPrice(cleanedText);
+              const validated = cleanedText.match(/^(\d*\.{0,1}\d{0,2}$)/);
+              if (validated) {
+                setProductDetails((prevDetails) => ({
+                  ...prevDetails,
+                  editedPrice: cleanedText,
+                }));
+              }
             }}
             style={{ fontSize: 16 }}
             keyboardType="numeric"
           />
         ) : (
           <Text fontSize="body" color="textPrimary">
-            {formatPrice(product.price)}
+            {formatPrice(productDetails.currentPrice)}
           </Text>
         )}
       </View>
