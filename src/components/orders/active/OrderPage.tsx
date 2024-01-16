@@ -12,7 +12,7 @@ import { OrderProduct } from "../../../types/OrderProduct";
 import { resetOrderState } from "../../../store/selectedOrderSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
-import Header from "../../Header";
+import Header from "../../headers/Header";
 import Button from "../../Button";
 import { ScrollView } from "react-native-gesture-handler";
 import { closeOrderById } from "../../../services/orderService";

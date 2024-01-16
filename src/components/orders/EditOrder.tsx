@@ -2,7 +2,7 @@ import { View } from "react-native";
 import useSelectedOrder from "../../hooks/orders/useSelectedOrder";
 import { EditOrderProps } from "../../types/stack/OrderStack";
 import ContainerStyle from "../../styles/Containers";
-import Header from "../Header";
+import Header from "../headers/Header";
 import Divider from "../Divider";
 import useTablesInfo from "../../hooks/useTablesInfo";
 import OrderForm from "./OrderForm";

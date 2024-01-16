@@ -10,7 +10,7 @@ import ContainerStyle from "../../../styles/Containers";
 import { ScrollView } from "react-native-gesture-handler";
 import { OrderListProps } from "../../../types/stack/OrderStack";
 import { MaterialIcons } from "@expo/vector-icons";
-import Header from "../../Header";
+import Header from "../../headers/Header";
 import Snackbar from "../../Snackbar";
 
 const ListItemContainer = styled(TouchableOpacity)`
@@ -27,7 +27,8 @@ const ItemTitle = styled.View`
 `;
 
 const OrderList = ({ navigation }: OrderListProps) => {
-  const { tables, status, error } = useOrders();
+  const isVisible = navigation.isFocused();
+  const { tables, status, error } = useOrders(isVisible);
 
   if (status === "loading" || status === "idle") {
     return <LoadingComponent />;

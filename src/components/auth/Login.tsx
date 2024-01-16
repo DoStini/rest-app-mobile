@@ -6,35 +6,15 @@ import TextStyles from "../../styles/Text";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { login } from "../../services/auth";
+import useAuth from "../../hooks/useAuth";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
 
-const Login = ({ revalidate }: { revalidate: () => void }) => {
-  const [loading, setLoading] = useState(false);
-  const [authError, setAuthError] = useState(false);
-
-  const handleLogin = ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    setLoading(true);
-    setAuthError(false);
-    login(email, password)
-      .then(() => {
-        setLoading(false);
-        revalidate();
-      })
-      .catch((err) => {
-        setLoading(false);
-        setAuthError(true);
-      });
-  };
+const Login = () => {
+  const { fetchingLogin, errorLogin, login } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -47,7 +27,7 @@ const Login = ({ revalidate }: { revalidate: () => void }) => {
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={LoginSchema}
-          onSubmit={handleLogin}
+          onSubmit={(values) => login(values.email, values.password)}
         >
           {({ handleChange, handleBlur, handleSubmit, errors, values }) => (
             <>
@@ -78,7 +58,7 @@ const Login = ({ revalidate }: { revalidate: () => void }) => {
                 </Text>
               )}
 
-              {authError && (
+              {errorLogin && (
                 <Text style={{ ...FormStyles.error, paddingBottom: 12 }}>
                   Invalid email or password
                 </Text>
@@ -88,7 +68,7 @@ const Login = ({ revalidate }: { revalidate: () => void }) => {
                 testID="submit"
                 text="Login"
                 onPress={handleSubmit}
-                loading={loading}
+                loading={fetchingLogin}
               />
             </>
           )}

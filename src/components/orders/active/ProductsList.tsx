@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import { OrderAddProps, OrderProps } from "../../../types/stack/OrderStack";
-import Header from "../../Header";
+import Header from "../../headers/Header";
 import Divider from "../../Divider";
 import ContainerStyle from "../../../styles/Containers";
 import useLiveOrder from "../../../hooks/orders/useLiveOrder";

@@ -3,7 +3,7 @@ import { ProductProps } from "../../types/StackTypes";
 import { formatPrice } from "../../config/helpers";
 import { View, StyleSheet, Pressable, TextInput } from "react-native";
 import ContainerStyle from "../../styles/Containers";
-import Header from "../Header";
+import Header from "../headers/Header";
 import Divider from "../Divider";
 import Button from "../Button";
 import { deleteProduct, updateProduct } from "../../services/orderService";

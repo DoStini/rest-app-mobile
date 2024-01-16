@@ -11,5 +11,15 @@ export const login = async (email: string, password: string) => {
 
   await setItemAsync("token", token);
 
+  return me();
+};
+
+export const me = async () => {
+  const response = await api.get("/proxy/auth");
+
   return response.data;
+};
+
+export const logout = async () => {
+  await setItemAsync("token", "");
 };

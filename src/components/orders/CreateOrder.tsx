@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import useTablesInfo from "../../hooks/useTablesInfo";
 import LoadingComponent from "../LoadingComponent";
 import ContainerStyle from "../../styles/Containers";
-import Header from "../Header";
+import Header from "../headers/Header";
 import { StyleSheet } from "react-native";
 import Divider from "../Divider";
 import { useState } from "react";

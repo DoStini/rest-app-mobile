@@ -1,7 +1,7 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import ContainerStyle from "../../../styles/Containers";
 import { OrderPrintProps } from "../../../types/stack/OrderStack";
-import Header from "../../Header";
+import Header from "../../headers/Header";
 import usePrintableorder from "../../../hooks/orders/usePrintableOrder";
 import LoadingComponent from "../../LoadingComponent";
 import Text from "../../Text";

@@ -16,7 +16,7 @@ import useCategories from "../../hooks/useCategories";
 import LoadingComponent from "../LoadingComponent";
 import { formatPrice, getCategoryNameById } from "../../config/helpers";
 import { MaterialIcons } from "@expo/vector-icons";
-import Header from "../Header";
+import Header from "../headers/Header";
 import ContainerStyle from "../../styles/Containers";
 import { ScrollView } from "react-native-gesture-handler";
 
