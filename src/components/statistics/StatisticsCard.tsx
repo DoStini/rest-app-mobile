@@ -1,4 +1,4 @@
-import { Pressable, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import ContainerStyle from "../../styles/Containers";
 import Text from "../Text";
 import {
@@ -6,6 +6,7 @@ import {
   StatisticsStackScreens,
 } from "../../types/stack/StatisticsStack";
 import { MaterialIcons } from "@expo/vector-icons";
+import TextStyles from "../../styles/Text";
 
 type StatisticsCardProps = {
   title: string;
@@ -14,6 +15,14 @@ type StatisticsCardProps = {
   subValue?: string;
   navigation: StatisticsProps["navigation"];
 };
+
+const styles = StyleSheet.create({
+  linkArrow: {
+    position: "absolute",
+    top: 15,
+    right: 15,
+  },
+});
 
 const StatisticsCard = ({
   title,
@@ -31,48 +40,45 @@ const StatisticsCard = ({
       style={ContainerStyle.statisticsCard}
     >
       {route && (
-        <View style={{ position: "absolute", top: 15, right: 15 }}>
+        <View style={styles.linkArrow}>
           <MaterialIcons
             name="arrow-forward"
             size={24}
             color="black"
-            style={{ textAlign: "center" }}
+            style={TextStyles.alignCenter}
           />
         </View>
       )}
       <View
         style={{ display: "flex", flexDirection: "column", marginBottom: 15 }}
       >
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={ContainerStyle.rowCenter}>
           {preValue && (
-            <Text fontWeight="bold" style={{ marginRight: 5 }}>
+            <Text
+              fontSize="medium"
+              fontWeight="bold"
+              style={{ marginRight: 5 }}
+            >
               €
             </Text>
           )}
           <Text
             fontSize="heading"
             fontWeight="bold"
-            style={{ textAlign: "center" }}
+            style={TextStyles.alignCenter}
           >
             {value}
           </Text>
         </View>
         {subValue && (
-          <Text fontSize="small" style={{ textAlign: "center" }}>
+          <Text fontSize="small" style={TextStyles.alignCenter}>
             {subValue}
           </Text>
         )}
       </View>
       <Text
         fontSize="small"
-        style={{ fontStyle: "italic", textAlign: "center" }}
+        style={[TextStyles.italic, TextStyles.alignCenter]}
       >
         {title}
       </Text>

@@ -4,7 +4,7 @@ import Header from "../Header";
 import ContainerStyle from "../../styles/Containers";
 import useProductStatistics from "../../hooks/statistics/useProductsStatistics";
 import { BarChart, PieChart } from "react-native-chart-kit";
-import { SCREEN_WIDTH } from "../../constants";
+import { CHARTS_HEIGHT, SCREEN_WIDTH } from "../../constants";
 import theme from "../../theme";
 import { useMemo } from "react";
 import { ProductsStatistics } from "../../types/state/Statistics";
@@ -39,7 +39,7 @@ const CategoriesStatistics = ({
       <PieChart
         data={chartData || []}
         width={SCREEN_WIDTH}
-        height={200}
+        height={CHARTS_HEIGHT}
         chartConfig={{
           color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
           strokeWidth: 2,

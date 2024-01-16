@@ -13,6 +13,7 @@ const Statistics = ({ navigation }: StatisticsProps) => {
       <Header title={"Statistics"} />
 
       <ScrollView
+        contentContainerStyle={{ marginHorizontal: 20 }}
         refreshControl={
           <RefreshControl
             refreshing={status === "loading"}

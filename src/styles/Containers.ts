@@ -25,6 +25,12 @@ const ContainerStyle = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
+  rowCenter: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   row: {
     display: "flex",
     flexDirection: "row",

@@ -4,6 +4,7 @@ import { ScrollView, View } from "react-native";
 import Text from "../Text";
 import { LineChart } from "react-native-chart-kit";
 import { limitString } from "../../config/helpers";
+import { CHARTS_HEIGHT } from "../../constants";
 
 type LineChartWrapperProps = {
   title: string;
@@ -43,7 +44,7 @@ const LineChartWrapper = ({
           width={width}
           yAxisLabel=""
           yAxisSuffix=""
-          height={200}
+          height={CHARTS_HEIGHT}
           fromZero
           renderDotContent={({ x, y, index }) => (
             <Text

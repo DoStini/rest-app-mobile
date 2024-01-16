@@ -5,9 +5,7 @@ import { useMemo } from "react";
 import useBarChartData from "../../hooks/statistics/useBarChartData";
 import ContainerStyle from "../../styles/Containers";
 import Header from "../Header";
-import BarChartWrapper from "./BarChartWrapper";
 import { SCREEN_WIDTH } from "../../constants";
-import { LineChart } from "react-native-chart-kit";
 import LineChartWrapper from "./LineChartWrapper";
 
 const WeeklyStatistics = ({ navigation }: StatisticsWeeklyProps) => {
@@ -21,6 +19,7 @@ const WeeklyStatistics = ({ navigation }: StatisticsWeeklyProps) => {
   }, [statistics]);
 
   const chartData = useBarChartData(formattedStatistics, "name", "value");
+
   return (
     <View style={ContainerStyle.contentContainer}>
       <Header title="Weekly Statistics" goBack={navigation.goBack} />
@@ -33,7 +32,7 @@ const WeeklyStatistics = ({ navigation }: StatisticsWeeklyProps) => {
           />
         }
       >
-        {statistics && (
+        {statistics.length > 0 && (
           <LineChartWrapper
             title="Weekly Statistics"
             width={SCREEN_WIDTH * 2}

@@ -4,6 +4,7 @@ import Text from "../Text";
 import { Dataset } from "react-native-chart-kit/dist/HelperTypes";
 import { BarChart } from "react-native-chart-kit";
 import { limitString } from "../../config/helpers";
+import { CHARTS_HEIGHT } from "../../constants";
 
 type BarChartWrapperProps = {
   title: string;
@@ -43,7 +44,7 @@ const BarChartWrapper = ({
           width={width}
           yAxisLabel=""
           yAxisSuffix=""
-          height={200}
+          height={CHARTS_HEIGHT}
           showValuesOnTopOfBars
           fromZero
           chartConfig={{
