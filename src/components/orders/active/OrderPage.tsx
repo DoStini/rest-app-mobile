@@ -162,42 +162,41 @@ const OrderPage = ({ navigation, route }: OrderProps) => {
 
       <Divider />
 
-      {/* Render CreatedAt, ClosedAt and Total price only when the order is closed*/}
-      {order.closed && (
-        <View>
-          <View style={Styles.rowContainer}>
-            <Text fontSize="body" fontWeight="bold">
-              Created at:
-            </Text>
-            <Text fontSize="body">
-              {convertISOToFormattedDate(order.createdAt)}
-            </Text>
-          </View>
-
-          <Divider />
-
-          <View style={Styles.rowContainer}>
-            <Text fontSize="body" fontWeight="bold">
-              Closed at:
-            </Text>
-            <Text fontSize="body">
-              {convertISOToFormattedDate(order.closedAt)}
-            </Text>
-          </View>
-
-          <Divider />
-
-          <View style={Styles.rowContainer}>
-            <Text fontSize="body" fontWeight="bold">
-              Total price:
-            </Text>
-            <Text fontSize="body">{formatPrice(order.closedTotal)}</Text>
-          </View>
-          <Divider />
-        </View>
-      )}
-
       <ScrollView>
+        {/* Render CreatedAt, ClosedAt and Total price only when the order is closed*/}
+        {order.closed && (
+          <View>
+            <View style={Styles.rowContainer}>
+              <Text fontSize="body" fontWeight="bold">
+                Created at:
+              </Text>
+              <Text fontSize="body">
+                {convertISOToFormattedDate(order.createdAt)}
+              </Text>
+            </View>
+
+            <Divider />
+
+            <View style={Styles.rowContainer}>
+              <Text fontSize="body" fontWeight="bold">
+                Closed at:
+              </Text>
+              <Text fontSize="body">
+                {convertISOToFormattedDate(order.closedAt)}
+              </Text>
+            </View>
+
+            <Divider />
+
+            <View style={Styles.rowContainer}>
+              <Text fontSize="body" fontWeight="bold">
+                Total price:
+              </Text>
+              <Text fontSize="body">{formatPrice(order.closedTotal)}</Text>
+            </View>
+            <Divider />
+          </View>
+        )}
         <Products
           products={order.OrderProduct}
           navigation={navigation}
