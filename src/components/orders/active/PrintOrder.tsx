@@ -8,7 +8,6 @@ import Text from "../../Text";
 import Divider from "../../Divider";
 import { OrderProduct } from "../../../types/OrderProduct";
 import { useMemo, useState } from "react";
-import { Form, Formik } from "formik";
 import FormNumberInput from "../../FormNumberInput";
 import Button from "../../Button";
 import { printOrderById } from "../../../services/orderService";

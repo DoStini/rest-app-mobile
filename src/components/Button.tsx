@@ -10,6 +10,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export type ButtonProps = {
   text: string;
+  testID?: string;
   onPress: () => void;
   loading?: boolean;
   style?: React.CSSProperties;
@@ -18,6 +19,7 @@ export type ButtonProps = {
 
 export default function Button({
   text,
+  testID,
   onPress,
   loading,
   style,
@@ -39,6 +41,7 @@ export default function Button({
 
   return (
     <AnimatedPressable
+      testID={testID}
       onPressIn={() => !loading && handlePressIn()}
       onPressOut={() => !loading && handlePressOut()}
       style={{ ...ButtonStyle.button, opacity, backgroundColor, ...style }}
