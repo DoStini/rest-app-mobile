@@ -1,8 +1,12 @@
 import Text from "../../Text";
 import useHistory from "../../../hooks/useHistory";
-import LoadingComponent from "../../LoadingComponent";
 import theme from "../../../theme";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  RefreshControl,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Order } from "../../../types/Order";
 import {
@@ -34,16 +38,20 @@ const styles = StyleSheet.create({
 });
 
 const HistoryOrderList = ({ navigation }: HistoryOrderListProps) => {
-  const { items, status, error } = useHistory();
-
-  if (status === "loading" || !items) {
-    return <LoadingComponent />;
-  }
+  const { items, status, error, refresh: refreshHistory } = useHistory();
 
   return (
     <View style={[ContainerStyle.contentContainer, { paddingTop: 60 }]}>
       <Header title="History" goBack={() => navigation.navigate("OrderList")} />
-      <ScrollView style={{ marginTop: 20 }}>
+      <ScrollView
+        style={{ marginTop: 20 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={status === "loading"}
+            onRefresh={refreshHistory}
+          />
+        }
+      >
         {items.map((order: Order) => (
           <View style={styles.ListItemContainer} key={order.id}>
             <TouchableOpacity
