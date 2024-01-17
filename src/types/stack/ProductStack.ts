@@ -1,30 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
-import { Product } from "./Product";
-import { Category } from "./Category";
-
-type HistoryStackNavigatorParamList = {
-  HistoryOrderList: undefined;
-  HistoryOrder: { id: string };
-};
-
-type HistoryListNavigationProp = StackNavigationProp<
-  HistoryStackNavigatorParamList,
-  "HistoryOrder"
->;
-type HistoryListOrderScreenNavigationProp = StackNavigationProp<
-  HistoryStackNavigatorParamList,
-  "HistoryOrderList"
->;
-
-export type HistoryProps = {
-  navigation: HistoryListNavigationProp;
-};
-
-export type HistoryOrderProps = {
-  navigation: HistoryListOrderScreenNavigationProp;
-  route: RouteProp<HistoryStackNavigatorParamList, "HistoryOrder">;
-};
+import { Product } from "../Product";
+import { Category } from "../Category";
 
 type ProductStackNavigatorParamList = {
   Products: undefined;

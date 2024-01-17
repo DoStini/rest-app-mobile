@@ -1,5 +1,5 @@
 import Text from "../Text";
-import { ProductProps } from "../../types/StackTypes";
+import { ProductProps } from "../../types/stack/ProductStack";
 import { formatPrice } from "../../config/helpers";
 import { View, StyleSheet, Pressable, TextInput } from "react-native";
 import ContainerStyle from "../../styles/Containers";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Text from "../Text";
-import { NewProductProps } from "../../types/StackTypes";
+import { NewProductProps } from "../../types/stack/ProductStack";
 import DropDownPicker from "react-native-dropdown-picker";
 import theme from "../../theme";
 import { Formik } from "formik";
