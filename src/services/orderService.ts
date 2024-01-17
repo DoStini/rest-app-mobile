@@ -59,6 +59,7 @@ export const reopenOrderById = async (id: string) => {
     const response = await api.patch(`/orders/${id}/reopen`);
     return response.data;
   } catch (error) {
+    Sentry.Native.captureException(error);
     console.error("Error reopening order order:", error);
   }
 };
@@ -146,6 +147,7 @@ export const fetchCategories = async () => {
     const response = await api.get("/products");
     return response.data;
   } catch (error) {
+    Sentry.Native.captureException(error);
     console.error("Error fetching categories:", error);
   }
 };
@@ -159,6 +161,7 @@ export const createProduct = async (
     const response = await api.post("/products", { name, price, categoryId });
     return response.data;
   } catch (error) {
+    Sentry.Native.captureException(error);
     console.error("Error in creating a product:", error);
   }
 };
@@ -177,6 +180,7 @@ export const updateProduct = async (
     });
     return response.data;
   } catch (error) {
+    Sentry.Native.captureException(error);
     console.error("Error in updating a product:", error);
   }
 };
@@ -186,6 +190,7 @@ export const deleteProduct = async (id: number) => {
     const response = await api.delete(`/products/${id}`);
     return response.data;
   } catch (error) {
+    Sentry.Native.captureException(error);
     console.error("Error in deleting a product:", error);
   }
 };
