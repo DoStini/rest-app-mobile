@@ -6,6 +6,7 @@ export const fetchHistory = async () => {
     const response = await api.get("/orders/closed");
     return response.data.orders;
   } catch (error) {
+    Sentry.Native.captureException(error);
     console.error("Error fetching history:", error);
   }
 };
