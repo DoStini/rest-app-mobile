@@ -52,8 +52,8 @@ const LineChartWrapper = ({
               fontSize="small"
               style={{
                 position: "absolute",
-                left: index > 0 ? x - 20 : x,
-                top: y + 5,
+                paddingLeft: index > 0 ? x - 20 : x,
+                paddingTop: y + 5,
                 textAlign: "center",
               }}
             >
