@@ -5,16 +5,14 @@ type BottomTabIconMap = Record<ScreenTitle, ScreenIcon>;
 
 const bottomTabBarRoutesMap: BottomTabRouteMap = {
   ORDERS: "Orders",
-  HISTORY: "History",
   PRODUCTS: "Products",
-  SETTINGS: "Settings",
+  STATISTICS: "Stats",
 };
 
 const bottomTabBarIconsMap: BottomTabIconMap = {
   ORDERS: "list",
-  HISTORY: "history",
   PRODUCTS: "local-pizza",
-  SETTINGS: "settings",
+  STATISTICS: "bar-chart",
 };
 
 export const getTitleForRoute = (

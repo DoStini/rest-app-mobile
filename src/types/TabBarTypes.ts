@@ -3,12 +3,7 @@ import { StyleProp, ViewStyle } from "react-native";
 
 export type BottomTabBarProps = ReactNavigationBottomTabBarProps;
 
-type MaterialIconName =
-  | "home"
-  | "history"
-  | "local-pizza"
-  | "settings"
-  | "error-outline";
+type MaterialIconName = "home" | "local-pizza" | "settings" | "error-outline";
 
 export type TabBarItemProps = {
   title: string;

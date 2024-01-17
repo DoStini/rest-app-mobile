@@ -36,7 +36,7 @@ export default function useAuth() {
   }, [loading, error, user]);
 
   const { mutate } = useSWR("/auth/me", () => dispatch(fetchAuth()), {
-    refreshInterval: 1000,
+    refreshInterval: 15000,
   });
 
   return {

@@ -12,6 +12,7 @@ import { OrderListProps } from "../../../types/stack/OrderStack";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../headers/Header";
 import Snackbar from "../../Snackbar";
+import { useEffect } from "react";
 
 const ListItemContainer = styled(TouchableOpacity)`
   display: flex;
@@ -41,20 +42,32 @@ const OrderList = ({ navigation }: OrderListProps) => {
         <Header
           title="Orders"
           rightButton={
-            <Pressable
-              onPress={() => navigation.navigate("CreateOrder")}
-              style={{ padding: 10 }}
-            >
-              <MaterialIcons
-                name="add-circle-outline"
-                size={30}
-                color={theme.colors.textPrimary}
-              />
-            </Pressable>
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <Pressable
+                onPress={() => navigation.navigate("HistoryOrderList")}
+                style={{ padding: 10 }}
+              >
+                <MaterialIcons
+                  name="history"
+                  size={30}
+                  color={theme.colors.textPrimary}
+                />
+              </Pressable>
+              <Pressable
+                onPress={() => navigation.navigate("CreateOrder")}
+                style={{ padding: 10 }}
+              >
+                <MaterialIcons
+                  name="add-circle-outline"
+                  size={30}
+                  color={theme.colors.textPrimary}
+                />
+              </Pressable>
+            </View>
           }
         />
 
-        <ScrollView style={{ marginTop: 20 }}>
+        <ScrollView>
           {tables?.map(
             (table: Table) =>
               table.orders?.length > 0 && (

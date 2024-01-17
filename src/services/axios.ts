@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getItemAsync } from "expo-secure-store";
+import * as Sentry from "sentry-expo";
 
 const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_BASE_ROUTE,
@@ -21,6 +22,7 @@ export const getFetcher = async (url: string) => {
     const response = await api.get(url);
     return response.data;
   } catch (error) {
+    Sentry.Native.captureException(error);
     console.error("Error fetching data:", error);
   }
 };
