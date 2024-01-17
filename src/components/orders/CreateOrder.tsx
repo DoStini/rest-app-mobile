@@ -20,16 +20,16 @@ const Styles = StyleSheet.create({
 });
 
 const CreateOrder = ({ navigation }: CreateOrderProps) => {
-  const { user, loading, error } = useAuth();
+  const { user, initializing } = useAuth();
   const { tables, status, error: errorTables } = useTablesInfo();
 
   const [creationLoading, setCreationLoading] = useState(false);
 
-  if (loading || status === "loading") {
+  if (initializing || tables.length === 0 || status === "loading") {
     return <LoadingComponent />;
   }
 
-  if (error || errorTables) {
+  if (errorTables) {
     navigation.navigate("OrderList");
     return null;
   }
