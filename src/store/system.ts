@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { SystemInfo } from "../types/stack/state/System";
 import * as service from "../services/system";
+import { SystemInfo } from "../types/state/System";
 
 export const fetchTablesInfo = createAsyncThunk(
   "system/fetchTablesInfo",

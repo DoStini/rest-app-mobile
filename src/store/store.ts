@@ -5,6 +5,7 @@ import selectedOrderReducer from "./selectedOrderSlice";
 import finishedOrderReducer from "./finishedOrderSlice";
 import ordersReducer from "./ordersSlice";
 import system from "./system";
+import statistics from "./statisticsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     finishedOrder: finishedOrderReducer,
     orders: ordersReducer,
     system: system,
+    statistics: statistics,
   },
 });
 

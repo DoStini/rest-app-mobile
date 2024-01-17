@@ -34,6 +34,12 @@ const TextStyles = StyleSheet.create({
   overline: {
     fontSize: 10,
   },
+  alignCenter: {
+    textAlign: "center",
+  },
+  italic: {
+    fontStyle: "italic",
+  },
 });
 
 export default TextStyles;

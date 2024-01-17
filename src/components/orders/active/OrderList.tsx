@@ -66,7 +66,7 @@ const OrderList = ({ navigation }: OrderListProps) => {
           }
         />
 
-        <ScrollView style={{ marginTop: 20 }}>
+        <ScrollView>
           {tables?.map(
             (table: Table) =>
               table.orders?.length > 0 && (
