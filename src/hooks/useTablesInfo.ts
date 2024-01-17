@@ -19,7 +19,7 @@ export default function useTablesInfo() {
 
   useEffect(() => {
     dispatch(fetchTablesInfo());
-  }, [dispatch]);
+  }, [dispatch, fetchTablesInfo]);
 
   return {
     tables,

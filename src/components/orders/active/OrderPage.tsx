@@ -12,7 +12,7 @@ import { OrderProduct } from "../../../types/OrderProduct";
 import { resetOrderState } from "../../../store/selectedOrderSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
-import Header from "../../Header";
+import Header from "../../headers/Header";
 import Button from "../../Button";
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -26,6 +26,7 @@ import {
   convertISOToFormattedDate,
   formatPrice,
 } from "../../../config/helpers";
+import { useIsFocused } from "@react-navigation/native";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -75,7 +76,7 @@ const Products = ({
 const OrderPage = ({ navigation, route }: OrderProps) => {
   const { id } = route.params;
 
-  const isVisible = navigation.isFocused();
+  const isVisible = useIsFocused();
   const { open: openSnackbar } = useSnackbar();
   const { order, status, error } = useLiveOrder(id, isVisible);
   const dispatch = useDispatch<AppDispatch>();

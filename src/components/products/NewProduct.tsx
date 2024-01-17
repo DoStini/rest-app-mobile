@@ -7,7 +7,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { View, StyleSheet, TextInput } from "react-native";
 import ContainerStyle from "../../styles/Containers";
-import Header from "../Header";
+import Header from "../headers/Header";
 import Divider from "../Divider";
 import Button from "../Button";
 import { createProduct } from "../../services/orderService";

@@ -14,14 +14,14 @@ import React from "react";
 import StatisticsStack from "./statistics/StatisticsStack";
 
 const Main = () => {
-  const { user, loading, error, revalidate } = useAuth();
+  const { user, initializing, error } = useAuth();
 
-  if (loading) {
+  if (initializing) {
     return <LoadingComponent />;
   }
 
   if (error) {
-    return <Login revalidate={revalidate} />;
+    return <Login />;
   }
 
   return (

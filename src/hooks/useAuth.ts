@@ -1,29 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import api from "../services/axios";
 import { User } from "../types/User";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import useSWR from "swr";
+import {
+  fetchAuth,
+  login as loginAction,
+  logout as logoutAction,
+} from "../store/system";
 
 export default function useAuth() {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
-  // Should use swr here
-  const authMeCall = () =>
-    api
-      .get("/proxy/auth")
-      .then((response) => {
-        setLoading(false);
-        setError(false);
-        setUser(response.data);
-      })
-      .catch(() => {
-        setLoading(false);
-        setError(true);
-      });
+  const login = (email: string, password: string) => {
+    dispatch(loginAction({ email, password }));
+  };
 
-  useEffect(() => {
-    authMeCall();
-  }, []);
+  const logout = () => {
+    dispatch(logoutAction());
+  };
 
-  return { user, loading, error, revalidate: authMeCall };
+  const loading = useSelector((state: RootState) => state.system.auth.loading);
+  const user = useSelector((state: RootState) => state.system.auth.user);
+  const error = useSelector((state: RootState) => state.system.auth.error);
+  const errorLogin = useSelector(
+    (state: RootState) => state.system.auth.errorLogin
+  );
+  const fetchingLogin = useSelector(
+    (state: RootState) => state.system.auth.fetchingLogin
+  );
+
+  const initializing = useMemo(() => {
+    return loading && !error && !user;
+  }, [loading, error, user]);
+
+  const { mutate } = useSWR("/auth/me", () => dispatch(fetchAuth()), {
+    refreshInterval: 15000,
+  });
+
+  return {
+    user,
+    loading,
+    initializing,
+    error,
+    fetchingLogin,
+    errorLogin,
+    login,
+    logout,
+    revalidate: mutate,
+  };
 }

@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import useTablesInfo from "../../hooks/useTablesInfo";
 import LoadingComponent from "../LoadingComponent";
 import ContainerStyle from "../../styles/Containers";
-import Header from "../Header";
+import Header from "../headers/Header";
 import { StyleSheet } from "react-native";
 import Divider from "../Divider";
 import { useState } from "react";
@@ -20,16 +20,16 @@ const Styles = StyleSheet.create({
 });
 
 const CreateOrder = ({ navigation }: CreateOrderProps) => {
-  const { user, loading, error } = useAuth();
+  const { user, initializing } = useAuth();
   const { tables, status, error: errorTables } = useTablesInfo();
 
   const [creationLoading, setCreationLoading] = useState(false);
 
-  if (loading || status === "loading") {
+  if (initializing || tables.length === 0 || status === "loading") {
     return <LoadingComponent />;
   }
 
-  if (error || errorTables) {
+  if (errorTables) {
     navigation.navigate("OrderList");
     return null;
   }
