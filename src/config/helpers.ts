@@ -25,6 +25,10 @@ export const formatPrice = (priceString: string): string => {
   return formattedPrice;
 };
 
+export const limitString = (value: string, limit: number) => {
+  return value.length <= limit ? value : value.slice(0, limit - 3) + "...";
+};
+
 export const getCategoryNameById = (
   categories: Category[],
   selectedCategoryId: number | null
