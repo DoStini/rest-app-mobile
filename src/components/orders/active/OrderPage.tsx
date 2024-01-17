@@ -26,6 +26,7 @@ import {
   convertISOToFormattedDate,
   formatPrice,
 } from "../../../config/helpers";
+import { useIsFocused } from "@react-navigation/native";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -75,7 +76,7 @@ const Products = ({
 const OrderPage = ({ navigation, route }: OrderProps) => {
   const { id } = route.params;
 
-  const isVisible = navigation.isFocused();
+  const isVisible = useIsFocused();
   const { open: openSnackbar } = useSnackbar();
   const { order, status, error } = useLiveOrder(id, isVisible);
   const dispatch = useDispatch<AppDispatch>();

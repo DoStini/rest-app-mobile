@@ -12,7 +12,7 @@ import { OrderListProps } from "../../../types/stack/OrderStack";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../headers/Header";
 import Snackbar from "../../Snackbar";
-import { useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 const ListItemContainer = styled(TouchableOpacity)`
   display: flex;
@@ -28,7 +28,7 @@ const ItemTitle = styled.View`
 `;
 
 const OrderList = ({ navigation }: OrderListProps) => {
-  const isVisible = navigation.isFocused();
+  const isVisible = useIsFocused();
   const { tables, status, error } = useOrders(isVisible);
 
   if (status === "loading" || status === "idle") {
