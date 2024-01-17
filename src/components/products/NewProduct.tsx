@@ -113,8 +113,10 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
                   placeholder="Price in euros (€)"
                   onChangeText={(text) => {
                     const cleanedText = text.replace(",", ".");
-                    setFieldValue("price", cleanedText);
-                    handleChange("price")(cleanedText);
+                    const decimalRegex = /^\d*\.?\d{0,2}$/;
+                    if (decimalRegex.test(cleanedText)) {
+                      setFieldValue("price", cleanedText);
+                    }
                   }}
                   onBlur={handleBlur("price")}
                   value={values.price}
