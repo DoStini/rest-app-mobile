@@ -6,8 +6,8 @@ import {
   View,
   StyleSheet,
   RefreshControl,
+  ScrollView,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { Order } from "../../../types/Order";
 import {
   convertISOToFormattedDate,
