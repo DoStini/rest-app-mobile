@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import api from "../services/axios";
 import { User } from "../types/User";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,13 +31,18 @@ export default function useAuth() {
     (state: RootState) => state.system.auth.fetchingLogin
   );
 
+  const initializing = useMemo(() => {
+    return loading && !error && !user;
+  }, [loading, error, user]);
+
   const { mutate } = useSWR("/auth/me", () => dispatch(fetchAuth()), {
-    refreshInterval: 15000,
+    refreshInterval: 1000,
   });
 
   return {
     user,
     loading,
+    initializing,
     error,
     fetchingLogin,
     errorLogin,

@@ -15,9 +15,9 @@ import OrdersStack from "./orders/active/OrderStack";
 import React from "react";
 
 const Main = () => {
-  const { user, loading, error } = useAuth();
+  const { user, initializing, error } = useAuth();
 
-  if (loading && !user) {
+  if (initializing) {
     return <LoadingComponent />;
   }
 
