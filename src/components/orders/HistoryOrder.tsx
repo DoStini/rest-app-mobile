@@ -51,6 +51,7 @@ const ProductBox = styled.View`
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
+  width: 100%;
 `;
 
 const HistoryOrder: React.FC<HistoryOrderProps> = ({ navigation, route }) => {

@@ -27,6 +27,7 @@ export default function Header({
       {goBack && (
         <MaterialIcons
           name="arrow-back"
+          testID="goBackButton"
           size={30}
           color="black"
           onPress={goBack}

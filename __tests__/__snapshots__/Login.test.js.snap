@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login component Snapshot is correct 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+      "maxWidth": 400,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "fontSize": 32,
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Welcome to Resty
+  </Text>
+  <Text
+    style={
+      {
+        "fontSize": 14,
+        "paddingBottom": 30,
+        "paddingTop": 15,
+      }
+    }
+  >
+    Please authenticate to access the platform
+  </Text>
+  <View
+    style={
+      {
+        "maxWidth": 400,
+        "width": "80%",
+      }
+    }
+  >
+    <TextInput
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      placeholder="Email"
+      style={
+        {
+          "borderBottomColor": "#372F22",
+          "borderBottomWidth": 1,
+          "height": 40,
+          "marginVertical": 12,
+          "paddingVertical": 10,
+        }
+      }
+      testID="email"
+      value=""
+    />
+    <TextInput
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      placeholder="Password"
+      secureTextEntry={true}
+      style={
+        {
+          "borderBottomColor": "#372F22",
+          "borderBottomWidth": 1,
+          "height": 40,
+          "marginVertical": 12,
+          "paddingVertical": 10,
+        }
+      }
+      testID="password"
+      value=""
+    />
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      animatedStyle={
+        {
+          "value": {},
+        }
+      }
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#96744E",
+          "opacity": 1,
+          "paddingHorizontal": 20,
+          "paddingVertical": 10,
+        }
+      }
+      testID="submit"
+    >
+      <View
+        style={
+          {
+            "display": "flex",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "color": "white",
+              "fontSize": 16,
+            }
+          }
+        >
+          Login
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

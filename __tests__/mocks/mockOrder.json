@@ -1,0 +1,65 @@
+{
+  "OrderProduct": [
+    {
+      "amount": 1,
+      "comment": "",
+      "createdAt": "2021-01-01T00:00:00.000Z",
+      "orderId": 1,
+      "orderedAmount": 1,
+      "productId": 1,
+      "product": {
+        "category": {
+          "id": 1,
+          "name": "testCategory"
+        },
+        "categoryId": 1,
+        "id": 1,
+        "image": null,
+        "manual": false,
+        "name": "testOrderProduct",
+        "position": 1,
+        "price": "10.00"
+      }
+    },
+    {
+      "amount": 2,
+      "comment": "",
+      "createdAt": "2021-01-01T00:00:00.000Z",
+      "orderId": 2,
+      "orderedAmount": 2,
+      "productId": 2,
+      "product": {
+        "category": {
+          "id": 2,
+          "name": "testCategory2"
+        },
+        "categoryId": 2,
+        "id": 2,
+        "image": null,
+        "manual": false,
+        "name": "testOrderProduct2",
+        "position": 2,
+        "price": "10.00"
+      }
+    }
+  ],
+  "Table": {
+    "id": 1,
+    "name": "testTable"
+  },
+  "closed": false,
+  "closedAt": null,
+  "closedTotal": null,
+  "createdAt": "2021-01-01T00:00:00.000Z",
+  "creator": {
+    "id": 1,
+    "name": "testCreator",
+    "username": "testCreator"
+  },
+  "dayId": 1,
+  "id": 1,
+  "name": "testOrder",
+  "tableId": 1,
+  "userId": 1
+
+}
