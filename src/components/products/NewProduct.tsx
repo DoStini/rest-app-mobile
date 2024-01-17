@@ -5,7 +5,13 @@ import DropDownPicker from "react-native-dropdown-picker";
 import theme from "../../theme";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { View, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import ContainerStyle from "../../styles/Containers";
 import Header from "../headers/Header";
 import Divider from "../Divider";
@@ -53,126 +59,130 @@ const NewProduct = ({ navigation, route }: NewProductProps) => {
     setLoading(false);
   };
   return (
-    <View style={ContainerStyle.contentContainer}>
-      <Header
-        title="New product"
-        goBack={() => navigation.navigate("Products")}
-      />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={ContainerStyle.contentContainer}>
+        <Header
+          title="New product"
+          goBack={() => navigation.navigate("Products")}
+        />
 
-      <Divider />
+        <Divider />
 
-      <Formik
-        initialValues={{ name: "", price: "", category: "" }}
-        validationSchema={ProductSchema}
-        onSubmit={(values) => {
-          onCreateProduct(values.name, values.price, values.category);
-        }}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          setFieldValue,
-          errors,
-          touched,
-          values,
-        }) => (
-          <View>
-            <View style={Styles.rowContainer}>
-              <Text fontSize="body" fontWeight="bold" color="textPrimary">
-                Product name
-              </Text>
-              <TextInput
-                placeholder="Name for the product"
-                onChangeText={handleChange("name")}
-                onBlur={handleBlur("name")}
-                value={values.name}
-                style={{ paddingTop: 5 }}
-              ></TextInput>
-              {touched.name && errors.name && (
-                <Text style={{ color: theme.colors.error }}>{errors.name}</Text>
-              )}
-            </View>
-
-            <Divider />
-
-            <View style={Styles.rowContainer}>
-              <Text fontSize="body" fontWeight="bold" color="textPrimary">
-                Price
-              </Text>
-              <TextInput
-                placeholder="Price in euros (€)"
-                onChangeText={(text) => {
-                  const cleanedText = text.replace(",", ".");
-                  setFieldValue("price", cleanedText);
-                  handleChange("price")(cleanedText);
-                }}
-                onBlur={handleBlur("price")}
-                value={values.price}
-                keyboardType="numeric"
-                style={{ paddingTop: 5 }}
-              ></TextInput>
-              {touched.price && errors.price && (
-                <Text style={{ color: theme.colors.error }}>
-                  {errors.price}
+        <Formik
+          initialValues={{ name: "", price: "", category: "" }}
+          validationSchema={ProductSchema}
+          onSubmit={(values) => {
+            onCreateProduct(values.name, values.price, values.category);
+          }}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            errors,
+            touched,
+            values,
+          }) => (
+            <View>
+              <View style={Styles.rowContainer}>
+                <Text fontSize="body" fontWeight="bold" color="textPrimary">
+                  Product name
                 </Text>
-              )}
-            </View>
+                <TextInput
+                  placeholder="Name for the product"
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  value={values.name}
+                  style={{ paddingTop: 5 }}
+                ></TextInput>
+                {touched.name && errors.name && (
+                  <Text style={{ color: theme.colors.error }}>
+                    {errors.name}
+                  </Text>
+                )}
+              </View>
 
-            <Divider />
+              <Divider />
 
-            <View style={[Styles.rowContainer, { zIndex: 1 }]}>
-              <Text fontSize="body" fontWeight="bold" color="textPrimary">
-                Category
-              </Text>
-              <DropDownPicker
-                open={open}
-                value={values.category}
-                items={categories.map((category) => ({
-                  label: category.name,
-                  value: category.id.toString(),
-                }))}
-                setOpen={(isOpen) => {
-                  setOpen(isOpen);
-                }}
-                setValue={(val) => {
-                  const actualValue = val({});
-                  setFieldValue("category", actualValue);
-                }}
-                placeholder="Select a category"
-                style={{
-                  backgroundColor: "transparent",
-                  minHeight: 30,
-                  borderWidth: 0,
-                  borderRadius: 0,
-                  paddingLeft: 0,
-                }}
-                dropDownContainerStyle={{
-                  zIndex: 2,
-                  borderWidth: 0,
-                }}
-                placeholderStyle={{
-                  color: "#C2B7AB",
-                }}
-              />
-              {touched.category && errors.category && (
-                <Text style={{ color: theme.colors.error }}>
-                  {errors.category}
+              <View style={Styles.rowContainer}>
+                <Text fontSize="body" fontWeight="bold" color="textPrimary">
+                  Price
                 </Text>
-              )}
-            </View>
-            <Divider />
+                <TextInput
+                  placeholder="Price in euros (€)"
+                  onChangeText={(text) => {
+                    const cleanedText = text.replace(",", ".");
+                    setFieldValue("price", cleanedText);
+                    handleChange("price")(cleanedText);
+                  }}
+                  onBlur={handleBlur("price")}
+                  value={values.price}
+                  keyboardType="numeric"
+                  style={{ paddingTop: 5 }}
+                ></TextInput>
+                {touched.price && errors.price && (
+                  <Text style={{ color: theme.colors.error }}>
+                    {errors.price}
+                  </Text>
+                )}
+              </View>
 
-            <Button
-              text="Create"
-              onPress={handleSubmit}
-              icon="add"
-              loading={loading}
-            ></Button>
-          </View>
-        )}
-      </Formik>
-    </View>
+              <Divider />
+
+              <View style={[Styles.rowContainer, { zIndex: 1 }]}>
+                <Text fontSize="body" fontWeight="bold" color="textPrimary">
+                  Category
+                </Text>
+                <DropDownPicker
+                  open={open}
+                  value={values.category}
+                  items={categories.map((category) => ({
+                    label: category.name,
+                    value: category.id.toString(),
+                  }))}
+                  setOpen={(isOpen) => {
+                    setOpen(isOpen);
+                  }}
+                  setValue={(val) => {
+                    const actualValue = val({});
+                    setFieldValue("category", actualValue);
+                  }}
+                  placeholder="Select a category"
+                  style={{
+                    backgroundColor: "transparent",
+                    minHeight: 30,
+                    borderWidth: 0,
+                    borderRadius: 0,
+                    paddingLeft: 0,
+                  }}
+                  dropDownContainerStyle={{
+                    zIndex: 2,
+                    borderWidth: 0,
+                  }}
+                  placeholderStyle={{
+                    color: "#C2B7AB",
+                  }}
+                />
+                {touched.category && errors.category && (
+                  <Text style={{ color: theme.colors.error }}>
+                    {errors.category}
+                  </Text>
+                )}
+              </View>
+              <Divider />
+
+              <Button
+                text="Create"
+                onPress={handleSubmit}
+                icon="add"
+                loading={loading}
+              ></Button>
+            </View>
+          )}
+        </Formik>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
