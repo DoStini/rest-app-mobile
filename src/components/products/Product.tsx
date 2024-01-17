@@ -1,7 +1,14 @@
 import Text from "../Text";
 import { ProductProps } from "../../types/stack/ProductStack";
 import { formatPrice } from "../../config/helpers";
-import { View, StyleSheet, Pressable, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import ContainerStyle from "../../styles/Containers";
 import Header from "../headers/Header";
 import Divider from "../Divider";
@@ -68,102 +75,104 @@ const Product = ({ navigation, route }: ProductProps) => {
   };
 
   return (
-    <View style={ContainerStyle.contentContainer}>
-      <Header
-        title="Product details"
-        afterTitle={
-          <Pressable
-            style={{ paddingLeft: 10 }}
-            onPress={handleUpdate}
-            disabled={loading}
-          >
-            {loading ? (
-              <LoadingComponent />
-            ) : (
-              <MaterialIcons
-                name={editing ? "save" : "edit"}
-                color={theme.colors.textPrimary}
-                size={26}
-              />
-            )}
-          </Pressable>
-        }
-        goBack={() => navigation.navigate("Products")}
-      />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={ContainerStyle.contentContainer}>
+        <Header
+          title="Product details"
+          afterTitle={
+            <Pressable
+              style={{ paddingLeft: 10 }}
+              onPress={handleUpdate}
+              disabled={loading}
+            >
+              {loading ? (
+                <LoadingComponent />
+              ) : (
+                <MaterialIcons
+                  name={editing ? "save" : "edit"}
+                  color={theme.colors.textPrimary}
+                  size={26}
+                />
+              )}
+            </Pressable>
+          }
+          goBack={() => navigation.navigate("Products")}
+        />
 
-      <Divider />
+        <Divider />
 
-      <View style={Styles.rowContainer}>
-        <Text fontSize="body" fontWeight="bold" color="textPrimary">
-          Name:
-        </Text>
-        {editing ? (
-          <TextInput
-            value={productDetails.editedName}
-            onChangeText={(text) =>
-              setProductDetails((prevDetails) => ({
-                ...prevDetails,
-                editedName: text,
-              }))
-            }
-            style={{ fontSize: 16 }}
-          />
-        ) : (
-          <Text fontSize="body" color="textPrimary">
-            {productDetails.currentName}
+        <View style={Styles.rowContainer}>
+          <Text fontSize="body" fontWeight="bold" color="textPrimary">
+            Name:
           </Text>
-        )}
-      </View>
-
-      <Divider />
-
-      <View style={Styles.rowContainer}>
-        <Text fontSize="body" fontWeight="bold" color="textPrimary">
-          Price:
-        </Text>
-        {editing ? (
-          <TextInput
-            value={productDetails.editedPrice}
-            onChangeText={(text) => {
-              const cleanedText = text.replace(",", ".");
-              const validated = cleanedText.match(/^(\d*\.{0,1}\d{0,2}$)/);
-              if (validated) {
+          {editing ? (
+            <TextInput
+              value={productDetails.editedName}
+              onChangeText={(text) =>
                 setProductDetails((prevDetails) => ({
                   ...prevDetails,
-                  editedPrice: cleanedText,
-                }));
+                  editedName: text,
+                }))
               }
-            }}
-            style={{ fontSize: 16 }}
-            keyboardType="numeric"
-          />
-        ) : (
-          <Text fontSize="body" color="textPrimary">
-            {formatPrice(productDetails.currentPrice)}
+              style={{ fontSize: 16 }}
+            />
+          ) : (
+            <Text fontSize="body" color="textPrimary">
+              {productDetails.currentName}
+            </Text>
+          )}
+        </View>
+
+        <Divider />
+
+        <View style={Styles.rowContainer}>
+          <Text fontSize="body" fontWeight="bold" color="textPrimary">
+            Price:
           </Text>
-        )}
+          {editing ? (
+            <TextInput
+              value={productDetails.editedPrice}
+              onChangeText={(text) => {
+                const cleanedText = text.replace(",", ".");
+                const validated = cleanedText.match(/^(\d*\.{0,1}\d{0,2}$)/);
+                if (validated) {
+                  setProductDetails((prevDetails) => ({
+                    ...prevDetails,
+                    editedPrice: cleanedText,
+                  }));
+                }
+              }}
+              style={{ fontSize: 16 }}
+              keyboardType="numeric"
+            />
+          ) : (
+            <Text fontSize="body" color="textPrimary">
+              {formatPrice(productDetails.currentPrice)}
+            </Text>
+          )}
+        </View>
+
+        <Divider />
+
+        <View style={Styles.rowContainer}>
+          <Text fontSize="body" fontWeight="bold" color="textPrimary">
+            Category:
+          </Text>
+          <Text fontSize="body" color="textPrimary">
+            {categoryName}
+          </Text>
+        </View>
+
+        <Divider />
+
+        <Button
+          text="Delete product"
+          onPress={handleDelete}
+          loading={loading}
+          style={{ backgroundColor: theme.colors.error, marginTop: 10 }}
+        ></Button>
       </View>
-
-      <Divider />
-
-      <View style={Styles.rowContainer}>
-        <Text fontSize="body" fontWeight="bold" color="textPrimary">
-          Category:
-        </Text>
-        <Text fontSize="body" color="textPrimary">
-          {categoryName}
-        </Text>
-      </View>
-
-      <Divider />
-
-      <Button
-        text="Delete product"
-        onPress={handleDelete}
-        loading={loading}
-        style={{ backgroundColor: theme.colors.error, marginTop: 10 }}
-      ></Button>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
