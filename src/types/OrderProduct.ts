@@ -2,7 +2,7 @@ import { Product } from "./Product";
 
 export type OrderProduct = {
   amount: number;
-  closedTotal?: string;
+  closedTotal: string;
   comment: string;
   createdAt?: string;
   orderId: number | undefined;

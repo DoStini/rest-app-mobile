@@ -18,10 +18,16 @@ export default function Header({
   rightButton,
 }: HeaderProps) {
   return (
-    <View style={[ContainerStyle.rowSpaceBetween, { alignItems: "center" }]}>
+    <View
+      style={[
+        ContainerStyle.rowSpaceBetween,
+        { alignItems: "center", marginBottom: 20 },
+      ]}
+    >
       {goBack && (
         <MaterialIcons
           name="arrow-back"
+          testID="goBackButton"
           size={30}
           color="black"
           onPress={goBack}

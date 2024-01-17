@@ -15,13 +15,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { updateCommentById } from "../../../services/orderService";
 import { CommentModal } from "./CommentModal";
+import { formatPrice } from "../../../config/helpers";
 
 export const ProductLine = ({
   product,
   deletable,
+  orderClosed,
 }: {
   product: OrderProduct;
   deletable: boolean;
+  orderClosed: boolean;
 }) => {
   const [amount, setAmount] = React.useState(product.amount);
   const dispatch = useDispatch<AppDispatch>();
@@ -100,26 +103,36 @@ export const ProductLine = ({
           onSaveComment={onSaveComment}
         />
 
-        <View style={ContainerStyle.row}>
-          <NumberInput
-            value={amount}
-            setValue={setAmount}
-            handleDelete={deletable ? onDelete : null}
-            onFinished={onFinishChanges}
-            onStarted={() => setUpdatingValue(true)}
-          />
-
-          <Pressable
-            style={{ paddingLeft: 10 }}
-            onPress={() => setCommandModalOpen(true)}
-          >
-            <MaterialIcons
-              name="edit"
-              color={theme.colors.textSecondary}
-              size={26}
+        {orderClosed ? (
+          <Text fontSize="small" color="textSecondary" fontWeight="light">
+            {product.amount}
+            {" x "}
+            {formatPrice(product.product.price)}
+            {" = "}
+            {formatPrice(product.closedTotal)}
+          </Text>
+        ) : (
+          <View style={ContainerStyle.row}>
+            <NumberInput
+              value={amount}
+              setValue={setAmount}
+              handleDelete={deletable ? onDelete : null}
+              onFinished={onFinishChanges}
+              onStarted={() => setUpdatingValue(true)}
             />
-          </Pressable>
-        </View>
+
+            <Pressable
+              style={{ paddingLeft: 10 }}
+              onPress={() => setCommandModalOpen(true)}
+            >
+              <MaterialIcons
+                name="edit"
+                color={theme.colors.textSecondary}
+                size={26}
+              />
+            </Pressable>
+          </View>
+        )}
       </View>
     </View>
   );
