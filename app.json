@@ -1,10 +1,10 @@
 {
     "expo": {
-        "name": "restApp",
-        "slug": "restApp",
-        "version": "1.0.0",
+        "name": "Resty",
+        "slug": "Resty",
+        "version": "2.0.0",
         "orientation": "portrait",
-        "icon": "./assets/icon.png",
+        "icon": "./assets/coro.jpg",
         "userInterfaceStyle": "light",
         "splash": {
             "image": "./assets/splash.png",
@@ -12,7 +12,7 @@
             "backgroundColor": "#ffffff"
         },
         "assetBundlePatterns": [
-            "**/*"
+            "**/*"q
         ],
         "ios": {
             "supportsTablet": true
@@ -21,10 +21,11 @@
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
-            }
+            },
+            "package": "com.andremoreira9.restApp"
         },
         "web": {
-            "favicon": "./assets/favicon.png"
+            "favicon": "./assets/coro.jpg"
         },
         "plugins": [
             "sentry-expo"
@@ -39,6 +40,11 @@
                     }
                 }
             ]
+        },
+        "extra": {
+            "eas": {
+                "projectId": "2d2ae3b0-9aac-4b2e-bfa1-d513ece28df1"
+            }
         }
     }
 }

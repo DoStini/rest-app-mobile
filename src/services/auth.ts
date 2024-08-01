@@ -16,7 +16,6 @@ export const login = async (email: string, password: string) => {
 
 export const me = async () => {
   const response = await api.get("/proxy/auth");
-
   return response.data;
 };
 
