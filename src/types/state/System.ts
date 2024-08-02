@@ -1,5 +1,5 @@
-import { SimpleTable } from "../../Table";
-import { User } from "../../User";
+import { SimpleTable } from "../Table";
+import { User } from "../User";
 
 export interface TablesInfo {
   tables: SimpleTable[];

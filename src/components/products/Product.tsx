@@ -12,6 +12,7 @@ import theme from "../../theme";
 import { useState } from "react";
 import useCategories from "../../hooks/useCategories";
 import LoadingComponent from "../LoadingComponent";
+import useAuth from "../../hooks/useAuth";
 
 const Styles = StyleSheet.create({
   rowContainer: {
@@ -25,6 +26,9 @@ const Product = ({ navigation, route }: ProductProps) => {
   const { refetch: refetchCategories } = useCategories();
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { user, initializing } = useAuth();
+
+  console.log(user);
 
   const [productDetails, setProductDetails] = useState({
     currentName: product.name,
@@ -80,11 +84,13 @@ const Product = ({ navigation, route }: ProductProps) => {
             {loading ? (
               <LoadingComponent />
             ) : (
-              <MaterialIcons
-                name={editing ? "save" : "edit"}
-                color={theme.colors.textPrimary}
-                size={26}
-              />
+              user?.username === "andremoreira9" && (
+                <MaterialIcons
+                  name={editing ? "save" : "edit"}
+                  color={theme.colors.textPrimary}
+                  size={26}
+                />
+              )
             )}
           </Pressable>
         }
@@ -157,12 +163,14 @@ const Product = ({ navigation, route }: ProductProps) => {
 
       <Divider />
 
-      <Button
-        text="Delete product"
-        onPress={handleDelete}
-        loading={loading}
-        style={{ backgroundColor: theme.colors.error, marginTop: 10 }}
-      ></Button>
+      {user?.username === "andremoreira9" && (
+        <Button
+          text="Delete product"
+          onPress={handleDelete}
+          loading={loading}
+          style={{ backgroundColor: theme.colors.error, marginTop: 10 }}
+        ></Button>
+      )}
     </View>
   );
 };
