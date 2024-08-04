@@ -6,6 +6,7 @@ export type OrderStackNavigatorParamList = {
   OrderList: undefined;
   HistoryOrderList: undefined;
   Order: { id: string };
+  "Order/Add/Custom": { id: string };
   "Order/Add": { id: string };
   "Order/Print": { id: string };
   "Order/Edit": { id: string };
@@ -19,6 +20,11 @@ type OrderNavigationProp = StackNavigationProp<
 type OrderAddNavigationProp = StackNavigationProp<
   OrderStackNavigatorParamList,
   "Order/Add"
+>;
+
+type OrderAddCustomNavigationProp = StackNavigationProp<
+  OrderStackNavigatorParamList,
+  "Order/Add/Custom"
 >;
 
 type OrderListNavigationProp = StackNavigationProp<
@@ -77,4 +83,9 @@ export type EditOrderProps = {
 export type OrderAddProps = {
   navigation: OrderAddNavigationProp;
   route: RouteProp<OrderStackNavigatorParamList, "Order/Add">;
+};
+
+export type OrderAddCustomProps = {
+  navigation: OrderAddCustomNavigationProp;
+  route: RouteProp<OrderStackNavigatorParamList, "Order/Add/Custom">;
 };

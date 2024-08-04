@@ -28,8 +28,6 @@ const Product = ({ navigation, route }: ProductProps) => {
   const [loading, setLoading] = useState(false);
   const { user, initializing } = useAuth();
 
-  console.log(user);
-
   const [productDetails, setProductDetails] = useState({
     currentName: product.name,
     currentPrice: product.price,

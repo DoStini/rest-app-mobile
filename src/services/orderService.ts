@@ -158,11 +158,34 @@ export const createProduct = async (
   categoryId: number
 ) => {
   try {
-    const response = await api.post("/products", { name, price, categoryId });
+    const response = await api.post("/products", {
+      name,
+      price,
+      categoryId,
+      manual: false,
+    });
     return response.data;
   } catch (error) {
     Sentry.Native.captureException(error);
     console.error("Error in creating a product:", error);
+  }
+};
+
+export const createManualProduct = async (
+  name: string,
+  price: number,
+  orderId: string
+) => {
+  try {
+    const response = await api.post(`/orders/${orderId}/custom`, {
+      name,
+      price,
+      manual: true,
+    });
+    return response.data;
+  } catch (error) {
+    Sentry.Native.captureException(error);
+    console.error("Error in creating a manual product:", error);
   }
 };
 

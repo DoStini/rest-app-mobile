@@ -6,7 +6,11 @@ import ContainerStyle from "../../../styles/Containers";
 import useLiveOrder from "../../../hooks/orders/useLiveOrder";
 import React, { useEffect, useMemo, useState } from "react";
 import LoadingComponent from "../../LoadingComponent";
-import { CategoryProducts, ProductWithAmount } from "../../../types/Order";
+import {
+  CategoryProducts,
+  Order,
+  ProductWithAmount,
+} from "../../../types/Order";
 import { MaterialIcons } from "@expo/vector-icons";
 import Text from "../../Text";
 import { OrderProduct } from "../../../types/OrderProduct";
@@ -17,15 +21,18 @@ import { Category } from "../../../types/Category";
 import theme from "../../../theme";
 import { ScrollView } from "react-native-gesture-handler";
 import useSnackbar from "../../../hooks/useSnackbar";
+import Button from "../../Button";
 
 const Products = ({
   navigation,
   id,
   products,
+  order,
 }: {
   navigation: OrderAddProps["navigation"];
   id: string;
   products: ProductWithAmount[];
+  order: Order;
 }) => {
   return (
     <ScrollView>
@@ -42,6 +49,7 @@ const Products = ({
             product={orderProduct}
             key={product.id}
             deletable={false}
+            orderClosed={order.closed}
           />
         );
       })}
@@ -144,8 +152,16 @@ export default function ProductsList({ navigation, route }: OrderAddProps) {
           navigation={navigation}
           id={id}
           products={selectedCategory.products}
+          order={order}
         />
       )}
+
+      <Button
+        text="Manual"
+        icon="print"
+        onPress={() => navigation.navigate("Order/Add/Custom", { id })}
+        style={{ marginTop: 20, marginBottom: 20 }}
+      />
     </View>
   );
 }

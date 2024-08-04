@@ -1,7 +1,7 @@
 {
     "expo": {
         "name": "Resty",
-        "slug": "Resty",
+        "slug": "restApp",
         "version": "2.0.0",
         "orientation": "portrait",
         "icon": "./assets/coro.jpg",
@@ -19,7 +19,7 @@
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
+                "foregroundImage": "./assets/coro.jpg",
                 "backgroundColor": "#ffffff"
             },
             "package": "com.andremoreira9.restApp"
